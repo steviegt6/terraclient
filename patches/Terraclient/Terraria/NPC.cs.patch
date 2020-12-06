@@ -1,0 +1,37 @@
+--- src/Terraria/Terraria/NPC.cs
++++ src/Terraclient/Terraria/NPC.cs
+@@ -19,6 +_,7 @@
+ using Terraria.Graphics.Effects;
+ using Terraria.ID;
+ using Terraria.Localization;
++using Terraria.Terraclient;
+ using Terraria.Utilities;
+ using Terraria.WorldBuilding;
+ 
+@@ -27408,7 +_,7 @@
+ 						base.Center = ((player8.gravDir == 1f) ? player8.Top : player8.Bottom) + new Vector2(player8.direction * 4, 0f);
+ 						gfxOffY = player8.gfxOffY;
+ 						base.velocity = Vector2.Zero;
+-						if (!player8.creativeGodMode)
++						if (!player8.creativeGodMode && !CheatHandler.GodMode.IsEnabled())
+ 							player8.AddBuff(163, 59);
+ 					}
+ 				}
+@@ -39909,7 +_,7 @@
+ 								flag3 = true;
+ 						}
+ 
+-						if (((player2.Center.X < base.Center.X && direction < 0 && player2.direction > 0) || (player2.Center.X > base.Center.X && direction > 0 && player2.direction < 0)) && flag3 && (Collision.CanHitLine(base.Center, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center - Vector2.UnitY * 16f, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center + Vector2.UnitY * 8f, 1, 1, player2.Center, 1, 1)) && !player2.creativeGodMode)
++						if (((player2.Center.X < base.Center.X && direction < 0 && player2.direction > 0) || (player2.Center.X > base.Center.X && direction > 0 && player2.direction < 0)) && flag3 && (Collision.CanHitLine(base.Center, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center - Vector2.UnitY * 16f, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center + Vector2.UnitY * 8f, 1, 1, player2.Center, 1, 1)) && !player2.creativeGodMode && !CheatHandler.GodMode.IsEnabled())
+ 							player2.AddBuff(156, num23 + (int)ai[2] * -1);
+ 
+ 						return;
+@@ -44561,7 +_,7 @@
+ 
+ 						if (Main.netMode != 2) {
+ 							Player player = Main.player[Main.myPlayer];
+-							if (!player.dead && player.active && (player.Center - base.Center).Length() < 400f && !player.creativeGodMode)
++							if (!player.dead && player.active && (player.Center - base.Center).Length() < 400f && !player.creativeGodMode && !CheatHandler.GodMode.IsEnabled())
+ 								player.AddBuff(195, 3, quiet: false);
+ 						}
+ 

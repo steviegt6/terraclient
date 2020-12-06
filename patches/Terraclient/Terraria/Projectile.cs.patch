@@ -1,0 +1,37 @@
+--- src/Terraria/Terraria/Projectile.cs
++++ src/Terraclient/Terraria/Projectile.cs
+@@ -20,6 +_,7 @@
+ using Terraria.ID;
+ using Terraria.Localization;
+ using Terraria.Physics;
++using Terraria.Terraclient;
+ using Terraria.Utilities;
+ using Terraria.WorldBuilding;
+ 
+@@ -8643,7 +_,7 @@
+ 		}
+ 
+ 		public void StatusPlayer(int i) {
+-			if (Main.player[i].creativeGodMode)
++			if (Main.player[i].creativeGodMode || CheatHandler.GodMode.IsEnabled())
+ 				return;
+ 
+ 			if (type == 472)
+@@ -21366,7 +_,7 @@
+ 						if (Main.expertMode)
+ 							timeToAdd = 960;
+ 
+-						if (!Main.player[num723].creativeGodMode)
++						if (!Main.player[num723].creativeGodMode || CheatHandler.GodMode.IsEnabled())
+ 							Main.player[num723].AddBuff(145, timeToAdd);
+ 					}
+ 				}
+@@ -46396,7 +_,7 @@
+ 
+ 				if (Main.netMode != 2) {
+ 					Player player = Main.player[Main.myPlayer];
+-					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode)
++					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode || CheatHandler.GodMode.IsEnabled())
+ 						player.AddBuff(197, 900, quiet: false);
+ 				}
+ 			}

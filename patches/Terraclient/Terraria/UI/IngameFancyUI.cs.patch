@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/UI/IngameFancyUI.cs
++++ src/Terraclient/Terraria/UI/IngameFancyUI.cs
+@@ -9,7 +_,7 @@
+ 
+ namespace Terraria.UI
+ {
+-	public class IngameFancyUI
++	public partial class IngameFancyUI
+ 	{
+ 		private static bool CoverForOneUIFrame;
+ 

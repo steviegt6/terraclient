@@ -1,0 +1,58 @@
+--- src/Terraria/Terraria/Main.cs
++++ src/Terraclient/Terraria/Main.cs
+@@ -68,6 +_,8 @@
+ using Terraria.Net;
+ using Terraria.ObjectData;
+ using Terraria.Social;
++using Terraria.Terraclient;
++using Terraria.Terraclient.GameContent.UI.States;
+ using Terraria.UI;
+ using Terraria.UI.Chat;
+ using Terraria.UI.Gamepad;
+@@ -13017,7 +_,7 @@
+ 			CurrentFrameFlags.SleepingPlayersCount = num2;
+ 			if (netMode != 2) {
+ 				int num3 = myPlayer;
+-				if (player[num3].creativeGodMode) {
++				if (player[num3].creativeGodMode || CheatHandler.GodMode.IsEnabled()) {
+ 					player[num3].statLife = player[num3].statLifeMax2;
+ 					player[num3].statMana = player[num3].statManaMax2;
+ 					player[num3].breath = player[num3].breathMax;
+@@ -37227,8 +_,8 @@
+ 				else if (menuMode == 11) {
+ 					num2 = 210;
+ 					num4 = 37;
+-					num5 = 8;
++					num5 = 9;
+-					array4[num5 - 1] = 8;
++					array4[num5 - 1] = 9;
+ 					for (int num19 = 0; num19 < num5; num19++) {
+ 						array7[num19] = 0.75f;
+ 					}
+@@ -37276,6 +_,14 @@
+ 					}
+ 
+ 					num20++;
++					array9[num20] = Language.GetTextValue("UI.Cheats");
++					if (selectedMenu == num20) {
++						SoundEngine.PlaySound(10);
++						MenuUI.SetState(new UIManageCheats());
++						menuMode = 888;
++					}
++
++					num20++;
+ 					array9[num20] = Lang.menu[103].Value;
+ 					if (selectedMenu == num20) {
+ 						SoundEngine.PlaySound(10);
+@@ -42780,6 +_,11 @@
+ 				}
+ 
+ 				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
++
++				// Map teleportation cheat
++				if (CheatHandler.MapTeleport.IsEnabled() && mouseRight)
++					player[myPlayer].Teleport((mapFullscreenPos + new Vector2(mouseX - (screenWidth / 2), mouseY - (screenHeight / 2)) / 16 * 16 / mapFullscreenScale) * 16, TeleportationStyleID.DebugTeleport);
++
+ 				DrawCursor(DrawThickCursor());
+ 			}
+ 
