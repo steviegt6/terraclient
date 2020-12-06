@@ -18,15 +18,6 @@
  		}
  
  		public void CheckCrackedBrickBreak() {
-@@ -19380,7 +_,7 @@
- 					lavaTime++;
- 			}
- 
--			if (lavaTime > lavaMax)
-+			if (lavaTime > lavaMax || CheatHandler.GodMode.IsEnabled())
- 				lavaTime = lavaMax;
- 
- 			if (waterWalk2 && !waterWalk)
 @@ -21160,7 +_,7 @@
  		}
  
