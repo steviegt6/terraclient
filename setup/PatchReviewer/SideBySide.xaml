@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="PatchReviewer.SideBySide"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:self="clr-namespace:PatchReviewer"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"/>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+        <self:TitledEditor x:Name="left" />
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" />
+        <self:TitledEditor Grid.Column="2" x:Name="right" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,119 @@
+﻿<Window x:Class="PatchReviewer.ReviewWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:self="clr-namespace:PatchReviewer"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="AppStyle.xaml" />
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" CanExecute="CanExecuteSave" Executed="ExecuteSave"></CommandBinding>
+        <CommandBinding Command="self:Commands.Reload" CanExecute="CanExecuteReloadFile" Executed="ExecuteReloadFile"></CommandBinding>
+        <CommandBinding Command="self:Commands.RepatchFile" CanExecute="CanExecuteRepatchFile" Executed="ExecuteRepatchFile"></CommandBinding>
+        <CommandBinding Command="self:Commands.RediffFile" CanExecute="CanExecuteRediffFile" Executed="ExecuteRediffFile"></CommandBinding>
+        <CommandBinding Command="self:Commands.NextDiff" CanExecute="CanExecuteNextReviewItem" Executed="ExecuteNextReviewItem"></CommandBinding>
+        <CommandBinding Command="self:Commands.PrevDiff" CanExecute="CanExecutePrevReviewItem" Executed="ExecutePrevReviewItem"></CommandBinding>
+        <CommandBinding Command="self:Commands.Rediff" CanExecute="CanExecuteRediff" Executed="ExecuteRediff"></CommandBinding>
+        <CommandBinding Command="self:Commands.Revert" CanExecute="CanExecuteRevert" Executed="ExecuteRevert"></CommandBinding>
+        <CommandBinding Command="self:Commands.ApprovePatch" CanExecute="CanExecuteApprove" Executed="ExecuteApprove"></CommandBinding>
+        <CommandBinding Command="self:Commands.DeletePatch" CanExecute="CanExecuteRemove" Executed="ExecuteRemove"></CommandBinding>
+    </Window.CommandBindings>
+
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Button Command="Save" ToolTip="Save File">
+                <Image Source="Images/Save.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Button Command="self:Commands.Reload" ToolTip="Reload File">
+                <Image Source="Images/Reload.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Separator/>
+            <Button Command="self:Commands.RepatchFile" ToolTip="Repatch File">
+                <Image Source="Images/Patch.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Button Command="self:Commands.RediffFile" ToolTip="Rediff File">
+                <Image Source="Images/Compare.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Separator/>
+            <Button Command="self:Commands.NextDiff" ToolTip="Next Review (Alt+Down)">
+                <Image Source="Images/NextDiff.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Button Command="self:Commands.PrevDiff" ToolTip="Previous Review (Alt+Up)">
+                <Image Source="Images/PrevDiff.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Separator/>
+            <Button Command="self:Commands.ApprovePatch" ToolTip="Approve Patch (F2)">
+                <Image Source="Images/Accept.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Button Command="self:Commands.DeletePatch" ToolTip="Delete Patch (F3)">
+                <Image Source="Images/Delete.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Separator/>
+            <Button Command="self:Commands.Rediff" ToolTip="Recalculate Diff (F5)">
+                <Image Source="Images/Refresh.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+            <Button Command="self:Commands.Revert" ToolTip="Revert (Ctrl+R)">
+                <Image Source="Images/Revert.png" Style="{StaticResource ImageEnabled}" />
+            </Button>
+        </ToolBar>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" MinWidth="100"/>
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" MinWidth="100" />
+            </Grid.ColumnDefinitions>
+            <TreeView Name="treeView" 
+                      ItemsSource="{Binding Files}" 
+                      SelectedItemChanged="TreeView_OnSelectedItemChanged" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <!-- <Setter Property="Margin" Value="-15, 0, 0, 0"/>-->
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Resources>
+                    <!-- Style the inactive selection the same as active -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                                     Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                                     Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+
+
+                    <HierarchicalDataTemplate DataType="{x:Type self:FilePatcherViewModel}" ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding LabelWithModifiedIndicator}" Background="{Binding Status, Converter={StaticResource StatusBrushConverter}}"/>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type self:ResultViewModel}">
+                        <StackPanel Orientation="Horizontal" 
+                                    Background="{Binding Status, Converter={StaticResource StatusBrushConverter}}">
+                            <TextBlock Text="{Binding MovedPatchCountText}" Width="30"/>
+                            <TextBlock Text="{Binding LabelWithModifiedIndicator}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" />
+			<DockPanel Grid.Column="2" >
+                <Label Name="titleLabel" DockPanel.Dock="Top" HorizontalContentAlignment="Center" FontFamily="Courier New" FontWeight="Bold" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Margin="2"
+                       Content="{Binding Title}"
+                       Background="{Binding Status, Converter={StaticResource StatusBrushConverter}}">
+                </Label>
+                <TabControl x:Name="tabControl" SelectionChanged="TabControl_OnSelectionChanged" Padding="0">
+                    <TabItem Header="File" x:Name="fileTab">
+                        <self:SideBySide x:Name="filePanel"/>
+                    </TabItem>
+                    <TabItem Header="Patch" x:Name="patchTab">
+                        <self:SideBySide x:Name="patchPanel"/>
+                    </TabItem>
+                </TabControl>
+
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>

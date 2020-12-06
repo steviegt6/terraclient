@@ -1,0 +1,17 @@
+--- src/decompiled/Terraria/Tile.cs
++++ src/Terraria/Terraria/Tile.cs
+@@ -1,8 +_,14 @@
+ using Microsoft.Xna.Framework;
+ using Terraria.DataStructures;
++#if !WINDOWS
++using System.Runtime.InteropServices;
++#endif
+ 
+ namespace Terraria
+ {
++#if !WINDOWS
++	[StructLayout(LayoutKind.Sequential, Pack = 1)]
++#endif
+ 	public class Tile
+ 	{
+ 		public ushort type;

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="DiffPatch\**" />
+    <EmbeddedResource Remove="DiffPatch\**" />
+    <None Remove="DiffPatch\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources\Patch-Mode.xshd" />
+    <Resource Include="GrayscaleEffect.ps" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.0" />
+    <Content Include="GrayscaleEffect.fx" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <Resource Include="Images\Compare.png" />
+    <Resource Include="Images\Reload.png" />
+    <Resource Include="Images\Blank.ico" />
+    <Resource Include="Images\Revert.png" />
+    <Resource Include="Images\Accept.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\NextDiff.png" />
+    <Resource Include="Images\Patch.png" />
+    <Resource Include="Images\PrevDiff.png" />
+    <Resource Include="Images\Refresh.png" />
+    <Resource Include="Images\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="DiffPatch\DiffPatch.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RedBlack">
+      <HintPath>lib\RedBlack.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

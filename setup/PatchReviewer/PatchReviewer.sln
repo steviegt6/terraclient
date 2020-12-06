@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchReviewer", "PatchReviewer.csproj", "{699D3F3F-F974-4384-AAE2-AEF7B14F920E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffPatch", "DiffPatch\DiffPatch.csproj", "{6A990A34-DA3B-4AB0-BA1D-11551B3B4D87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{699D3F3F-F974-4384-AAE2-AEF7B14F920E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{699D3F3F-F974-4384-AAE2-AEF7B14F920E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{699D3F3F-F974-4384-AAE2-AEF7B14F920E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{699D3F3F-F974-4384-AAE2-AEF7B14F920E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A990A34-DA3B-4AB0-BA1D-11551B3B4D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A990A34-DA3B-4AB0-BA1D-11551B3B4D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A990A34-DA3B-4AB0-BA1D-11551B3B4D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A990A34-DA3B-4AB0-BA1D-11551B3B4D87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5DA97A8-6F32-4658-B95A-1D46EB490878}
+	EndGlobalSection
+EndGlobal
