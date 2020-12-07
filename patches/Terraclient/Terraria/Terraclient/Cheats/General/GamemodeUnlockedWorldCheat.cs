@@ -6,9 +6,9 @@ namespace Terraria.Terraclient.Cheats.General
 	{
 		public bool isEnabled = false;
 
-		public string Name() => Language.GetTextValue("Cheats.GameModeUnlockedWorldName");
+		public string Name() => Language.GetTextValue("Cheats.GamemodeUnlockedWorldName");
 
-		public string Description() => Language.GetTextValue("Cheats.GameModeUnlockedWorldCheat");
+		public string Description() => Language.GetTextValue("Cheats.GamemodeUnlockedWorldCheat");
 
 		public bool IsEnabled() => isEnabled;
 
