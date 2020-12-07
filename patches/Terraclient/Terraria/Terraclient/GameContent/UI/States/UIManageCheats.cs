@@ -81,14 +81,19 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		}
 
 		private void AssembleBindPanels() {
-			List<ICheat> cheats = new List<ICheat> {
-				CheatHandler.GodMode,
+			List<ICheat> misc = new List<ICheat> {
 				CheatHandler.MapTeleport,
 				CheatHandler.JourneyMode,
 				CheatHandler.GamemodeUnlockedWorld
 			};
 
-			_bindsKeyboard.Add(CreateBindingGroup(0, cheats));
+			List<ICheat> godMode = new List<ICheat> {
+				CheatHandler.GodMode
+			};
+
+			int group = 0;
+			_bindsKeyboard.Add(CreateBindingGroup(group++, misc));
+			_bindsKeyboard.Add(CreateBindingGroup(group++, godMode));
 		}
 
 		private UISortableElement CreateBindingGroup(int elementIndex, List<ICheat> cheats) {
@@ -112,22 +117,21 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			list.ListPadding = 5f;
 			panel.Append(list);
 
-			switch (elementIndex) {
-				case 0:
-					panel.BackgroundColor = Color.Lerp(panel.BackgroundColor, new Color(63, 82, 151), 0.18f);
-					break;
-			}
+            panel.BackgroundColor = Color.Lerp(panel.BackgroundColor, new Color(63, 82, 151), 0.18f);
 
 			CreateElementGroup(list, panel.BackgroundColor, cheats);
 
 			panel.BackgroundColor = panel.BackgroundColor.MultiplyRGBA(new Color(111, 111, 111));
 
-			LocalizedText text = LocalizedText.Empty;
-
+			LocalizedText text;
 			switch (elementIndex) {
 				default:
 				case 0:
-					text = Language.GetText("UI.GeneralCheats");
+					text = Language.GetText("UI.MiscOptions");
+					break;
+
+				case 1:
+					text = Language.GetText("UI.GodModeOptions");
 					break;
 			}
 

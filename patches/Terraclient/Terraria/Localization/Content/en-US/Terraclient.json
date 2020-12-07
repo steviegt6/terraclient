@@ -1,7 +1,12 @@
 {
 	"UI": {
 		"Cheats": "Cheats",
-		"GeneralCheats": "General Cheats"
+
+		"MiscOptions": "Misc. Options",
+		"GodModeOptions": "God Mode Options",
+
+		"CheatEnabled": "Enabled",
+		"CheatDisabled": "Disabled"
 	},
 
 	"Cheats": {
