@@ -10,12 +10,15 @@
  			0.7f,
  			0.7f,
  			0.7f,
-@@ -176,7 +_,7 @@
+@@ -174,9 +_,9 @@
+ 			noSound = false;
+ 			bool flag5 = SocialAPI.Network != null && SocialAPI.Network.CanInvite();
  			int num7 = flag5 ? 1 : 0;
- 			int num8 = 5 + num7 + 2;
+-			int num8 = 5 + num7 + 2;
++			int num8 = 5 + num7 + 3;
  			Vector2 vector = new Vector2(value3.X + value2.X / 4f, value3.Y + (float)(num3 * 5 / 2));
 -			Vector2 vector2 = new Vector2(0f, value2.Y - (float)(num3 * 5)) / (num8 + 1);
-+			Vector2 vector2 = new Vector2(0f, value2.Y - (float)(num3 * 7.5f)) / (num8 + 1);
++			Vector2 vector2 = new Vector2(0f, value2.Y - (float)(num3 * 5.1f)) / (num8 + 1);
  			if (flag)
  				vector.X -= 55f;
  

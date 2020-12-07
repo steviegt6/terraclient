@@ -9,6 +9,23 @@
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
+@@ -3043,6 +_,8 @@
+ 		}
+ 
+ 		public static bool SaveSettings() {
++			CheatHandler.SaveCheatSettings();
++
+ 			Configuration.Clear();
+ 			Configuration.Put("ResetDefaultUIScale", false);
+ 			Configuration.Put("SmartCursorToggle", cSmartCursorModeIsToggleAndNotHold);
+@@ -8221,6 +_,7 @@
+ 
+ 			base.Window.AllowUserResizing = true;
+ 			LoadSettings();
++			CheatHandler.LoadCheatSettings();
+ 			SetDisplayMonitor();
+ 			if (screenWidth > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
+ 				screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 @@ -13017,7 +_,7 @@
  			CurrentFrameFlags.SleepingPlayersCount = num2;
  			if (netMode != 2) {

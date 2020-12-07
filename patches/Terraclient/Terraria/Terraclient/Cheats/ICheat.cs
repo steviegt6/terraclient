@@ -7,5 +7,7 @@
 		string Description();
 
 		bool IsEnabled();
+
+		void SwitchEnabled();
 	}
 }
