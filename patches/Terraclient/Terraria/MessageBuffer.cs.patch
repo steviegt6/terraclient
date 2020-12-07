@@ -1,0 +1,23 @@
+--- src/Terraria/Terraria/MessageBuffer.cs
++++ src/Terraclient/Terraria/MessageBuffer.cs
+@@ -17,6 +_,7 @@
+ using Terraria.ID;
+ using Terraria.Localization;
+ using Terraria.Net;
++using Terraria.Terraclient;
+ using Terraria.Testing;
+ using Terraria.UI;
+ 
+@@ -294,10 +_,10 @@
+ 						else if (player14.name == "") {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.EmptyName"));
+ 						}
+-						else if (player14.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode) {
++						else if (player14.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !CheatHandler.GamemodeUnlockedWorld.IsEnabled()) {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsCreativeAndWorldIsNotCreative"));
+ 						}
+-						else if (player14.difficulty != 3 && Main.GameModeInfo.IsJourneyMode) {
++						else if (player14.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !CheatHandler.GamemodeUnlockedWorld.IsEnabled()) {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsNotCreativeAndWorldIsCreative"));
+ 						}
+ 						else {

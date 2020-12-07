@@ -1,12 +1,14 @@
-﻿namespace Terraria.Terraclient.Cheats.General
+﻿using Terraria.Localization;
+
+namespace Terraria.Terraclient.Cheats.General
 {
 	public class GodModeCheat : ICheat
 	{
 		public bool isEnabled = true;
 
-		public string Name() => "God Mode";
+		public string Name() => Language.GetTextValue("Cheats.GodModeName");
 
-		public string Description() => "Prevents your player from taking damage, suffering from the effects of debuffs, etc.";
+		public string Description() => Language.GetTextValue("Cheats.GodModeDesc");
 
 		public bool IsEnabled() => isEnabled;
 

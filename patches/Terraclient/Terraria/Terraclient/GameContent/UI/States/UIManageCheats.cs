@@ -83,7 +83,9 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		private void AssembleBindPanels() {
 			List<ICheat> cheats = new List<ICheat> {
 				CheatHandler.GodMode,
-				CheatHandler.MapTeleport
+				CheatHandler.MapTeleport,
+				CheatHandler.JourneyMode,
+				CheatHandler.GamemodeUnlockedWorld
 			};
 
 			_bindsKeyboard.Add(CreateBindingGroup(0, cheats));

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using Terraria.GameContent;
 using Terraria.Terraclient.Cheats;
 using Terraria.UI;
@@ -37,13 +36,9 @@ namespace Terraria.Terraclient.GameContent.UI.Elements
 
 			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, _cheat.Name(), pos, drawColor, 0f, Vector2.Zero, defScale, dimensions.Width + 1f);
 
-			pos.X -= 17f;
-
 			string text = _cheat.IsEnabled() ? "Enabled" : "Disabled";
 
-			pos = new Vector2(dimensions.X + dimensions.Width - ChatManager.GetStringSize(FontAssets.ItemStack.Value, text, defScale).X - 10f, dimensions.Y + 8f);
-
-			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, text, pos, drawColor, 0f, Vector2.Zero, defScale, dimensions.Width + 1f);
+			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, text, new Vector2(dimensions.X + dimensions.Width - ChatManager.GetStringSize(FontAssets.ItemStack.Value, text, defScale).X - 10f, dimensions.Y + 8f), drawColor, 0f, Vector2.Zero, defScale, dimensions.Width + 1f);
 
 			if (IsMouseHovering)
 				Main.instance.MouseText(_cheat.Description());

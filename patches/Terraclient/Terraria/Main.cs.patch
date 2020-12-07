@@ -35,6 +35,15 @@
  					player[num3].statLife = player[num3].statLifeMax2;
  					player[num3].statMana = player[num3].statManaMax2;
  					player[num3].breath = player[num3].breathMax;
+@@ -15568,7 +_,7 @@
+ 				numLines++;
+ 			}
+ 
+-			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && LocalPlayer.difficulty == 3 && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
++			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && (LocalPlayer.difficulty == 3 || CheatHandler.JourneyMode.IsEnabled()) && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
+ 				int sacrificeCount = LocalPlayerCreativeTracker.ItemSacrifices.GetSacrificeCount(item.type);
+ 				if (amountNeeded - sacrificeCount > 0) {
+ 					toolTipLine[numLines] = Language.GetTextValue("CommonItemTooltip.CreativeSacrificeNeeded", amountNeeded - sacrificeCount);
 @@ -37227,8 +_,8 @@
  				else if (menuMode == 11) {
  					num2 = 210;

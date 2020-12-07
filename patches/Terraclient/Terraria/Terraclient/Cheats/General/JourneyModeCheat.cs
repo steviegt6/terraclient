@@ -2,13 +2,13 @@
 
 namespace Terraria.Terraclient.Cheats.General
 {
-	public class MapTeleportCheat : ICheat
+	public class JourneyModeCheat : ICheat
 	{
 		public bool isEnabled = true;
 
-		public string Name() => Language.GetTextValue("Cheats.MapTeleportName");
+		public string Name() => Language.GetTextValue("Cheats.JourneyModeName");
 
-		public string Description() => Language.GetTextValue("Cheats.MapTeleportDesc");
+		public string Description() => Language.GetTextValue("Cheats.JourneyModeDesc");
 
 		public bool IsEnabled() => isEnabled;
 

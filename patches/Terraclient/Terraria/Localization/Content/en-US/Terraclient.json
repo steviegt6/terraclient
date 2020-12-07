@@ -1,6 +1,20 @@
 {
 	"UI": {
 		"Cheats": "Cheats",
-		"GeneralCheats": "General Cheats" 
+		"GeneralCheats": "General Cheats"
+	},
+
+	"Cheats": {
+		"GamemodeUnlockedWorldsName": "Gamemode-Unlocked Worlds",
+		"GamemodeUnlockedWorldsDesc": "Allows Journey characters to join non-Journey worlds and vice-versa.",
+
+		"GodModeName": "God Mode",
+		"GodModeDesc": "Prevents your player from taking damage, suffering from the effects of debuffs, etc.",
+
+		"JourneyModeName": "Journey Mode Features",
+		"JourneyModeDesc": "Gives non-Journey characters access to Journey-specific features (i.e. research).",
+
+		"MapTeleportName": "Map Teleportation",
+		"MapTeleportDesc": "Allows you to right-click anywhere on a map to teleport."
 	}
 }

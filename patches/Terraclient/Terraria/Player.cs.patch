@@ -8,6 +8,15 @@
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
+@@ -2341,7 +_,7 @@
+ 		}
+ 
+ 		public void ToggleCreativeMenu() {
+-			if (dead || difficulty != 3)
++			if (dead || (difficulty != 3 && !CheatHandler.JourneyMode.IsEnabled()))
+ 				return;
+ 
+ 			bool flag = false;
 @@ -16137,6 +_,9 @@
  				else
  					Dust.NewDust(new Vector2(position.X + (float)(12 * direction), position.Y + (float)num4 + 4f * gravDir), width - 8, 8, 34, 0f, 0f, 0, default(Color), 1.2f);
@@ -27,6 +36,15 @@
  				return;
  
  			Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+@@ -26472,7 +_,7 @@
+ 				immuneAlpha = 255;
+ 
+ 			UpdateGraveyard(now: true);
+-			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && difficulty == 3)
++			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && (difficulty == 3 || CheatHandler.JourneyMode.IsEnabled()))
+ 				AutoFinchStaff();
+ 		}
+ 
 @@ -26677,7 +_,7 @@
  		}
  
