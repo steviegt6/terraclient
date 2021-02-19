@@ -4,22 +4,32 @@
 
 		"MiscOptions": "Misc. Options",
 		"GodModeOptions": "God Mode Options",
+		"FullbrightOptions": "Fullbright Options", 
 
 		"CheatEnabled": "Enabled",
 		"CheatDisabled": "Disabled"
 	},
 
 	"Cheats": {
-		"GamemodeUnlockedWorldsName": "Gamemode-Unlocked Worlds",
-		"GamemodeUnlockedWorldsDesc": "Allows Journey characters to join non-Journey worlds and vice-versa.",
+		"GamemodeUnlockedWorldCheatName": "Gamemode-Unlocked Worlds",
+		"GamemodeUnlockedWorldCheatDesc": "Allows Journey characters to join non-Journey worlds and vice-versa.",
 
-		"GodModeName": "God Mode",
-		"GodModeDesc": "Prevents your player from taking damage, suffering from the effects of debuffs, etc.",
+		"GodModeCheatName": "God Mode",
+		"GodModeCheatDesc": "Prevents your player from taking damage, suffering from the effects of debuffs, etc.",
 
-		"JourneyModeName": "Journey Mode Features",
-		"JourneyModeDesc": "Gives non-Journey characters access to Journey-specific features (i.e. research).",
+		"JourneyModeCheatName": "Journey Mode Features",
+		"JourneyModeCheatDesc": "Gives non-Journey characters access to Journey-specific features (i.e. research).",
 
-		"MapTeleportName": "Map Teleportation",
-		"MapTeleportDesc": "Allows you to right-click anywhere on a map to teleport."
+		"MapTeleportCheatName": "Map Teleportation",
+		"MapTeleportCheatDesc": "Allows you to right-click anywhere on a map to teleport.",
+
+		"FullbrightCheatName": "Fullbright",
+		"FullbrightCheatDesc": "Lights up the entire world for your viewing.",
+
+		"FullbrightDimOptionCheatName": "Dimmer Fullbright",
+		"FullbrightDimOptionCheatDesc": "Dimmer light if the max lighting is too bright.",
+
+		"FullbrightLightQualityOptionCheatName": "Lower Light Quality",
+		"FullbrightLightQualityOptionCheatDesc": "Lessens the amount of light shown for performance issues." 
 	}
 }

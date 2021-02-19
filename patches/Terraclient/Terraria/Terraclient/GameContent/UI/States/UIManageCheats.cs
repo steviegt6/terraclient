@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
@@ -88,8 +89,10 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		private void AssembleBindPanels() {
 			List<Cheat> misc = new List<Cheat>();
 			List<Cheat> godMode = new List<Cheat>();
+			List<Cheat> fullbright = new List<Cheat>();
+			List<Cheat> cheats = CheatHandler.cheats.OrderBy(c => _cheatsFullLine.Contains(c)).ToList();
 
-			foreach (Cheat cheat in CheatHandler.cheats)
+			foreach (Cheat cheat in cheats)
 				switch (cheat.Category) {
 					default:
 					case CheatCategory.Misc:
@@ -98,11 +101,15 @@ namespace Terraria.Terraclient.GameContent.UI.States
 					case CheatCategory.GodMode:
 						godMode.Add(cheat);
 						break;
+					case CheatCategory.Fullbright:
+						fullbright.Add(cheat);
+						break;
 				}
 
 			int group = 0;
 			_bindsKeyboard.Add(CreateBindingGroup(group++, misc));
 			_bindsKeyboard.Add(CreateBindingGroup(group++, godMode));
+			_bindsKeyboard.Add(CreateBindingGroup(group, fullbright));
 		}
 
 		private UISortableElement CreateBindingGroup(int elementIndex, List<Cheat> cheats) {
@@ -141,6 +148,10 @@ namespace Terraria.Terraclient.GameContent.UI.States
 
 				case 1:
 					text = Language.GetText("UI.GodModeOptions");
+					break;
+
+				case 2:
+					text = Language.GetText("UI.FullbrightOptions");
 					break;
 			}
 

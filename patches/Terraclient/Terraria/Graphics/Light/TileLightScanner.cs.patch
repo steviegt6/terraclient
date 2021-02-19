@@ -1,0 +1,31 @@
+--- src/Terraria/Terraria/Graphics/Light/TileLightScanner.cs
++++ src/Terraclient/Terraria/Graphics/Light/TileLightScanner.cs
+@@ -3,6 +_,8 @@
+ using System;
+ using Terraria.GameContent;
+ using Terraria.ID;
++using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats.General;
+ using Terraria.Utilities;
+ 
+ namespace Terraria.Graphics.Light
+@@ -177,6 +_,19 @@
+ 					num = 0.6f;
+ 					num2 = 0.3f;
+ 					break;
++			}
++
++			if (CheatHandler.GetCheat<FullbrightCheat>().isEnabled) {
++				float lightLevel = CheatHandler.GetCheat<FullbrightCheat.FullbrightDimOptionCheat>().isEnabled
++					? 0.5f
++					: 1f;
++
++				bool shouldAddLight =
++					!CheatHandler.GetCheat<FullbrightCheat.FullbrightLightQualityOptionCheat>().isEnabled ||
++					x % 2 == 0 && y % 2 == 0;
++
++				if (shouldAddLight)
++					num = num2 = num3 = lightLevel;
+ 			}
+ 
+ 			if (lightColor.X < num)

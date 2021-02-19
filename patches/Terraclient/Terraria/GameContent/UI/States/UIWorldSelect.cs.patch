@@ -14,7 +14,7 @@
  			bool num = Main.ActivePlayerFileData.Player.difficulty == 3;
  			bool flag = file.GameMode == 3;
 -			return num == flag;
-+			return num == flag || CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled;
++			return num == flag || CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled;
  		}
  
  		public override void Draw(SpriteBatch spriteBatch) {

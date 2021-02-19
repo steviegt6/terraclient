@@ -3,6 +3,7 @@
 	public enum CheatCategory
 	{
 		Misc,
-		GodMode
+		GodMode,
+		Fullbright
 	}
 }
