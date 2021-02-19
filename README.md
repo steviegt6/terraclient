@@ -18,6 +18,7 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.1.2, truly a jou
 - Journey character access bypassing
 - Fullbright
 - Map teleportation
+- Journey Mode spoofing
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
