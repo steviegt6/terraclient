@@ -226,7 +226,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 
 		private void GoBackClick(UIMouseEvent evt, UIElement listeningElement) {
 			Main.menuMode = 11;
-			CheatHandler.SaveCheatSettings();
+			Main.SaveSettings();
 			IngameFancyUI.Close();
 		}
 	}

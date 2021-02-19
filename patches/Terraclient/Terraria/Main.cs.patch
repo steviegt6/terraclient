@@ -1,32 +1,51 @@
 --- src/Terraria/Terraria/Main.cs
 +++ src/Terraclient/Terraria/Main.cs
-@@ -68,6 +_,9 @@
+@@ -68,6 +_,10 @@
  using Terraria.Net;
  using Terraria.ObjectData;
  using Terraria.Social;
 +using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats;
 +using Terraria.Terraclient.Cheats.General;
 +using Terraria.Terraclient.GameContent.UI.States;
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
-@@ -3043,6 +_,8 @@
- 		}
+@@ -238,7 +_,7 @@
+ 		public static NPCHeadRenderer BossNPCHeadRenderer = null;
+ 		public static string versionNumber = "v1.4.1.2";
+ 		public static string versionNumber2 = "v1.4.1.2";
+-		public static string SavePath = Program.LaunchParameters.ContainsKey("-savedirectory") ? Program.LaunchParameters["-savedirectory"] : Platform.Get<IPathService>().GetStoragePath("Terraria");
++		public static string SavePath = (Program.LaunchParameters.ContainsKey("-savedirectory") ? Program.LaunchParameters["-savedirectory"] : Platform.Get<IPathService>().GetStoragePath("Terraria")) + Path.DirectorySeparatorChar + "Terraclient";
+ 		public static bool AnnouncementBoxDisabled;
+ 		public static int AnnouncementBoxRange = -1;
+ 		public static string AutogenSeedName;
+@@ -3044,6 +_,8 @@
  
  		public static bool SaveSettings() {
-+			CheatHandler.SaveCheatSettings();
-+
  			Configuration.Clear();
++			foreach (Cheat cheat in CheatHandler.cheats)
++				Configuration.Put(cheat.GetType().Name, cheat.IsEnabled);
  			Configuration.Put("ResetDefaultUIScale", false);
  			Configuration.Put("SmartCursorToggle", cSmartCursorModeIsToggleAndNotHold);
-@@ -8221,6 +_,7 @@
+ 			Configuration.Put("MapEnabled", mapEnabled);
+@@ -3158,6 +_,8 @@
+ 			}
+ 
+ 			Configuration.Load();
++			foreach (Cheat cheat in CheatHandler.cheats)
++				Configuration.Get(cheat.GetType().Name, ref cheat.IsEnabled);
+ 			int currentValue = 0;
+ 			Configuration.Get("LastLaunchedVersion", ref currentValue);
+ 			bool flag = false;
+@@ -8220,6 +_,7 @@
+ 			});
  
  			base.Window.AllowUserResizing = true;
++			CheatHandler.InitializeCheats();
  			LoadSettings();
-+			CheatHandler.LoadCheatSettings();
  			SetDisplayMonitor();
  			if (screenWidth > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
- 				screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 @@ -13017,7 +_,7 @@
  			CurrentFrameFlags.SleepingPlayersCount = num2;
  			if (netMode != 2) {
