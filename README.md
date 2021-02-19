@@ -1,7 +1,7 @@
 <h1 align="center">
 Terraclient
 </h1>
-<p alight="center">
+<p align="center">
   <img src="https://forthebadge.com/images/badges/made-with-c-sharp.svg"> <img src="https://forthebadge.com/images/badges/0-percent-optimized.svg"> <img src="https://forthebadge.com/images/badges/contains-tasty-spaghetti-code.svg"><br>
   <img src="https://forthebadge.com/images/badges/open-source.svg"> <img src="https://forthebadge.com/images/badges/uses-git.svg"> <img src="https://forthebadge.com/images/badges/powered-by-black-magic.svg"><br>
   <img src="https://forthebadge.com/images/badges/reading-6th-grade-level.svg"> <img src="https://forthebadge.com/images/badges/built-by-neckbeards.svg"> <img src="https://forthebadge.com/images/badges/works-on-my-machine.svg">
