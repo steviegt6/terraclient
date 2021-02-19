@@ -12,6 +12,6 @@
 
 		public bool IsEnabled;
 
-		public void Toggle() { }
+		public void Toggle() => IsEnabled = !IsEnabled;
 	}
 }
