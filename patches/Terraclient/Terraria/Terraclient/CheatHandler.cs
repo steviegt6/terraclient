@@ -1,43 +1,58 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Terraria.IO;
-using Terraria.Terraclient.Cheats.General;
+using Terraria.Terraclient.Cheats;
 
 namespace Terraria.Terraclient
 {
 	public static class CheatHandler
 	{
-		public static string CheatPath = Main.SavePath + Path.DirectorySeparatorChar + "Terraclient";
+		public static Preferences CheatConfiguration => new Preferences(CheatPath + Path.DirectorySeparatorChar + "cheat_config.json");
 
-		public static bool IsInATShockServer = false;
+		public static string CheatPath => Main.SavePath + Path.DirectorySeparatorChar + "Terraclient";
 
-		public static GodModeCheat GodMode = new GodModeCheat();
+		internal static List<Cheat> cheats;
 
-		public static MapTeleportCheat MapTeleport = new MapTeleportCheat();
-
-		public static JourneyModeCheat JourneyMode = new JourneyModeCheat();
-
-		public static GamemodeUnlockedWorldCheat GamemodeUnlockedWorld = new GamemodeUnlockedWorldCheat();
-
-		public static Preferences CheatConfiguration = new Preferences(CheatPath + Path.DirectorySeparatorChar + "cheat_config.json");
+		public static Cheat GetCheat<T>() where T : Cheat => cheats.First(c => c.GetType() == typeof(T));
 
 		public static void SaveCheatSettings() {
 			CheatConfiguration.Clear();
 
-			CheatConfiguration.Put("GodMode", GodMode.isEnabled);
-			CheatConfiguration.Put("MapTeleport", MapTeleport.isEnabled);
-			CheatConfiguration.Put("JourneyMode", JourneyMode.isEnabled);
-			CheatConfiguration.Put("GamemodeUnlockedWorld", GamemodeUnlockedWorld.isEnabled);
+			foreach (Cheat cheat in cheats)
+				CheatConfiguration.Put(cheat.GetType().Name, cheat.IsEnabled);
 
 			CheatConfiguration.Save();
 		}
 
 		public static void LoadCheatSettings() {
+			InitializeCheats();
 			CheatConfiguration.Load();
 
-			CheatConfiguration.Get("GodMode", ref GodMode.isEnabled);
-			CheatConfiguration.Get("MapTeleport", ref MapTeleport.isEnabled);
-			CheatConfiguration.Get("JourneyMode", ref JourneyMode.isEnabled);
-			CheatConfiguration.Get("GamemodeUnlockedWorld", ref GamemodeUnlockedWorld.isEnabled);
+			foreach (Cheat cheat in cheats) {
+				bool value = cheat.IsEnabled;
+				CheatConfiguration.Get(cheat.GetType().Name, ref value);
+				cheat.IsEnabled = value;
+			}
+
+			CheatConfiguration.Save();
+		}
+
+		private static void InitializeCheats() {
+			if (cheats != null)
+				return;
+
+			cheats = new List<Cheat>();
+
+			foreach (Type type in typeof(CheatHandler).Assembly.GetTypes()) {
+				if (type.IsAbstract || type.GetConstructor(new Type[] { }) == null || !type.IsSubclassOf(typeof(Cheat)) || !(Activator.CreateInstance(type) is Cheat cheat))
+					continue;
+
+				cheats.Add(cheat);
+			}
+
+			cheats = cheats.OrderBy(c => c.GetType().Name).ToList();
 		}
 	}
 }

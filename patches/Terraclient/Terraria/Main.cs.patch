@@ -1,10 +1,11 @@
 --- src/Terraria/Terraria/Main.cs
 +++ src/Terraclient/Terraria/Main.cs
-@@ -68,6 +_,8 @@
+@@ -68,6 +_,9 @@
  using Terraria.Net;
  using Terraria.ObjectData;
  using Terraria.Social;
 +using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats.General;
 +using Terraria.Terraclient.GameContent.UI.States;
  using Terraria.UI;
  using Terraria.UI.Chat;
@@ -31,7 +32,7 @@
  			if (netMode != 2) {
  				int num3 = myPlayer;
 -				if (player[num3].creativeGodMode) {
-+				if (player[num3].creativeGodMode || CheatHandler.GodMode.IsEnabled()) {
++				if (player[num3].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().IsEnabled) {
  					player[num3].statLife = player[num3].statLifeMax2;
  					player[num3].statMana = player[num3].statManaMax2;
  					player[num3].breath = player[num3].breathMax;
@@ -40,7 +41,7 @@
  			}
  
 -			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && LocalPlayer.difficulty == 3 && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
-+			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && (LocalPlayer.difficulty == 3 || CheatHandler.JourneyMode.IsEnabled()) && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
++			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && (LocalPlayer.difficulty == 3 || CheatHandler.GetCheat<JourneyModeCheat>().IsEnabled) && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
  				int sacrificeCount = LocalPlayerCreativeTracker.ItemSacrifices.GetSacrificeCount(item.type);
  				if (amountNeeded - sacrificeCount > 0) {
  					toolTipLine[numLines] = Language.GetTextValue("CommonItemTooltip.CreativeSacrificeNeeded", amountNeeded - sacrificeCount);
@@ -76,7 +77,7 @@
  				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 +
 +				// Map teleportation cheat
-+				if (CheatHandler.MapTeleport.IsEnabled() && mouseRight)
++				if (CheatHandler.GetCheat<MapTeleportCheat>().IsEnabled && mouseRight)
 +					player[myPlayer].Teleport((mapFullscreenPos + new Vector2(mouseX - (screenWidth / 2), mouseY - (screenHeight / 2)) / 16 * 16 / mapFullscreenScale) * 16, TeleportationStyleID.DebugTeleport);
 +
  				DrawCursor(DrawThickCursor());

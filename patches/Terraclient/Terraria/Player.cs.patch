@@ -1,10 +1,11 @@
 --- src/Terraria/Terraria/Player.cs
 +++ src/Terraclient/Terraria/Player.cs
-@@ -29,6 +_,7 @@
+@@ -29,6 +_,8 @@
  using Terraria.Localization;
  using Terraria.ObjectData;
  using Terraria.Social;
 +using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats.General;
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
@@ -13,7 +14,7 @@
  
  		public void ToggleCreativeMenu() {
 -			if (dead || difficulty != 3)
-+			if (dead || (difficulty != 3 && !CheatHandler.JourneyMode.IsEnabled()))
++			if (dead || (difficulty != 3 && !CheatHandler.GetCheat<JourneyModeCheat>().IsEnabled))
  				return;
  
  			bool flag = false;
@@ -22,7 +23,7 @@
  					Dust.NewDust(new Vector2(position.X + (float)(12 * direction), position.Y + (float)num4 + 4f * gravDir), width - 8, 8, 34, 0f, 0f, 0, default(Color), 1.2f);
  			}
 +
-+			if (CheatHandler.GodMode.IsEnabled())
++			if (CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
 +				breath = breathMax;
  		}
  
@@ -32,7 +33,7 @@
  
  		public void Update_NPCCollision() {
 -			if (creativeGodMode)
-+			if (creativeGodMode || CheatHandler.GodMode.IsEnabled())
++			if (creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  				return;
  
  			Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
@@ -41,7 +42,7 @@
  
  			UpdateGraveyard(now: true);
 -			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && difficulty == 3)
-+			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && (difficulty == 3 || CheatHandler.JourneyMode.IsEnabled()))
++			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && (difficulty == 3 || CheatHandler.GetCheat<JourneyModeCheat>().IsEnabled))
  				AutoFinchStaff();
  		}
  
@@ -50,7 +51,7 @@
  
  		public double Hurt(PlayerDeathReason damageSource, int Damage, int hitDirection, bool pvp = false, bool quiet = false, bool Crit = false, int cooldownCounter = -1) {
 -			if (creativeGodMode)
-+			if (creativeGodMode || CheatHandler.GodMode.IsEnabled())
++			if (creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  				return 0.0;
  
  			bool flag = !immune;
@@ -59,7 +60,7 @@
  
  		public void KillMe(PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp = false) {
 -			if (creativeGodMode || dead)
-+			if (creativeGodMode || dead || CheatHandler.GodMode.IsEnabled())
++			if (creativeGodMode || dead || CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  				return;
  
  			StopVanityActions();

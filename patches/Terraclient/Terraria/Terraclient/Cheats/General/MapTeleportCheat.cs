@@ -2,16 +2,12 @@
 
 namespace Terraria.Terraclient.Cheats.General
 {
-	public class MapTeleportCheat : ICheat
+	public class MapTeleportCheat : Cheat
 	{
-		public bool isEnabled = true;
+		public override string Name => Language.GetTextValue("Cheats.MapTeleportName");
 
-		public string Name() => Language.GetTextValue("Cheats.MapTeleportName");
+		public override string Description => Language.GetTextValue("Cheats.MapTeleportDesc");
 
-		public string Description() => Language.GetTextValue("Cheats.MapTeleportDesc");
-
-		public bool IsEnabled() => isEnabled;
-
-		public void SwitchEnabled() => isEnabled = !isEnabled;
+		public override bool IsImportant => true; // only marked as important since there're an uneven amount of misc. cheats
 	}
 }

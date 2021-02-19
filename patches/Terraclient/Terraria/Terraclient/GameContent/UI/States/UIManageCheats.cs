@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -15,9 +16,9 @@ namespace Terraria.Terraclient.GameContent.UI.States
 {
 	public class UIManageCheats : UIState
 	{
-		private static List<ICheat> _cheatsFullLine = new List<ICheat> {
-			CheatHandler.GodMode,
-			CheatHandler.MapTeleport
+		private static List<Cheat> _cheatsFullLine = new List<Cheat> {
+			//CheatHandler.GodMode,
+			//CheatHandler.MapTeleport
 		};
 
 		private List<UIElement> _bindsKeyboard = new List<UIElement>();
@@ -25,6 +26,10 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		private UIList _uiList;
 
 		public override void OnInitialize() {
+			foreach (Cheat cheat in CheatHandler.cheats)
+				if (cheat.IsImportant)
+					_cheatsFullLine.Add(cheat);
+
 			_outerContainer = new UIElement();
 			_outerContainer.Width.Set(0f, 0.8f);
 			_outerContainer.MaxWidth.Set(600f, 0f);
@@ -81,22 +86,26 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		}
 
 		private void AssembleBindPanels() {
-			List<ICheat> misc = new List<ICheat> {
-				CheatHandler.MapTeleport,
-				CheatHandler.JourneyMode,
-				CheatHandler.GamemodeUnlockedWorld
-			};
+			List<Cheat> misc = new List<Cheat>();
+			List<Cheat> godMode = new List<Cheat>();
 
-			List<ICheat> godMode = new List<ICheat> {
-				CheatHandler.GodMode
-			};
+			foreach (Cheat cheat in CheatHandler.cheats)
+				switch (cheat.Category) {
+					default:
+					case CheatCategory.Misc:
+						misc.Add(cheat);
+						break;
+					case CheatCategory.GodMode:
+						godMode.Add(cheat);
+						break;
+				}
 
 			int group = 0;
 			_bindsKeyboard.Add(CreateBindingGroup(group++, misc));
 			_bindsKeyboard.Add(CreateBindingGroup(group++, godMode));
 		}
 
-		private UISortableElement CreateBindingGroup(int elementIndex, List<ICheat> cheats) {
+		private UISortableElement CreateBindingGroup(int elementIndex, List<Cheat> cheats) {
 			UISortableElement sortableElementIndex = new UISortableElement(elementIndex);
 			sortableElementIndex.HAlign = 0.5f;
 			sortableElementIndex.Width.Set(0f, 1f);
@@ -148,7 +157,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			return sortableElementIndex;
 		}
 
-		private void CreateElementGroup(UIList parent, Color color, List<ICheat> cheats) {
+		private void CreateElementGroup(UIList parent, Color color, List<Cheat> cheats) {
 			for (int i = 0; i < cheats.Count; i++) {
 				UISortableElement sortableIndex = new UISortableElement(i);
 				sortableIndex.Width.Set(0f, 1f);
@@ -181,7 +190,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			}
 		}
 
-		public UIElement CreatePanel(Color color, ICheat cheat) => new UICheatsListItem(color, cheat);
+		public UIElement CreatePanel(Color color, Cheat cheat) => new UICheatsListItem(color, cheat);
 
 		public override void OnActivate() {
 			if (Main.gameMenu) {

@@ -1,10 +1,11 @@
 --- src/Terraria/Terraria/GameContent/UI/States/UIWorldSelect.cs
 +++ src/Terraclient/Terraria/GameContent/UI/States/UIWorldSelect.cs
-@@ -9,6 +_,7 @@
+@@ -9,6 +_,8 @@
  using Terraria.ID;
  using Terraria.IO;
  using Terraria.Localization;
 +using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats.General;
  using Terraria.UI;
  using Terraria.UI.Gamepad;
  
@@ -13,7 +14,7 @@
  			bool num = Main.ActivePlayerFileData.Player.difficulty == 3;
  			bool flag = file.GameMode == 3;
 -			return num == flag;
-+			return num == flag || CheatHandler.GamemodeUnlockedWorld.IsEnabled();
++			return num == flag || CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled;
  		}
  
  		public override void Draw(SpriteBatch spriteBatch) {

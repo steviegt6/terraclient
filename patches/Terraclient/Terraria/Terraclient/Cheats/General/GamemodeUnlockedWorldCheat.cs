@@ -2,16 +2,10 @@
 
 namespace Terraria.Terraclient.Cheats.General
 {
-	public class GamemodeUnlockedWorldCheat : ICheat
+	public class GamemodeUnlockedWorldCheat : Cheat
 	{
-		public bool isEnabled = false;
+		public override string Name => Language.GetTextValue("Cheats.GamemodeUnlockedWorldsName");
 
-		public string Name() => Language.GetTextValue("Cheats.GamemodeUnlockedWorldsName");
-
-		public string Description() => Language.GetTextValue("Cheats.GamemodeUnlockedWorldsDesc");
-
-		public bool IsEnabled() => isEnabled;
-
-		public void SwitchEnabled() => isEnabled = !isEnabled;
+		public override string Description => Language.GetTextValue("Cheats.GamemodeUnlockedWorldsDesc");
 	}
 }
