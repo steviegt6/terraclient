@@ -90,6 +90,49 @@
  					array9[num20] = Lang.menu[103].Value;
  					if (selectedMenu == num20) {
  						SoundEngine.PlaySound(10);
+@@ -39023,6 +_,7 @@
+ 			}
+ 
+ 			if (!WorldGen.drunkWorldGen) {
++				goto SkipVanillaVersionDrawVers;
+ 				for (int num107 = 0; num107 < 5; num107++) {
+ 					Microsoft.Xna.Framework.Color color12 = Microsoft.Xna.Framework.Color.Black;
+ 					if (num107 == 4) {
+@@ -39052,6 +_,14 @@
+ 					origin2.Y *= 0.5f;
+ 					spriteBatch.DrawString(FontAssets.MouseText.Value, versionNumber, new Vector2(origin2.X + (float)num108 + 10f, (float)screenHeight - origin2.Y + (float)num109 - 2f), color12, 0f, origin2, 1f, SpriteEffects.None, 0f);
+ 				}
++
++			SkipVanillaVersionDrawVers:
++				string versString = $"Terraclient v{CheatHandler.TCVersion}" +
++				                    $"\nTerraria {versionNumber}";
++				Vector2 versSize = FontAssets.MouseText.Value.MeasureString(versString);
++
++				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, versString,
++					new Vector2(10f, screenHeight - versSize.Y), Color.White, 0f, Vector2.Zero, Vector2.One);
+ 			}
+ 
+ 			spriteBatch.End();
+@@ -39187,12 +_,19 @@
+ 		private void PreDrawMenu(out Microsoft.Xna.Framework.Point screenSizeCache, out Microsoft.Xna.Framework.Point screenSizeCacheAfterScaling) {
+ 			float uiScaleWanted = _uiScaleWanted;
+ 			float num = (float)screenHeight / 900f;
++			float preScale = num;
+ 			if (num < 1f)
+ 				num = 1f;
+ 
+ 			if (SettingDontScaleMainMenuUp)
+ 				num = 1f;
+ 
++			if (CheatHandler.GetCheat<NoMainMenuUIScalingCheat>().isEnabled)
++				num = 1f;
++
++			if (MenuUI.CurrentState is UIManageCheats uiManageCheats && uiManageCheats.uiScaleOnCtor != num)
++				MenuUI.SetState(new UIManageCheats());
++
+ 			screenSizeCache = ScreenSize;
+ 			UIScale = num;
+ 			PlayerInput.SetZoom_UI();
 @@ -42780,6 +_,11 @@
  				}
  

@@ -30,6 +30,9 @@
 		"FullbrightDimOptionCheatDesc": "Dimmer light if the max lighting is too bright.",
 
 		"FullbrightLightQualityOptionCheatName": "Lower Light Quality",
-		"FullbrightLightQualityOptionCheatDesc": "Lessens the amount of light shown for performance issues." 
+		"FullbrightLightQualityOptionCheatDesc": "Lessens the amount of light shown for performance issues.",
+
+		"NoMainMenuUIScalingCheatName": "No Main Menu Scaling",
+		"NoMainMenuUIScalingCheatDesc": "Not a cheat, but removes the forced UI scaling on the main menu." 
 	}
 }

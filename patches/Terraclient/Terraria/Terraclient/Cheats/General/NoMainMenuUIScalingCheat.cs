@@ -1,6 +1,6 @@
 ﻿namespace Terraria.Terraclient.Cheats.General
 {
-	public class MapTeleportCheat : Cheat
+	public class NoMainMenuUIScalingCheat : Cheat
 	{
 	}
 }

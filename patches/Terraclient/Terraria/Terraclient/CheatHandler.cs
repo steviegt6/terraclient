@@ -7,6 +7,8 @@ namespace Terraria.Terraclient
 {
 	public static class CheatHandler
 	{
+		public static Version TCVersion = new Version(0, 1, 0, 0);
+
 		internal static List<Cheat> cheats;
 
 		public static Cheat GetCheat<T>() where T : Cheat => cheats.First(c => c.GetType() == typeof(T));

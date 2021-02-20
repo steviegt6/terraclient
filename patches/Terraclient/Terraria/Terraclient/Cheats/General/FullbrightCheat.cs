@@ -12,7 +12,7 @@
 			public override CheatCategory Category => CheatCategory.Fullbright;
 		}
 
-		public override bool IsImportant => true; // only marked as important since there're an uneven amount of misc. cheats
+		public override bool IsImportant => true;
 
 		public override CheatCategory Category => CheatCategory.Fullbright;
 	}

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Audio;
@@ -17,14 +16,15 @@ namespace Terraria.Terraclient.GameContent.UI.States
 {
 	public class UIManageCheats : UIState
 	{
-		private static List<Cheat> _cheatsFullLine = new List<Cheat> {
-			//CheatHandler.GodMode,
-			//CheatHandler.MapTeleport
-		};
+		public float uiScaleOnCtor;
+
+		private static List<Cheat> _cheatsFullLine = new List<Cheat>();
 
 		private List<UIElement> _bindsKeyboard = new List<UIElement>();
 		private UIElement _outerContainer;
 		private UIList _uiList;
+
+		public UIManageCheats() : base() => uiScaleOnCtor = Main.UIScale;
 
 		public override void OnInitialize() {
 			foreach (Cheat cheat in CheatHandler.cheats)
