@@ -1,13 +1,13 @@
 ﻿namespace Terraria.Terraclient.Cheats.General
 {
-	public class FullbrightCheat : Cheat
+	public class FullbrightCheat : FBCheat
 	{
-		public class FullbrightDimOptionCheat : Cheat
+		public class FullbrightDimOptionCheat : FBCheat
 		{
 			public override CheatCategory Category => CheatCategory.Fullbright;
 		}
 
-		public class FullbrightLightQualityOptionCheat : Cheat
+		public class FullbrightLightQualityOptionCheat : FBCheat
 		{
 			public override CheatCategory Category => CheatCategory.Fullbright;
 		}

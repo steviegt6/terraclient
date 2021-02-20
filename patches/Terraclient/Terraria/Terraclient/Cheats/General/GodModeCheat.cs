@@ -1,9 +1,7 @@
 ﻿namespace Terraria.Terraclient.Cheats.General
 {
-	public class GodModeCheat : Cheat
+	public class GodModeCheat : GMCheat
 	{
 		public override bool IsImportant => true;
-
-		public override CheatCategory Category => CheatCategory.GodMode;
 	}
 }

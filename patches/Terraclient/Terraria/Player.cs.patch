@@ -18,6 +18,15 @@
  				return;
  
  			bool flag = false;
+@@ -6479,7 +_,7 @@
+ 					fireWalk = true;
+ 					buffImmune[24] = true;
+ 				}
+-				else if (BuffID.Sets.BasicMountData[buffType[j]] != null) {
++				else if (buffType[j] <= BuffID.Sets.BasicMountData.Length && BuffID.Sets.BasicMountData[buffType[j]] != null) {
+ 					BuffID.Sets.BuffMountData buffMountData = BuffID.Sets.BasicMountData[buffType[j]];
+ 					mount.SetMount(buffMountData.mountID, this, buffMountData.faceLeft);
+ 					buffTime[j] = 10;
 @@ -16137,6 +_,9 @@
  				else
  					Dust.NewDust(new Vector2(position.X + (float)(12 * direction), position.Y + (float)num4 + 4f * gravDir), width - 8, 8, 34, 0f, 0f, 0, default(Color), 1.2f);
@@ -28,6 +37,15 @@
  		}
  
  		public void CheckCrackedBrickBreak() {
+@@ -18108,7 +_,7 @@
+ 			maxRunSpeed *= moveSpeed;
+ 			UpdateJumpHeight();
+ 			for (int num33 = 0; num33 < 22; num33++) {
+-				if (buffType[num33] > 0 && buffTime[num33] > 0 && buffImmune[buffType[num33]])
++				if (buffType[num33] > 0 && buffTime[num33] > 0 && buffType[num33] <= buffImmune.Length && buffImmune[buffType[num33]])
+ 					DelBuff(num33);
+ 			}
+ 
 @@ -21160,7 +_,7 @@
  		}
  

@@ -5,6 +5,7 @@
 		"MiscOptions": "Misc. Options",
 		"GodModeOptions": "God Mode Options",
 		"FullbrightOptions": "Fullbright Options", 
+		"PlayerESPOptions": "Player ESP Options", 
 
 		"CheatEnabled": "Enabled",
 		"CheatDisabled": "Disabled"
@@ -33,6 +34,15 @@
 		"FullbrightLightQualityOptionCheatDesc": "Lessens the amount of light shown for performance issues.",
 
 		"NoMainMenuUIScalingCheatName": "No Main Menu Scaling",
-		"NoMainMenuUIScalingCheatDesc": "Not a cheat, but removes the forced UI scaling on the main menu." 
+		"NoMainMenuUIScalingCheatDesc": "Not a cheat, but removes the forced UI scaling on the main menu.",
+
+		"PlayerESPCheatName": "Player ESP",
+		"PlayerESPCheatDesc": "Displays player name and how far away they are from you.",
+
+		"PlayerESPTracerOptionCheatName": "Tracers",
+		"PlayerESPTracerOptionCheatDesc": "Draws a line to all players.",
+
+		"PlayerESPExtraInfoOptionCheatName": "Extra Info",
+		"PlayerESPExtraInfoOptionCheatDesc":  "Displays numerous extra stats, including HP, mana, defense, and teams"
 	}
 }

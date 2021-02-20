@@ -1,0 +1,54 @@
+--- src/Terraria/Terraria/GameContent/UI/NewMultiplayerClosePlayersOverlay.cs
++++ src/Terraclient/Terraria/GameContent/UI/NewMultiplayerClosePlayersOverlay.cs
+@@ -6,6 +_,8 @@
+ using Terraria.GameInput;
+ using Terraria.Graphics;
+ using Terraria.Localization;
++using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats.General;
+ using Terraria.UI.Chat;
+ 
+ namespace Terraria.GameContent.UI
+@@ -36,7 +_,7 @@
+ 
+ 		private struct PlayerOffScreenCache
+ 		{
+-			private Player player;
++			internal Player player;
+ 			private string nameToShow;
+ 			private Vector2 namePlatePos;
+ 			private Color namePlateColor;
+@@ -91,7 +_,7 @@
+ 
+ 		public void Draw() {
+ 			int teamNamePlateDistance = Main.teamNamePlateDistance;
+-			if (teamNamePlateDistance <= 0)
++			if (teamNamePlateDistance <= 0 && !CheatHandler.GetCheat<PlayerESPCheat>().isEnabled)
+ 				return;
+ 
+ 			_playerOnScreenCache.Clear();
+@@ -110,7 +_,7 @@
+ 			_ = Main.screenPosition;
+ 			Player player2 = player[myPlayer];
+ 			float num2 = (float)(int)mouseTextColor / 255f;
+-			if (player2.team == 0)
++			if (player2.team == 0 && !CheatHandler.GetCheat<PlayerESPCheat>().isEnabled)
+ 				return;
+ 
+ 			DynamicSpriteFont value = FontAssets.MouseText.Value;
+@@ -119,13 +_,13 @@
+ 					continue;
+ 
+ 				Player player3 = player[i];
+-				if (!player3.active || player3.dead || player3.team != player2.team)
++				if (!player3.active || player3.dead || ((player3.team != player2.team) && !CheatHandler.GetCheat<PlayerESPCheat>().isEnabled))
+ 					continue;
+ 
+ 				string name = player3.name;
+ 				GetDistance(screenWidth, screenHeight, screenPosition, player2, value, player3, name, out Vector2 namePlatePos, out float namePlateDist, out Vector2 measurement);
+ 				Color color = new Color((byte)((float)(int)teamColor[player3.team].R * num2), (byte)((float)(int)teamColor[player3.team].G * num2), (byte)((float)(int)teamColor[player3.team].B * num2), mouseTextColor);
+-				if (namePlateDist > 0f) {
++				if (namePlateDist > 0f || CheatHandler.GetCheat<PlayerESPCheat>().isEnabled) {
+ 					float num3 = player3.Distance(player2.Center);
+ 					if (!(num3 > (float)num)) {
+ 						float num4 = 20f;
