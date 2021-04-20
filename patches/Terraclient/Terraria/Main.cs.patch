@@ -20,6 +20,15 @@
  		public static bool AnnouncementBoxDisabled;
  		public static int AnnouncementBoxRange = -1;
  		public static string AutogenSeedName;
+@@ -666,7 +_,7 @@
+ 		public static int DiscoR = 255;
+ 		public static int DiscoB;
+ 		public static int DiscoG;
+-		public static int teamCooldown;
++		public static int teamCooldown { get => 0; set => value = 0; }
+ 		public static int teamCooldownLen = 300;
+ 		public static bool gamePaused;
+ 		public static bool gameInactive;
 @@ -3054,6 +_,8 @@
  
  		public static bool SaveSettings() {
