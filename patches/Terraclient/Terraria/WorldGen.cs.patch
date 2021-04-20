@@ -1,0 +1,43 @@
+--- src/Terraria/Terraria/WorldGen.cs
++++ src/Terraclient/Terraria/WorldGen.cs
+@@ -2415,6 +_,40 @@
+ 			}
+ 		}
+ 
++		// TODO: partial classes
++		public static void CycleWorldDifficulty(WorldFileData data) {
++			data.SetAsActive();
++
++			noMapUpdate = true;
++			WorldFile.LoadWorld(Main.ActiveWorldFileData.IsCloudSave);
++			noMapUpdate = false;
++
++			if (loadFailed || !loadSuccess) {
++				Main.LoadWorlds();
++				Main.GoToWorldSelect();
++				return;
++			}
++
++			Main.sectionManager.SetAllFramesLoaded();
++
++			switch (Main.ActiveWorldFileData.GameMode) {
++				case 0:
++				case 1:
++				case 2:
++					Main.ActiveWorldFileData.GameMode++;
++					break;
++
++				case 3:
++					Main.ActiveWorldFileData.GameMode = 0;
++					break;
++			}
++
++			WorldFile.SaveWorld();
++			Rain.ClearRain();
++			Main.fastForwardTime = false;
++			Main.UpdateTimeRate();
++		}
++
+ 		public static void playWorldCallBack(object threadContext) {
+ 			if (Main.rand == null)
+ 				Main.rand = new UnifiedRandom((int)DateTime.Now.Ticks);

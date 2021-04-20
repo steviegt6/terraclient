@@ -9,6 +9,21 @@
  using Terraria.UI;
  
  namespace Terraria.GameContent.UI.Elements
+@@ -95,6 +_,14 @@
+ 			uIImageButton5.OnMouseOut += ButtonMouseOut;
+ 			Append(uIImageButton5);
+ 			num += 24f;
++			uIImageButton5 = new UIImageButton(_buttonRenameTexture);
++			uIImageButton5.VAlign = 1f;
++			uIImageButton5.Left.Set(num, 0f);
++			uIImageButton5.OnClick += CycleDifficulty;
++			uIImageButton5.OnMouseOver += CycleMouseOver;
++			uIImageButton5.OnMouseOut += ButtonMouseOut;
++			Append(uIImageButton5);
++			num += 24f;
+ 			UIImageButton uIImageButton6 = new UIImageButton(_buttonDeleteTexture) {
+ 				VAlign = 1f,
+ 				HAlign = 1f
 @@ -270,14 +_,14 @@
  
  			bool flag = Main.ActivePlayerFileData.Player.difficulty == 3;
@@ -26,3 +41,20 @@
  				SoundEngine.PlaySound(10);
  				Main.statusText = Language.GetTextValue("UI.PlayerIsNotCreativeAndWorldIsCreative");
  				Main.menuMode = 1000000;
+@@ -294,6 +_,16 @@
+ 			uIVirtualKeyboard.SetMaxInputLength(27);
+ 			Main.MenuUI.SetState(uIVirtualKeyboard);
+ 			(base.Parent.Parent as UIList)?.UpdateOrder();
++		}
++
++		private void CycleMouseOver(UIMouseEvent evt, UIElement listeningElement) {
++			_buttonLabel.SetText(Language.GetTextValue("UI.CycleWorldDifficulty"));
++		}
++
++		private void CycleDifficulty(UIMouseEvent evt, UIElement listeningElement) {
++			SoundEngine.PlaySound(10);
++			Main.menuMode = 10;
++			//WorldGen.CycleWorldDifficulty(_data);
+ 		}
+ 
+ 		private void OnFinishedSettingName(string name) {

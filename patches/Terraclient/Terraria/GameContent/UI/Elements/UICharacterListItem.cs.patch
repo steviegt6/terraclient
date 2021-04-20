@@ -23,7 +23,7 @@
 +
 +		// TODO: move to partial
 +		private void CycleMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-+			_buttonLabel.SetText(Language.GetTextValue("UI.CycleDifficulty"));
++			_buttonLabel.SetText(Language.GetTextValue("UI.CyclePlayerDifficulty"));
 +		}
 +
 +		private void CycleDifficulty(UIMouseEvent mouseEvent, UIElement element) {

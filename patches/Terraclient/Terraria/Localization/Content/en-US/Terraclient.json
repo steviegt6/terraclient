@@ -10,7 +10,8 @@
 		"CheatEnabled": "Enabled",
 		"CheatDisabled": "Disabled",
 
-		"CycleDifficulty": "Cycle player difficulty" 
+		"CyclePlayerDifficulty": "Cycle player difficulty",
+		"CycleWorldDifficulty": "Cycle world difficulty" 
 	},
 
 	"Cheats": {
