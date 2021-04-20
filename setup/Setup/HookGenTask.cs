@@ -20,6 +20,7 @@ namespace Terraria.ModLoader.Setup
 
 		public override void Run()
 		{
+			return;
 			string targetExePath = @"src/tModLoader/Terraria/bin/WindowsDebug/net45/Terraria.exe";
 			if (!File.Exists(targetExePath)) {
 				var result = MessageBox.Show($"\"{targetExePath}\" does not exist. Use Vanilla exe instead?", "tML exe not found", MessageBoxButton.YesNo);
