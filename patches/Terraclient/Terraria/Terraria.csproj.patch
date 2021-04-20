@@ -1,0 +1,23 @@
+--- src/Terraria/Terraria/Terraria.csproj
++++ src/Terraclient/Terraria/Terraria.csproj
+@@ -31,6 +_,9 @@
+     <Reference Include="Microsoft.Xna.Framework.Xact" Condition="$(DefineConstants.Contains('XNA'))" />
+     <Reference Include="Newtonsoft.Json" />
+     <Reference Include="NVorbis" Condition="$(DefineConstants.Contains('CLIENT'))" />
++    <Reference Include="System.ValueTuple">
++      <HintPath>Libraries\NVorbis.System.ValueTuple.dll</HintPath>
++    </Reference>
+     <Reference Include="RailSDK.Net">
+       <HintPath Condition="$(DefineConstants.Contains('WINDOWS'))">Libraries/Windows/RailSDK.Net.dll</HintPath>
+       <HintPath Condition="$(DefineConstants.Contains('MAC'))">Libraries/Mac/RailSDK.Net.dll</HintPath>
+@@ -66,8 +_,8 @@
+     <EmbeddedResource Remove="Libraries/Mac/**" Condition="!$(DefineConstants.Contains('MAC'))" />
+     <EmbeddedResource Remove="Libraries/Linux/**" Condition="!$(DefineConstants.Contains('LINUX'))" />
+     <EmbeddedResource Remove="Libraries/Mono/**" Condition="!$(DefineConstants.Contains('MONO'))" />
+-    <EmbeddedResource Remove="Libraries/XNA/**"/>
++    <EmbeddedResource Remove="Libraries/XNA/**" />
+-    <EmbeddedResource Remove="Libraries/FNA/**"/>
++    <EmbeddedResource Remove="Libraries/FNA/**" />
+     <EmbeddedResource Include="Localization/Content/**" />
+     <EmbeddedResource Include="Microsoft/**" />
+   </ItemGroup>
