@@ -8,7 +8,9 @@
 		"PlayerESPOptions": "Player ESP Options", 
 
 		"CheatEnabled": "Enabled",
-		"CheatDisabled": "Disabled"
+		"CheatDisabled": "Disabled",
+
+		"CycleDifficulty": "Cycle player difficulty" 
 	},
 
 	"Cheats": {

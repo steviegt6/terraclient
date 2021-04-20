@@ -1,0 +1,49 @@
+--- src/Terraria/Terraria/GameContent/UI/Elements/UICharacterListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UICharacterListItem.cs
+@@ -88,6 +_,14 @@
+ 			uIImageButton4.OnMouseOut += ButtonMouseOut;
+ 			Append(uIImageButton4);
+ 			num += 24f;
++			uIImageButton4 = new UIImageButton(_buttonRenameTexture);
++			uIImageButton4.VAlign = 1f;
++			uIImageButton4.Left.Set(num, 0f);
++			uIImageButton4.OnClick += CycleDifficulty;
++			uIImageButton4.OnMouseOver += CycleMouseOver;
++			uIImageButton4.OnMouseOut += ButtonMouseOut;
++			Append(uIImageButton4);
++			num += 24f;
+ 			UIImageButton uIImageButton5 = new UIImageButton(_buttonDeleteTexture) {
+ 				VAlign = 1f,
+ 				HAlign = 1f
+@@ -162,6 +_,31 @@
+ 			uIVirtualKeyboard.SetMaxInputLength(20);
+ 			Main.MenuUI.SetState(uIVirtualKeyboard);
+ 			(base.Parent.Parent as UIList)?.UpdateOrder();
++		}
++
++		// TODO: move to partial
++		private void CycleMouseOver(UIMouseEvent evt, UIElement listeningElement) {
++			_buttonLabel.SetText(Language.GetTextValue("UI.CycleDifficulty"));
++		}
++
++		private void CycleDifficulty(UIMouseEvent mouseEvent, UIElement element) {
++			SoundEngine.PlaySound(10);
++
++			switch (_data.Player.difficulty) {
++				case 0:
++				case 1:
++				case 2:
++					_data.Player.difficulty++;
++					break;
++
++				case 3:
++					_data.Player.difficulty = 0;
++					break;
++			}
++
++			Player.SavePlayer(_data);
++			Main.OpenCharacterSelectUI();
++			(Parent.Parent as UIList)?.UpdateOrder();
+ 		}
+ 
+ 		private void OnFinishedSettingName(string name) {
