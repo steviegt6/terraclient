@@ -23,4 +23,4 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.1. As of now, 
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
-View a list of planned features [here](https://github.com/Terraclient/Terraclient/issues/1), and view issues [here](https://github.com/Terraclient/Terraclient/issues).
+View a list of planned features [here](https://github.com/TML-Patcher/Terraclient/issues/1), and view issues [here](https://github.com/TML-Patcher/Terraclient/issues).
