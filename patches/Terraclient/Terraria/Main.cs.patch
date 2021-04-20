@@ -154,3 +154,12 @@
  				DrawCursor(DrawThickCursor());
  			}
  
+@@ -47198,7 +_,7 @@
+ 			base.Draw(gameTime);
+ 			float val = (float)screenWidth / MinimumZoomComparerX;
+ 			float val2 = (float)screenHeight / MinimumZoomComparerY;
+-			ForcedMinimumZoom = Math.Max(Math.Max(1f, val), val2);
++			ForcedMinimumZoom = Math.Max(Math.Max(1f, 1f), 1f);
+ 			GameViewMatrix.Effects = ((!gameMenu && player[myPlayer].gravDir != 1f) ? SpriteEffects.FlipVertically : SpriteEffects.None);
+ 			BackgroundViewMatrix.Effects = GameViewMatrix.Effects;
+ 			BackgroundViewMatrix.Zoom = new Vector2(ForcedMinimumZoom);
