@@ -1,0 +1,20 @@
+--- src/Terraria/Terraria/GameContent/Bestiary/BestiaryEntry.cs
++++ src/Terraclient/Terraria/GameContent/Bestiary/BestiaryEntry.cs
+@@ -2,6 +_,7 @@
+ using System.Collections.Generic;
+ using Terraria.ID;
+ using Terraria.Localization;
++using Terraria.Terraclient.GameContent.Bestiary;
+ 
+ namespace Terraria.GameContent.Bestiary
+ {
+@@ -24,7 +_,8 @@
+ 			List<IBestiaryInfoElement> list = new List<IBestiaryInfoElement> {
+ 				new NPCNetIdBestiaryInfoElement(npcNetId),
+ 				new NamePlateInfoElement(Lang.GetNPCName(npcNetId).Key, npcNetId),
+-				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId])
++				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId]),
++				new SpawnButtonBestiaryElement(npcNetId)
+ 			};
+ 
+ 			foreach (int key2 in Main.RegisterdGameModes.Keys) {

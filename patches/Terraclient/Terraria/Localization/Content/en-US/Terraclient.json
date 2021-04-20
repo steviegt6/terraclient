@@ -4,14 +4,19 @@
 
 		"MiscOptions": "Misc. Options",
 		"GodModeOptions": "God Mode Options",
-		"FullbrightOptions": "Fullbright Options", 
-		"PlayerESPOptions": "Player ESP Options", 
+		"FullbrightOptions": "Fullbright Options",
+		"PlayerESPOptions": "Player ESP Options",
 
 		"CheatEnabled": "Enabled",
 		"CheatDisabled": "Disabled",
 
 		"CyclePlayerDifficulty": "Cycle player difficulty",
-		"CycleWorldDifficulty": "Cycle world difficulty" 
+		"CycleWorldDifficulty": "Cycle world difficulty"
+	},
+
+	"Bestiary": {
+		"ImmuneTo": "Immune to:",
+		"SpawnButton": "-> Spawn! <-" 
 	},
 
 	"Cheats": {
@@ -49,6 +54,9 @@
 		"PlayerESPTracerOptionCheatDesc": "Draws a line to all players.",
 
 		"PlayerESPExtraInfoOptionCheatName": "Extra Info",
-		"PlayerESPExtraInfoOptionCheatDesc": "Displays numerous extra stats, including HP, mana, defense, and teams"
+		"PlayerESPExtraInfoOptionCheatDesc": "Displays numerous extra stats, including HP, mana, defense, and teams.",
+
+		"BestiaryForceUnlockCheatName": "Force-Unlock Bestiary",
+		"BestiaryForceUnlockCheatDesc": "Unlocks and displays all bestiary information."
 	}
 }

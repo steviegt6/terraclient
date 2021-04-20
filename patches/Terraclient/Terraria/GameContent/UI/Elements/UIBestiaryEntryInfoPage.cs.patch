@@ -1,0 +1,50 @@
+--- src/Terraria/Terraria/GameContent/UI/Elements/UIBestiaryEntryInfoPage.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UIBestiaryEntryInfoPage.cs
+@@ -2,6 +_,7 @@
+ using System.Collections.Generic;
+ using System.Linq;
+ using Terraria.GameContent.Bestiary;
++using Terraria.Terraclient.GameContent.Bestiary;
+ using Terraria.UI;
+ 
+ namespace Terraria.GameContent.UI.Elements
+@@ -12,10 +_,13 @@
+ 		{
+ 			Nameplate,
+ 			Portrait,
++			SpawnButton,
+ 			FlavorText,
+ 			Stats,
+ 			ItemsFromCatchingNPC,
+ 			ItemsFromDrops,
++			BuffImmunityPlate,
++			BuffImmunity,
+ 			Misc
+ 		}
+ 
+@@ -125,7 +_,8 @@
+ 					UIElement uIElement = item3.ProvideUIElement(uICollectionInfo);
+ 					if (uIElement != null) {
+ 						_list.Add(uIElement);
++						if (!(item3 is BuffImmunityTextPlateInfoElement))
+-						flag = true;
++							flag = true;
+ 					}
+ 				}
+ 
+@@ -161,6 +_,15 @@
+ 
+ 			if (element is NPCStatsReportInfoElement)
+ 				return BestiaryInfoCategory.Stats;
++
++			if (element is BuffImmunityBestiaryElement)
++				return BestiaryInfoCategory.BuffImmunity;
++
++			if (element is BuffImmunityTextPlateInfoElement) 
++				return BestiaryInfoCategory.BuffImmunityPlate;
++
++			if (element is SpawnButtonBestiaryElement)
++				return BestiaryInfoCategory.SpawnButton;
+ 
+ 			return BestiaryInfoCategory.Misc;
+ 		}

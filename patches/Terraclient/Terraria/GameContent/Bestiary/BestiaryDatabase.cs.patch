@@ -1,0 +1,34 @@
+--- src/Terraria/Terraria/GameContent/Bestiary/BestiaryDatabase.cs
++++ src/Terraclient/Terraria/GameContent/Bestiary/BestiaryDatabase.cs
+@@ -1,5 +_,7 @@
+ using System.Collections.Generic;
+ using Terraria.GameContent.ItemDropRules;
++using Terraria.ID;
++using Terraria.Terraclient.GameContent.Bestiary;
+ 
+ namespace Terraria.GameContent.Bestiary
+ {
+@@ -51,6 +_,23 @@
+ 		public void Merge(ItemDropDatabase dropsDatabase) {
+ 			for (int i = -65; i < 665; i++) {
+ 				ExtractDropsForNPC(dropsDatabase, i);
++
++				BestiaryEntry entry = FindEntryByNPCID(i);
++				if (entry != null && i != 0) {
++					if (NPCID.Sets.DebuffImmunitySets.ContainsKey(i) && NPCID.Sets.DebuffImmunitySets[i] != null &&
++					    NPCID.Sets.DebuffImmunitySets[i].SpecificallyImmuneTo != null) {
++						bool addedText = false;
++
++						foreach (int buff in NPCID.Sets.DebuffImmunitySets[i].SpecificallyImmuneTo) {
++							if (!addedText) {
++								entry.Info.Add(new BuffImmunityTextPlateInfoElement());
++								addedText = true;
++							}
++
++							entry.Info.Add(new BuffImmunityBestiaryElement(buff));
++						}
++					}
++				}
+ 			}
+ 		}
+ 
