@@ -23,6 +23,9 @@
 		"JourneyModeCheatName": "Journey Mode Features",
 		"JourneyModeCheatDesc": "Gives non-Journey characters access to Journey-specific features (i.e. research).",
 
+		"JourneySacrificesCheatName": "Infinite Journey Items",
+		"JourneySacrificesCheatDesc": "Automatically unlocks all items in the item spawning menu (requires world/server re-log).",
+
 		"MapTeleportCheatName": "Map Teleportation",
 		"MapTeleportCheatDesc": "Allows you to right-click anywhere on a map to teleport.",
 
@@ -45,6 +48,6 @@
 		"PlayerESPTracerOptionCheatDesc": "Draws a line to all players.",
 
 		"PlayerESPExtraInfoOptionCheatName": "Extra Info",
-		"PlayerESPExtraInfoOptionCheatDesc":  "Displays numerous extra stats, including HP, mana, defense, and teams"
+		"PlayerESPExtraInfoOptionCheatDesc": "Displays numerous extra stats, including HP, mana, defense, and teams"
 	}
 }
