@@ -9,7 +9,7 @@
  using Terraria.Utilities;
  using Terraria.WorldBuilding;
  
-@@ -27408,7 +_,7 @@
+@@ -27395,7 +_,7 @@
  						base.Center = ((player8.gravDir == 1f) ? player8.Top : player8.Bottom) + new Vector2(player8.direction * 4, 0f);
  						gfxOffY = player8.gfxOffY;
  						base.velocity = Vector2.Zero;
@@ -18,7 +18,7 @@
  							player8.AddBuff(163, 59);
  					}
  				}
-@@ -39909,7 +_,7 @@
+@@ -39874,7 +_,7 @@
  								flag3 = true;
  						}
  
@@ -27,7 +27,7 @@
  							player2.AddBuff(156, num23 + (int)ai[2] * -1);
  
  						return;
-@@ -44561,7 +_,7 @@
+@@ -44526,7 +_,7 @@
  
  						if (Main.netMode != 2) {
  							Player player = Main.player[Main.myPlayer];

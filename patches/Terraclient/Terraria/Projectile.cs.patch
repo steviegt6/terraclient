@@ -9,7 +9,7 @@
  using Terraria.Utilities;
  using Terraria.WorldBuilding;
  
-@@ -8643,7 +_,7 @@
+@@ -8680,7 +_,7 @@
  		}
  
  		public void StatusPlayer(int i) {
@@ -18,21 +18,21 @@
  				return;
  
  			if (type == 472)
-@@ -21366,7 +_,7 @@
+@@ -21425,7 +_,7 @@
  						if (Main.expertMode)
  							timeToAdd = 960;
  
 -						if (!Main.player[num723].creativeGodMode)
-+						if (!Main.player[num723].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++						if (!Main.player[num723].creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
  							Main.player[num723].AddBuff(145, timeToAdd);
  					}
  				}
-@@ -46396,7 +_,7 @@
+@@ -46459,7 +_,7 @@
  
  				if (Main.netMode != 2) {
  					Player player = Main.player[Main.myPlayer];
 -					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode)
-+					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
  						player.AddBuff(197, 900, quiet: false);
  				}
  			}

@@ -1,6 +1,6 @@
 --- src/Terraria/Terraria/GameContent/UI/Elements/UIWorldListItem.cs
 +++ src/Terraclient/Terraria/GameContent/UI/Elements/UIWorldListItem.cs
-@@ -7,6 +_,8 @@
+@@ -8,6 +_,8 @@
  using Terraria.IO;
  using Terraria.Localization;
  using Terraria.Social;
@@ -9,7 +9,7 @@
  using Terraria.UI;
  
  namespace Terraria.GameContent.UI.Elements
-@@ -254,14 +_,14 @@
+@@ -270,14 +_,14 @@
  
  			bool flag = Main.ActivePlayerFileData.Player.difficulty == 3;
  			bool isJourneyMode = value.IsJourneyMode;

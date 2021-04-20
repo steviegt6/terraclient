@@ -9,7 +9,7 @@
  using Terraria.UI;
  using Terraria.UI.Gamepad;
  
-@@ -136,7 +_,7 @@
+@@ -138,7 +_,7 @@
  		private bool CanWorldBePlayed(WorldFileData file) {
  			bool num = Main.ActivePlayerFileData.Player.difficulty == 3;
  			bool flag = file.GameMode == 3;
