@@ -14,6 +14,8 @@ namespace Terraria.ModLoader.Setup
 		public SetupDebugTask(ITaskInterface taskInterface) : base(taskInterface) { }
 
 		public override void Run() {
+			taskInterface.SetStatus("Disabled.");
+			return;
 			taskInterface.SetStatus("Updating ModCompile version");
 			var modCompile = Path.Combine(tMLSteamDir, "ModCompile");
 			UpdateModCompileVersion(modCompile);
