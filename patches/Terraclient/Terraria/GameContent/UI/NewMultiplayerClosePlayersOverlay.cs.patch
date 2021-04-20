@@ -44,7 +44,7 @@
  				return;
  
  			_playerOnScreenCache.Clear();
-@@ -110,7 +_,7 @@
+@@ -110,22 +_,22 @@
  			_ = Main.screenPosition;
  			Player player2 = player[myPlayer];
  			float num2 = (float)(int)mouseTextColor / 255f;
@@ -53,7 +53,9 @@
  				return;
  
  			DynamicSpriteFont value = FontAssets.MouseText.Value;
-@@ -119,13 +_,13 @@
+ 			for (int i = 0; i < 255; i++) {
+-				if (i == myPlayer)
++				if (i == myPlayer && !CheatHandler.GetCheat<PlayerESPCheat.PlayerESPExtraInfoOptionCheat>().isEnabled)
  					continue;
  
  				Player player3 = player[i];
