@@ -1,8 +1,10 @@
 --- src/Terraria/Terraria/GameContent/UI/NewMultiplayerClosePlayersOverlay.cs
 +++ src/Terraclient/Terraria/GameContent/UI/NewMultiplayerClosePlayersOverlay.cs
-@@ -6,6 +_,8 @@
+@@ -5,7 +_,10 @@
+ using System.Collections.Generic;
  using Terraria.GameInput;
  using Terraria.Graphics;
++using Terraria.ID;
  using Terraria.Localization;
 +using Terraria.Terraclient;
 +using Terraria.Terraclient.Cheats.General;
@@ -18,6 +20,21 @@
  			private string nameToShow;
  			private Vector2 namePlatePos;
  			private Color namePlateColor;
+@@ -72,8 +_,13 @@
+ 
+ 			public void DrawLifeBar() {
+ 				Vector2 vector = Main.screenPosition + distanceDrawPosition + new Vector2(26f, 20f);
+-				if (player.statLife != player.statLifeMax2)
++				if (player.statLife != player.statLifeMax2 || CheatHandler.GetCheat<PlayerESPCheat>().isEnabled)
+ 					Main.instance.DrawHealthBar(vector.X, vector.Y, player.statLife, player.statLifeMax2, 1f, 1.25f, noFlip: true);
++				if (CheatHandler.GetCheat<PlayerESPCheat.PlayerESPExtraInfoOptionCheat>().isEnabled) {
++					ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, $"{player.statLife}/{player.statLifeMax2} hp", namePlatePos + new Vector2(0f, 24f * 1f - 6f), Colors.RarityRed, 0f, Vector2.Zero, Vector2.One);
++					ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, $"{player.statMana}/{player.statManaMax2} mp", namePlatePos + new Vector2(0f, 24f * 2f - 6f), Colors.RarityBlue, 0f, Vector2.Zero, Vector2.One);
++					ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, $"{player.statDefense} def.", namePlatePos + new Vector2(0f, 24f * 3f - 6f), Colors.RarityTrash, 0f, Vector2.Zero, Vector2.One);
++				}
+ 			}
+ 
+ 			public void DrawPlayerDistance(SpriteBatch spriteBatch) {
 @@ -91,7 +_,7 @@
  
  		public void Draw() {
