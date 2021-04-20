@@ -10,15 +10,15 @@
  using Terraria.UI;
  
 @@ -294,10 +_,10 @@
- 						else if (player14.name == "") {
+ 						else if (player4.name == "") {
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.EmptyName"));
  						}
--						else if (player14.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode) {
-+						else if (player14.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
+-						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode) {
++						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsCreativeAndWorldIsNotCreative"));
  						}
--						else if (player14.difficulty != 3 && Main.GameModeInfo.IsJourneyMode) {
-+						else if (player14.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
+-						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode) {
++						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsNotCreativeAndWorldIsCreative"));
  						}
  						else {

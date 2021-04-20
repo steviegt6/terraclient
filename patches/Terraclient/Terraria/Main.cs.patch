@@ -13,14 +13,14 @@
  using Terraria.UI.Gamepad;
 @@ -238,7 +_,7 @@
  		public static NPCHeadRenderer BossNPCHeadRenderer = null;
- 		public static string versionNumber = "v1.4.1.2";
- 		public static string versionNumber2 = "v1.4.1.2";
+ 		public static string versionNumber = "v1.4.2.1";
+ 		public static string versionNumber2 = "v1.4.2.1";
 -		public static string SavePath = Program.LaunchParameters.ContainsKey("-savedirectory") ? Program.LaunchParameters["-savedirectory"] : Platform.Get<IPathService>().GetStoragePath("Terraria");
 +		public static string SavePath = (Program.LaunchParameters.ContainsKey("-savedirectory") ? Program.LaunchParameters["-savedirectory"] : Platform.Get<IPathService>().GetStoragePath("Terraria")) + Path.DirectorySeparatorChar + "Terraclient";
  		public static bool AnnouncementBoxDisabled;
  		public static int AnnouncementBoxRange = -1;
  		public static string AutogenSeedName;
-@@ -3044,6 +_,8 @@
+@@ -3054,6 +_,8 @@
  
  		public static bool SaveSettings() {
  			Configuration.Clear();
@@ -29,7 +29,7 @@
  			Configuration.Put("ResetDefaultUIScale", false);
  			Configuration.Put("SmartCursorToggle", cSmartCursorModeIsToggleAndNotHold);
  			Configuration.Put("MapEnabled", mapEnabled);
-@@ -3158,6 +_,8 @@
+@@ -3168,6 +_,8 @@
  			}
  
  			Configuration.Load();
@@ -38,7 +38,7 @@
  			int currentValue = 0;
  			Configuration.Get("LastLaunchedVersion", ref currentValue);
  			bool flag = false;
-@@ -8220,6 +_,7 @@
+@@ -8231,6 +_,7 @@
  			});
  
  			base.Window.AllowUserResizing = true;
@@ -46,7 +46,7 @@
  			LoadSettings();
  			SetDisplayMonitor();
  			if (screenWidth > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
-@@ -13017,7 +_,7 @@
+@@ -13039,7 +_,7 @@
  			CurrentFrameFlags.SleepingPlayersCount = num2;
  			if (netMode != 2) {
  				int num3 = myPlayer;
@@ -55,7 +55,7 @@
  					player[num3].statLife = player[num3].statLifeMax2;
  					player[num3].statMana = player[num3].statManaMax2;
  					player[num3].breath = player[num3].breathMax;
-@@ -15568,7 +_,7 @@
+@@ -15590,7 +_,7 @@
  				numLines++;
  			}
  
@@ -64,7 +64,7 @@
  				int sacrificeCount = LocalPlayerCreativeTracker.ItemSacrifices.GetSacrificeCount(item.type);
  				if (amountNeeded - sacrificeCount > 0) {
  					toolTipLine[numLines] = Language.GetTextValue("CommonItemTooltip.CreativeSacrificeNeeded", amountNeeded - sacrificeCount);
-@@ -37227,8 +_,8 @@
+@@ -37216,8 +_,8 @@
  				else if (menuMode == 11) {
  					num2 = 210;
  					num4 = 37;
@@ -75,7 +75,7 @@
  					for (int num19 = 0; num19 < num5; num19++) {
  						array7[num19] = 0.75f;
  					}
-@@ -37276,6 +_,14 @@
+@@ -37265,6 +_,14 @@
  					}
  
  					num20++;
@@ -90,7 +90,7 @@
  					array9[num20] = Lang.menu[103].Value;
  					if (selectedMenu == num20) {
  						SoundEngine.PlaySound(10);
-@@ -39023,6 +_,7 @@
+@@ -39039,6 +_,7 @@
  			}
  
  			if (!WorldGen.drunkWorldGen) {
@@ -98,7 +98,7 @@
  				for (int num107 = 0; num107 < 5; num107++) {
  					Microsoft.Xna.Framework.Color color12 = Microsoft.Xna.Framework.Color.Black;
  					if (num107 == 4) {
-@@ -39052,6 +_,14 @@
+@@ -39068,6 +_,14 @@
  					origin2.Y *= 0.5f;
  					spriteBatch.DrawString(FontAssets.MouseText.Value, versionNumber, new Vector2(origin2.X + (float)num108 + 10f, (float)screenHeight - origin2.Y + (float)num109 - 2f), color12, 0f, origin2, 1f, SpriteEffects.None, 0f);
  				}
@@ -113,7 +113,7 @@
  			}
  
  			spriteBatch.End();
-@@ -39187,12 +_,19 @@
+@@ -39205,12 +_,19 @@
  		private void PreDrawMenu(out Microsoft.Xna.Framework.Point screenSizeCache, out Microsoft.Xna.Framework.Point screenSizeCacheAfterScaling) {
  			float uiScaleWanted = _uiScaleWanted;
  			float num = (float)screenHeight / 900f;
@@ -133,7 +133,7 @@
  			screenSizeCache = ScreenSize;
  			UIScale = num;
  			PlayerInput.SetZoom_UI();
-@@ -42780,6 +_,11 @@
+@@ -42814,6 +_,11 @@
  				}
  
  				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
