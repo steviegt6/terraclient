@@ -19,7 +19,15 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.1. As of now, 
 - Fullbright
 - Map teleportation
 - Journey Mode spoofing
-- Forced Main Menu UI Scaling Removal
+- Forced main-menu UI scaling removal
+- Player ESP
+ - Extra info option as well
+ - Displays yourself as well
+- Forced wide-screen scaling removal
+- Forced PvP/team-switching cooldown removal
+- The ability to switch between actual player difficulties (saves the file as well)
+ - This, but for worlds, too.
+
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
