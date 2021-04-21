@@ -1,12 +1,13 @@
 --- src/Terraria/Terraria/Main.cs
 +++ src/Terraclient/Terraria/Main.cs
-@@ -68,6 +_,10 @@
+@@ -68,6 +_,11 @@
  using Terraria.Net;
  using Terraria.ObjectData;
  using Terraria.Social;
 +using Terraria.Terraclient;
 +using Terraria.Terraclient.Cheats;
 +using Terraria.Terraclient.Cheats.General;
++using Terraria.Terraclient.Commands;
 +using Terraria.Terraclient.GameContent.UI.States;
  using Terraria.UI;
  using Terraria.UI.Chat;
@@ -64,6 +65,15 @@
  					player[num3].statLife = player[num3].statLifeMax2;
  					player[num3].statMana = player[num3].statManaMax2;
  					player[num3].breath = player[num3].breathMax;
+@@ -13397,7 +_,7 @@
+ 			if (!inputTextEnter || !chatRelease)
+ 				return;
+ 
+-			if (chatText != "") {
++			if (chatText != "" && !CheatCommandHandler.ParseCheatCommand(chatText)) {
+ 				ChatMessage message = ChatManager.Commands.CreateOutgoingMessage(chatText);
+ 				if (netMode == 1)
+ 					ChatHelper.SendChatMessageFromClient(message);
 @@ -15590,7 +_,7 @@
  				numLines++;
  			}
@@ -107,18 +117,37 @@
  				for (int num107 = 0; num107 < 5; num107++) {
  					Microsoft.Xna.Framework.Color color12 = Microsoft.Xna.Framework.Color.Black;
  					if (num107 == 4) {
-@@ -39068,6 +_,14 @@
+@@ -39068,6 +_,33 @@
  					origin2.Y *= 0.5f;
  					spriteBatch.DrawString(FontAssets.MouseText.Value, versionNumber, new Vector2(origin2.X + (float)num108 + 10f, (float)screenHeight - origin2.Y + (float)num109 - 2f), color12, 0f, origin2, 1f, SpriteEffects.None, 0f);
  				}
 +
 +			SkipVanillaVersionDrawVers:
++			const float textOffsetY = 28f;
 +				string versString = $"Terraclient v{CheatHandler.TCVersion}" +
 +				                    $"\nTerraria {versionNumber}";
 +				Vector2 versSize = FontAssets.MouseText.Value.MeasureString(versString);
 +
 +				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, versString,
 +					new Vector2(10f, screenHeight - versSize.Y), Color.White, 0f, Vector2.Zero, Vector2.One);
++
++				Vector2 constBaseOffset = new Vector2(10, 10);
++				string generate = Language.GetTextValue("Cheats.GenerateUUID");
++				Vector2 generateSize = FontAssets.MouseText.Value.MeasureString(generate);
++				Rectangle generateBounds = new Rectangle((int)constBaseOffset.X, (int)constBaseOffset.Y, (int)generateSize.X, (int)generateSize.Y);
++				Rectangle mouse = new Rectangle(mouseX, mouseY, 1, 1);
++				Color generateColor = Color.White;
++				if (generateBounds.Contains(mouse)) {
++					generateColor = Color.Goldenrod;
++					if (mouseLeft && mouseLeftRelease)
++						clientUUID = Guid.NewGuid().ToString();
++				}
++
++				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, generate,
++					constBaseOffset, generateColor, 0f, Vector2.Zero, Vector2.One);
++				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
++					Language.GetTextValue("Cheats.CurrentUUID", clientUUID), constBaseOffset + new Vector2(0, textOffsetY),
++					Color.Gray, 0f, Vector2.Zero, Vector2.One);
  			}
  
  			spriteBatch.End();

@@ -20,6 +20,9 @@
 	},
 
 	"Cheats": {
+		"CurrentUUID": "Current UUID: {0}",
+		"GenerateUUID": "-> Generate new UUID! <-", 
+
 		"GamemodeUnlockedWorldCheatName": "Gamemode-Unlocked Worlds",
 		"GamemodeUnlockedWorldCheatDesc": "Allows Journey characters to join non-Journey worlds and vice-versa.",
 

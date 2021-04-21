@@ -10,7 +10,7 @@
      <Reference Include="RailSDK.Net">
        <HintPath Condition="$(DefineConstants.Contains('WINDOWS'))">Libraries/Windows/RailSDK.Net.dll</HintPath>
        <HintPath Condition="$(DefineConstants.Contains('MAC'))">Libraries/Mac/RailSDK.Net.dll</HintPath>
-@@ -66,8 +_,8 @@
+@@ -66,10 +_,13 @@
      <EmbeddedResource Remove="Libraries/Mac/**" Condition="!$(DefineConstants.Contains('MAC'))" />
      <EmbeddedResource Remove="Libraries/Linux/**" Condition="!$(DefineConstants.Contains('LINUX'))" />
      <EmbeddedResource Remove="Libraries/Mono/**" Condition="!$(DefineConstants.Contains('MONO'))" />
@@ -20,4 +20,9 @@
 +    <EmbeddedResource Remove="Libraries/FNA/**" />
      <EmbeddedResource Include="Localization/Content/**" />
      <EmbeddedResource Include="Microsoft/**" />
++  </ItemGroup>
++  <ItemGroup>
++    <Folder Include="Terraclient\Commands\" />
    </ItemGroup>
+   <Target Name="EditBin" AfterTargets="Build">
+     <PropertyGroup>
