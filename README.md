@@ -27,7 +27,12 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.1. As of now, 
 - Forced wide-screen scaling removal and forced main-menu UI scaling removal.
 - Forced PvP/team-switching cooldown removal.
 - The ability to switch between actual player difficulties (saves the file as well).
-
+- The ability to unlock all Journey mode items in the item spawning UI (requires rejoining the world/server).
+- The ability to unlock all bestiary entries (requires re-opening the UI).
+  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary.
+    - There is also a list of all buff immunities.
+- The ability to regenerate your UUID from the main menu.
+- Chat command system (W.I.P.).
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
