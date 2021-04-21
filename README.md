@@ -14,19 +14,19 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.1. As of now, 
 ## Features
 
 (Note that this list is ever-expanding and not always complete)
-- Godmode
+- Godmode.
 - Journey character access bypassing
-- Fullbright
-- Map teleportation
-- Journey Mode spoofing
-- Forced main-menu UI scaling removal
-- Player ESP
- - Extra info option as well
- - Displays yourself as well
-- Forced wide-screen scaling removal
-- Forced PvP/team-switching cooldown removal
-- The ability to switch between actual player difficulties (saves the file as well)
- - This, but for worlds, too.
+- Fullbright.
+  - + options for slightly better fullbright performance.
+- Map teleportation.
+- Journey Mode spoofing.
+  - (Gives your character access to all Journey mode features like research, even on servers. This does not make the server register you has a Journey mode character, though.)
+- Player ESP using multiplayer nameplates.
+  - Extra info option as well.
+    - Displays yourself as well.
+- Forced wide-screen scaling removal and forced main-menu UI scaling removal.
+- Forced PvP/team-switching cooldown removal.
+- The ability to switch between actual player difficulties (saves the file as well).
 
 
 ## Contributing
