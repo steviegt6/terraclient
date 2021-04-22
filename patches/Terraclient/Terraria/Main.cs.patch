@@ -131,62 +131,62 @@
  				}
 +
 +			SkipVanillaVersionDrawVers:
-+			const float textOffsetY = 28f;
-+				string versString = $"Terraclient v{CheatHandler.TCVersion}" +
-+				                    $"\nTerraria {versionNumber}";
-+				Vector2 versSize = FontAssets.MouseText.Value.MeasureString(versString);
-+
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, versString,
-+					new Vector2(10f, screenHeight - versSize.Y), Color.White, 0f, Vector2.Zero, Vector2.One);
-+
-+				Vector2 constBaseOffset = new Vector2(10, 10);
-+				string generate = Language.GetTextValue("Cheats.GenerateUUID");
-+				Vector2 generateSize = FontAssets.MouseText.Value.MeasureString(generate);
-+				Rectangle generateBounds = new Rectangle((int)constBaseOffset.X, (int)constBaseOffset.Y, (int)generateSize.X, (int)generateSize.Y);
 +				Rectangle mouse = new Rectangle(mouseX, mouseY, 1, 1);
++				const float textOffsetY = 28f;
++				Vector2 constBaseOffset = new Vector2(10, 10);
++
++				void HoverableRect(string text, Vector2 pos, Action whileHovering = null, Action whileNotHovering = null) {
++					Vector2 size = FontAssets.MouseText.Value.MeasureString(text);
++
++					if (new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y).Contains(mouse))
++						whileHovering?.Invoke();
++					else
++						whileNotHovering?.Invoke();
++				}
++
++				void DrawText(string text, Vector2 pos, Color color) =>
++					ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, text, pos, color, 0f, Vector2.Zero, Vector2.One);
++
++				string versString = $"Terraclient v{CheatHandler.TCVersion}\nTerraria {versionNumber}";
++
++				DrawText(versString, new Vector2(10f, screenHeight - (textOffsetY * 2f)), Color.White);
++
++				string uuidGen = Language.GetTextValue("Cheats.GenerateUUID");
 +				Color generateColor = Color.White;
-+				if (generateBounds.Contains(mouse)) {
-+					generateColor = Color.Goldenrod;
-+					if (mouseLeft && mouseLeftRelease)
-+						clientUUID = Guid.NewGuid().ToString();
-+				}
++				HoverableRect(uuidGen, constBaseOffset, () => {
++					                                        generateColor = Color.Goldenrod;
++					                                        if (mouseLeft && mouseLeftRelease)
++						                                        clientUUID = Guid.NewGuid().ToString();
++				                                        });
 +
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, generate,
-+					constBaseOffset, generateColor, 0f, Vector2.Zero, Vector2.One);
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
-+					Language.GetTextValue("Cheats.CurrentUUID", clientUUID), constBaseOffset + new Vector2(0, textOffsetY),
-+					Color.Gray, 0f, Vector2.Zero, Vector2.One);
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
-+					Language.GetTextValue("UI.Computing", Environment.Is64BitProcess ? "64bit" : "32bit"), constBaseOffset + new Vector2(0, textOffsetY * 2f),
-+					Color.LightGray, 0f, Vector2.Zero, Vector2.One);
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
-+					Language.GetTextValue("UI.RunningFNA"), constBaseOffset + new Vector2(0, textOffsetY * 3f),
-+					Color.LightGray, 0f, Vector2.Zero, Vector2.One);
++				DrawText(uuidGen, constBaseOffset, generateColor);
++				DrawText(Language.GetTextValue("Cheats.CurrentUUID", clientUUID), constBaseOffset + new Vector2(0, textOffsetY), Color.Gray);
++				DrawText(Language.GetTextValue("UI.Computing", Environment.Is64BitProcess ? "64bit" : "32bit"), constBaseOffset + new Vector2(0, textOffsetY * 2f), Color.LightGray);
++				DrawText(Language.GetTextValue("UI.RunningFNA"), constBaseOffset + new Vector2(0, textOffsetY * 3f), Color.LightGray);
 +
-+				string discord = Language.GetTextValue("UI.Discord");
-+				Vector2 discordSize = FontAssets.MouseText.Value.MeasureString(discord);
-+				Rectangle discordBounds = new Rectangle((int)constBaseOffset.X,
-+					(int)constBaseOffset.Y + (int)(textOffsetY * 5f), (int)discordSize.X, (int)discordSize.Y);
++				string discordText = Language.GetTextValue("UI.Discord");
++				Vector2 discordTextPos = new Vector2(constBaseOffset.X, constBaseOffset.Y + (textOffsetY * 5f));
 +				Color discordColor = Colors.RarityBlue;
-+				if (discordBounds.Contains(mouse)) {
-+					discordColor *= 0.75f;
-+					discord += " :D";
-+					ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
-+						"(https://discord.com/invite/qrZ4Bpz)",
-+						constBaseOffset + new Vector2(8f, textOffsetY * 4f) +
-+						FontAssets.MouseText.Value.MeasureString(discord), Color.White, 0f, Vector2.Zero, Vector2.One);
-+					if (mouseLeft && mouseLeftRelease) {
-+						ProcessStartInfo info = new("https://discord.com/invite/qrZ4Bpz") {
-+							UseShellExecute = true, Verb = "open"
-+						};
-+						Process.Start(info);
-+					}
-+				}
-+				else
-+					discord += " <-";
 +
-+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, discord,
-+					constBaseOffset + new Vector2(0, textOffsetY * 5f), discordColor, 0f, Vector2.Zero, Vector2.One);
++				Action hoverDiscord = () => {
++					                      discordColor *= 0.75f;
++					                      discordText += " :D";
++
++					                      string discordLink = "https://discord.com/invite/qrZ4Bpz";
++
++										  DrawText($"({discordLink})", constBaseOffset + new Vector2(8f, textOffsetY * 4f) + FontAssets.MouseText.Value.MeasureString(discordText), Color.White);
++
++					                      if (mouseLeft && mouseLeftRelease) {
++						                      ProcessStartInfo info =
++							                      new(discordLink) { UseShellExecute = true, Verb = "open" };
++						                      Process.Start(info);
++					                      }
++				                      };
++
++				Action notHoverDiscord = () => discordText += " <-";
++
++				HoverableRect(discordText, discordTextPos, hoverDiscord, notHoverDiscord);
++				DrawText(discordText, discordTextPos, discordColor);
  			}
  
  			spriteBatch.End();
