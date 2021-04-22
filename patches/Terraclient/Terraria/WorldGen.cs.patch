@@ -1,6 +1,6 @@
 --- src/Terraria/Terraria/WorldGen.cs
 +++ src/Terraclient/Terraria/WorldGen.cs
-@@ -2415,6 +_,40 @@
+@@ -2421,6 +_,40 @@
  			}
  		}
  
