@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReLogic", "..\src\Terraria\ReLogic\ReLogic.csproj", "{359B7CB0-9706-4008-8CF9-EB81F8021D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terraria", "..\src\Terraclient\Terraria\Terraria.csproj", "{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terraria", "..\src\Terraria\Terraria\Terraria.csproj", "{630BE316-5EDD-4F27-9983-B3B07662A34E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReLogic", "..\src\Terraclient\ReLogic\ReLogic.csproj", "{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,22 +15,22 @@ Global
 		ServerRelease|Any CPU = ServerRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.ServerDebug|Any CPU.ActiveCfg = ServerDebug|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.ServerDebug|Any CPU.Build.0 = ServerDebug|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.ServerRelease|Any CPU.ActiveCfg = ServerRelease|Any CPU
-		{359B7CB0-9706-4008-8CF9-EB81F8021D59}.ServerRelease|Any CPU.Build.0 = ServerRelease|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.ServerDebug|Any CPU.ActiveCfg = ServerDebug|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.ServerDebug|Any CPU.Build.0 = ServerDebug|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.ServerRelease|Any CPU.ActiveCfg = ServerRelease|Any CPU
-		{630BE316-5EDD-4F27-9983-B3B07662A34E}.ServerRelease|Any CPU.Build.0 = ServerRelease|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.ServerDebug|Any CPU.ActiveCfg = ServerDebug|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.ServerDebug|Any CPU.Build.0 = ServerDebug|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.ServerRelease|Any CPU.ActiveCfg = ServerRelease|Any CPU
+		{551ABFAB-A078-4F3D-9745-8F9459AEBDE7}.ServerRelease|Any CPU.Build.0 = ServerRelease|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.ServerDebug|Any CPU.ActiveCfg = ServerDebug|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.ServerDebug|Any CPU.Build.0 = ServerDebug|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.ServerRelease|Any CPU.ActiveCfg = ServerRelease|Any CPU
+		{FD1E1461-86F1-4D3A-9CC4-E909A582F3C1}.ServerRelease|Any CPU.Build.0 = ServerRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
