@@ -5,7 +5,7 @@
     <UseWPF>True</UseWPF>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Terraria.ModLoader</RootNamespace>
-    <ApplicationIcon>../patches/Terraclient/Terraria/Terraclient.ico</ApplicationIcon>
+    <ApplicationIcon>../patches/tModLoader/Terraria/tModLoader.ico</ApplicationIcon>
     <TieredCompilation>false</TieredCompilation> <!-- be nice if we didn't need this, but MonoMod.RuntimeDetour isn't compatible with tiered jit currently -->
   </PropertyGroup>
   <ItemGroup>
@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.Build.Locator" Version="1.2.6" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.4.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="3.4.0" />
-    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="20.5.7.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.2.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PatchReviewer\PatchReviewer.csproj" />
@@ -27,9 +27,6 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.Decompiler">
       <HintPath>lib\ICSharpCode.Decompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="XnaToFna">
-      <HintPath>lib\XnaToFna.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
