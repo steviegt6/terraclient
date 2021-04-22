@@ -125,7 +125,7 @@
  				for (int num107 = 0; num107 < 5; num107++) {
  					Microsoft.Xna.Framework.Color color12 = Microsoft.Xna.Framework.Color.Black;
  					if (num107 == 4) {
-@@ -39071,6 +_,50 @@
+@@ -39071,6 +_,60 @@
  					origin2.Y *= 0.5f;
  					spriteBatch.DrawString(FontAssets.MouseText.Value, versionNumber, new Vector2(origin2.X + (float)num108 + 10f, (float)screenHeight - origin2.Y + (float)num109 - 2f), color12, 0f, origin2, 1f, SpriteEffects.None, 0f);
  				}
@@ -156,15 +156,25 @@
 +				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
 +					Language.GetTextValue("Cheats.CurrentUUID", clientUUID), constBaseOffset + new Vector2(0, textOffsetY),
 +					Color.Gray, 0f, Vector2.Zero, Vector2.One);
++				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
++					Language.GetTextValue("UI.Computing", Environment.Is64BitProcess ? "64bit" : "32bit"), constBaseOffset + new Vector2(0, textOffsetY * 2f),
++					Color.LightGray, 0f, Vector2.Zero, Vector2.One);
++				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
++					Language.GetTextValue("UI.RunningFNA"), constBaseOffset + new Vector2(0, textOffsetY * 3f),
++					Color.LightGray, 0f, Vector2.Zero, Vector2.One);
 +
-+				string discord = Language.GetTextValue("Cheats.Discord");
++				string discord = Language.GetTextValue("UI.Discord");
 +				Vector2 discordSize = FontAssets.MouseText.Value.MeasureString(discord);
 +				Rectangle discordBounds = new Rectangle((int)constBaseOffset.X,
-+					(int)constBaseOffset.Y + (int)(textOffsetY * 4f), (int)discordSize.X, (int)discordSize.Y);
++					(int)constBaseOffset.Y + (int)(textOffsetY * 5f), (int)discordSize.X, (int)discordSize.Y);
 +				Color discordColor = Colors.RarityBlue;
 +				if (discordBounds.Contains(mouse)) {
 +					discordColor *= 0.75f;
 +					discord += " :D";
++					ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value,
++						"(https://discord.com/invite/qrZ4Bpz)",
++						constBaseOffset + new Vector2(8f, textOffsetY * 4f) +
++						FontAssets.MouseText.Value.MeasureString(discord), Color.White, 0f, Vector2.Zero, Vector2.One);
 +					if (mouseLeft && mouseLeftRelease)
 +						Process.Start("https://discord.com/invite/qrZ4Bpz");
 +				}
@@ -172,7 +182,7 @@
 +					discord += " <-";
 +
 +				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, discord,
-+					constBaseOffset + new Vector2(0, textOffsetY * 4f), discordColor, 0f, Vector2.Zero, Vector2.One);
++					constBaseOffset + new Vector2(0, textOffsetY * 5f), discordColor, 0f, Vector2.Zero, Vector2.One);
  			}
  
  			spriteBatch.End();
