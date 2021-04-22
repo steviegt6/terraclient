@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Audio;
@@ -90,32 +91,42 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			List<Cheat> misc = new List<Cheat>();
 			List<Cheat> godMode = new List<Cheat>();
 			List<Cheat> fullbright = new List<Cheat>();
-			// ReSharper disable once InconsistentNaming
 			List<Cheat> playerESP = new List<Cheat>();
+			List<Cheat> forceUnlocks = new List<Cheat>();
 			List<Cheat> cheats = CheatHandler.cheats.OrderBy(c => _cheatsFullLine.Contains(c)).ToList();
 
 			foreach (Cheat cheat in cheats)
 				switch (cheat.Category) {
-					default:
 					case CheatCategory.Misc:
 						misc.Add(cheat);
 						break;
+
 					case CheatCategory.GodMode:
 						godMode.Add(cheat);
 						break;
+
 					case CheatCategory.Fullbright:
 						fullbright.Add(cheat);
 						break;
+
 					case CheatCategory.PlayerESP:
 						playerESP.Add(cheat);
 						break;
+
+					case CheatCategory.ForceUnlocks:
+						forceUnlocks.Add(cheat);
+						break;
+
+					default:
+						throw new ArgumentOutOfRangeException();
 				}
 
 			int group = 0;
 			_bindsKeyboard.Add(CreateBindingGroup(group++, misc));
 			_bindsKeyboard.Add(CreateBindingGroup(group++, godMode));
 			_bindsKeyboard.Add(CreateBindingGroup(group++, fullbright));
-			_bindsKeyboard.Add(CreateBindingGroup(group, playerESP));
+			_bindsKeyboard.Add(CreateBindingGroup(group++, playerESP));
+			_bindsKeyboard.Add(CreateBindingGroup(group, forceUnlocks));
 		}
 
 		private UISortableElement CreateBindingGroup(int elementIndex, List<Cheat> cheats) {
@@ -162,6 +173,10 @@ namespace Terraria.Terraclient.GameContent.UI.States
 
 				case 3:
 					text = Language.GetText("UI.PlayerESPOptions");
+					break;
+
+				case 4:
+					text = Language.GetText("UI.ForceUnlocksOptions");
 					break;
 			}
 

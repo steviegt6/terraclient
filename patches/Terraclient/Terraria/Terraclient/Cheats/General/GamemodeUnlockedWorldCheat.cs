@@ -1,6 +1,7 @@
 ﻿namespace Terraria.Terraclient.Cheats.General
 {
-	public class GamemodeUnlockedWorldCheat : Cheat
+	public class GamemodeUnlockedWorldCheat : ForceUnlockCheat
 	{
+		public override bool IsImportant => true;
 	}
 }

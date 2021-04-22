@@ -5,8 +5,8 @@
 		Misc,
 		GodMode,
 		Fullbright,
-		// ReSharper disable once InconsistentNaming
-		PlayerESP
+		PlayerESP,
+		ForceUnlocks
 	}
 
 	public abstract class GMCheat : Cheat
@@ -22,5 +22,10 @@
 	public abstract class PESPCheat : Cheat
 	{
 		public override CheatCategory Category => CheatCategory.PlayerESP;
+	}
+
+	public abstract class ForceUnlockCheat : Cheat
+	{
+		public override CheatCategory Category => CheatCategory.ForceUnlocks;
 	}
 }

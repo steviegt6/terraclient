@@ -1,0 +1,49 @@
+--- src/Terraria/Terraria/GameInput/PlayerInput.cs
++++ src/Terraclient/Terraria/GameInput/PlayerInput.cs
+@@ -75,7 +_,9 @@
+ 			"LockOn",
+ 			"ViewZoomIn",
+ 			"ViewZoomOut",
+-			"ToggleCreativeMenu"
++			"ToggleCreativeMenu",
++			"CycleBankUp",
++			"CycleBankDown"
+ 		};
+ 		private static bool _canReleaseRebindingLock = true;
+ 		private static int _memoOfLastPoint = -1;
+@@ -1451,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus["CycleBankUp"].Add("PageUp");
++							c.KeyStatus["CycleBankDown"].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1559,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus["CycleBankUp"].Add("PageUp");
++							c.KeyStatus["CycleBankDown"].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1666,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus["CycleBankUp"].Add("PageUp");
++							c.KeyStatus["CycleBankDown"].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1773,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus["CycleBankUp"].Add("PageUp");
++							c.KeyStatus["CycleBankDown"].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");

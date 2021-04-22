@@ -1,0 +1,13 @@
+--- src/Terraria/Terraria/GameContent/UI/Elements/UIKeybindingListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UIKeybindingListItem.cs
+@@ -196,6 +_,10 @@
+ 					return Language.GetTextValue("UI.ZoomOut");
+ 				case "ToggleCreativeMenu":
+ 					return Language.GetTextValue("UI.ToggleCreativeMenu");
++				case "CycleBankUp":
++					return Language.GetTextValue("UI.CycleBankUp");
++				case "CycleBankDown":
++					return Language.GetTextValue("UI.CycleBankDown");
+ 			}
+ 		}
+ 	}

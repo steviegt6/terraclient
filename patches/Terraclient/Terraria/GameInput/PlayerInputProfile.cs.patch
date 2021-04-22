@@ -1,0 +1,17 @@
+--- src/Terraria/Terraria/GameInput/PlayerInputProfile.cs
++++ src/Terraclient/Terraria/GameInput/PlayerInputProfile.cs
+@@ -79,6 +_,14 @@
+ 					list.Add(item);
+ 			}
+ 
++			if (!InputModes[InputMode.Keyboard].KeyStatus.ContainsKey("CycleBankUp")) {
++				InputModes[InputMode.Keyboard].KeyStatus["CycleBankUp"] = new List<string>();
++				InputModes[InputMode.Keyboard].KeyStatus["CycleBankDown"] = new List<string>();
++
++				InputModes[InputMode.Keyboard].KeyStatus["CycleBankUp"].AddRange(PlayerInput.OriginalProfiles["Redigit's Pick"].InputModes[InputMode.Keyboard].KeyStatus["CycleBankUp"]);
++				InputModes[InputMode.Keyboard].KeyStatus["CycleBankDown"].AddRange(PlayerInput.OriginalProfiles["Redigit's Pick"].InputModes[InputMode.Keyboard].KeyStatus["CycleBankDown"]);
++			}
++
+ 			if (dict.TryGetValue("Settings", out value)) {
+ 				Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(((JObject)value).ToString());
+ 				if (dictionary.TryGetValue("Edittable", out value))

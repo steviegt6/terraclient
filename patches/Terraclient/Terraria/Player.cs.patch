@@ -46,6 +46,15 @@
  					DelBuff(num33);
  			}
  
+@@ -20917,6 +_,8 @@
+ 		}
+ 
+ 		private void HandleBeingInChestRange() {
++			if (CheatHandler.GetCheat<InfiniteChestReachCheat>().isEnabled)
++				return;
+ 			if (chest != -1) {
+ 				if (chest != -2)
+ 					flyingPigChest = -1;
 @@ -21187,7 +_,7 @@
  		}
  

@@ -12,6 +12,18 @@
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
+@@ -83,9 +_,9 @@
+ namespace Terraria
+ {
+ #if CLIENT
+-	public class Main : Game
++	public partial class Main : Game
+ #else
+-	public class Main : Terraria.Server.Game
++	public partial class Main : Terraria.Server.Game
+ #endif
+ 	{
+ 		public delegate void OnPlayerSelected(PlayerFileData player);
 @@ -241,7 +_,7 @@
  		public static NPCHeadRenderer BossNPCHeadRenderer = null;
  		public static string versionNumber = "v1.4.2.2";
@@ -74,6 +86,14 @@
  				ChatMessage message = ChatManager.Commands.CreateOutgoingMessage(chatText);
  				if (netMode == 1)
  					ChatHelper.SendChatMessageFromClient(message);
+@@ -13422,6 +_,7 @@
+ 			UILinkPointNavigator.Update();
+ 			PlayerInput.CacheMousePositionForZoom();
+ 			PlayerInput.SetZoom_MouseInWorld();
++			HandleClientInput();
+ 			oldKeyState = keyState;
+ 			keyState = Keyboard.GetState();
+ 		}
 @@ -15593,7 +_,7 @@
  				numLines++;
  			}

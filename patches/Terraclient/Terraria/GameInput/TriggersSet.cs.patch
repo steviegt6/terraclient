@@ -1,0 +1,19 @@
+--- src/Terraria/Terraria/GameInput/TriggersSet.cs
++++ src/Terraclient/Terraria/GameInput/TriggersSet.cs
+@@ -479,6 +_,16 @@
+ 			}
+ 		}
+ 
++		public bool CycleBankUp {
++			get => KeyStatus["CycleBankUp"];
++			set => KeyStatus["CycleBankUp"] = value;
++		}
++
++		public bool CycleBankDown {
++			get => KeyStatus["CycleBankDown"];
++			set => KeyStatus["CycleBankDown"] = value;
++		}
++
+ 		public Vector2 DirectionsRaw => new Vector2(Right.ToInt() - Left.ToInt(), Down.ToInt() - Up.ToInt());
+ 
+ 		public void Reset() {

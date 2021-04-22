@@ -1,0 +1,20 @@
+--- src/Terraria/Terraria/GameContent/UI/States/UIManageControls.cs
++++ src/Terraclient/Terraria/GameContent/UI/States/UIManageControls.cs
+@@ -27,6 +_,8 @@
+ 			"RadialQuickbar",
+ 			"LockOn",
+ 			"ToggleCreativeMenu",
++			"CycleBankUp",
++			"CycleBankDown",
+ 			"sp3",
+ 			"sp4",
+ 			"sp5",
+@@ -224,6 +_,8 @@
+ 				"Throw",
+ 				"Inventory",
+ 				"ToggleCreativeMenu",
++				"CycleBankUp",
++				"CycleBankDown",
+ 				"ViewZoomIn",
+ 				"ViewZoomOut",
+ 				"sp9"
