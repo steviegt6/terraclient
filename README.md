@@ -33,6 +33,8 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.2. As of now, 
     - There is also a list of all buff immunities.
 - The ability to regenerate your UUID from the main menu.
 - Chat command system (W.I.P.).
+- Infinite chest reach cheat.
+- Player bank (i.e. piggy, safe, etc.) cycling from the inventory. Requires the aforementioned infinite chest reach cheat to work.
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
