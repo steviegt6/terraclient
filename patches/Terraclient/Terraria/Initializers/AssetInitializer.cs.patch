@@ -1,0 +1,10 @@
+--- src/Terraria/Terraria/Initializers/AssetInitializer.cs
++++ src/Terraclient/Terraria/Initializers/AssetInitializer.cs
+@@ -54,6 +_,7 @@
+ 			TextureAssets.SplashTextureLegoFront = LoadAsset<Texture2D>("Images\\SplashScreens\\Splash_" + num + "_2", AssetRequestMode.ImmediateLoad);
+ 			TextureAssets.Item[75] = LoadAsset<Texture2D>("Images\\Item_" + (short)75, AssetRequestMode.ImmediateLoad);
+ 			TextureAssets.LoadingSunflower = LoadAsset<Texture2D>("Images\\UI\\Sunflower_Loading", AssetRequestMode.ImmediateLoad);
++			FontAssets.DeathText = LoadAsset<DynamicSpriteFont>("Fonts/Death_Text", AssetRequestMode.ImmediateLoad); // pre-load font for drawing progress
+ 		}
+ 
+ 		public static void LoadAssetsWhileInInitialBlackScreen() {

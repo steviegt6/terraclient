@@ -60,6 +60,72 @@
  			int currentValue = 0;
  			Configuration.Get("LastLaunchedVersion", ref currentValue);
  			bool flag = false;
+@@ -4904,14 +_,18 @@
+ 		}
+ 
+ 		private void Initialize_AlmostEverything() {
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.IAE");
+ 			TilePaintSystem = new TilePaintSystemV2();
+ 			TilesRenderer = new TileDrawing(TilePaintSystem);
+ 			WallsRenderer = new WallDrawing(TilePaintSystem);
+ 			CreativePowerManager.Initialize();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.CloudFiles");
+ 			LocalFavoriteData.Load();
+ 			CloudFavoritesData.Load();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Entities");
+ 			Initialize_Entities();
+ 			FindAnnouncementBoxStatus();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Classes");
+ 			CustomCurrencyManager.Initialize();
+ 			WingStatsInitializer.Load();
+ 			TileObjectData.Initialize();
+@@ -4924,6 +_,7 @@
+ 			Projectile.InitializeStaticThings();
+ 			TorchID.Initialize();
+ 			InitializeItemAnimations();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Bestiary");
+ 			BestiaryDatabase bestiaryDatabase = new BestiaryDatabase();
+ 			new BestiaryDatabaseNPCsPopulator().Populate(bestiaryDatabase);
+ 			BestiaryDB = bestiaryDatabase;
+@@ -4935,18 +_,22 @@
+ 			bestiaryDatabase.Merge(ItemDropsDB);
+ 			PylonSystem = new TeleportPylonsSystem();
+ 			ItemDropSolver = new ItemDropResolver(itemDropDatabase);
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.ShopCreative");
+ 			ShopHelper = new ShopHelper();
+ 			CreativeItemSacrificesCatalog.Instance.Initialize();
+ 			if (!dedServ) {
+ 			BestiaryUI = new UIBestiaryTest(BestiaryDB);
+ 			ContentThatNeedsRenderTargets.Add(MapPlayerRenderer);
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Lighting");
+ 			Lighting.Initialize();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Map");
+ 			MapHelper.Initialize();
+ 			}
+ 			else {
+ 			Mount.Initialize();
+ 			Minecart.Initialize();
+ 			}
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.WGBackgrounds");
+ 			WorldGen.RandomizeBackgrounds(rand);
+ 			if (treeBGSet1[0] == 173)
+ 				WorldGen.RandomizeBackgrounds(rand);
+@@ -4960,6 +_,7 @@
+ 			bgAlphaFrontLayer[0] = 1f;
+ 			bgAlphaFarBackLayer[0] = 1f;
+ 			invBottom = 258;
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.MajorUhOhs");
+ 			Initialize_TileAndNPCData1();
+ 			Initialize_TileAndNPCData2();
+ 			Initialize_Items();
+@@ -4980,6 +_,7 @@
+ 
+ 			Recipe.SetupRecipes();
+ 			ContentSamples.FixItemsAfterRecipesAreAdded();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.FinishingTouches");
+ 			for (int k = 0; k < Liquid.maxLiquid; k++) {
+ 				liquid[k] = new Liquid();
+ 			}
 @@ -8238,6 +_,7 @@
  			});
  
@@ -68,6 +134,38 @@
  			LoadSettings();
  			SetDisplayMonitor();
  			if (screenWidth > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
+@@ -8337,6 +_,7 @@
+ 
+ 			AssetSourceController.UseResourcePacks(AssetInitializer.CreateResourcePackList(base.Services));
+ 			AssetInitializer.LoadSplashAssets(asyncLoadForSounds: true);
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Chroma");
+ 			ChromaInitializer.Load();
+ 			_gameContentLoadProcess = LoadContent_Deferred();
+ 		}
+@@ -8360,8 +_,10 @@
+ 		protected IEnumerator LoadContent_Deferred() {
+ 			yield return null;
+ 			IssueReporter = new GeneralIssueReporter();
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Assets");
+ 			AssetInitializer.LoadAssetsWhileInInitialBlackScreen();
+ 			yield return null;
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Music");
+ 			bool doneLoadingMusic = false;
+ 			IEnumerator musicLoadProcedure = LoadMusic_InSteps();
+ 			while (!doneLoadingMusic) {
+@@ -8384,10 +_,12 @@
+ 			_begunMainAsyncLoad = true;
+ 			AssetInitializer.Load(asyncLoad: true);
+ 			_artLoaded = true;
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.RenderTargets");
+ 			TownNPCHeadRenderer = new NPCHeadRenderer(TextureAssets.NpcHead);
+ 			ContentThatNeedsRenderTargets.Add(TownNPCHeadRenderer);
+ 			BossNPCHeadRenderer = new NPCHeadRenderer(TextureAssets.NpcHeadBoss);
+ 			ContentThatNeedsRenderTargets.Add(BossNPCHeadRenderer);
++			CurrentLoadStage = Language.GetTextValue("LoadCycles.Waiting");
+ 		}
+ 
+ 		private void TickLoadProcess() {
 @@ -13043,7 +_,7 @@
  			CurrentFrameFlags.SleepingPlayersCount = num2;
  			if (netMode != 2) {
@@ -230,6 +328,32 @@
  			screenSizeCache = ScreenSize;
  			UIScale = num;
  			PlayerInput.SetZoom_UI();
+@@ -39466,10 +_,10 @@
+ 			}
+ 
+ 			int num8 = 70;
+-			if (num == 1)
++			//if (num == 1)
+ 				DrawSplash_LoadingFlower(Microsoft.Xna.Framework.Color.White);
+-			else if (num2 > num)
+-				DrawSplash_LoadingFlower(white);
++			//else if (num2 > num)
++			//	DrawSplash_LoadingFlower(white);
+ 
+ 			_splashFrameCount += 1f;
+ 			if (_splashFrameCount >= (float)num8)
+@@ -39494,6 +_,11 @@
+ 			float rotation = 0f;
+ 			Vector2 origin = rectangle.Size() / 2f;
+ 			spriteBatch.Draw(value, position, rectangle, splashColor, rotation, origin, num, SpriteEffects.None, 0f);
++
++			position -= new Vector2(0f, 100f);
++			position.X -= FontAssets.DeathText.Value.MeasureString(CurrentLoadStage).X / 2f;
++			spriteBatch.DrawString(FontAssets.DeathText.Value, CurrentLoadStage, position,
++				splashColor);
+ 		}
+ 
+ 		private void DrawSplash_LoadingStar(Microsoft.Xna.Framework.Color splashColor) {
 @@ -42817,6 +_,11 @@
  				}
  

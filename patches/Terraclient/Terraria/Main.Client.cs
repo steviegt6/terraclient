@@ -1,10 +1,10 @@
-using Microsoft.Xna.Framework;
 using System;
 using Terraria.GameInput;
+using Terraria.Localization;
 
 namespace Terraria
 {
-	public partial class Main : Game
+	public partial class Main
 	{
 		public enum CycleDirection
 		{
@@ -13,6 +13,8 @@ namespace Terraria
 		}
 
 		public static int SpecialContainerType { get; private set; } = -1;
+
+		public static string CurrentLoadStage { get; internal set; } = Language.GetTextValue("LoadCycles.Waiting");
 
 		public static void CycleContainerType(CycleDirection direction) {
 			if (SpecialContainerType == -1) {

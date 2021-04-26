@@ -1,4 +1,24 @@
 {
+	"LoadCycles": {
+		"Waiting": "Waiting for load process update...",
+		"Chroma": "Initializing Chroma...",
+		"Assets": "Loading assets...", 
+		"RenderTargets": "Loading render targets", 
+		"Music": "Loading music...", 
+		"IAE": "Beginning proper initialization...",
+		"CloudFiles": "Loading local and cloud data...",
+		"Entities": "Initializing entities...",
+		"Classes": "Initializing major classes...",
+		"Bestiary": "Initializing bestiary and pylons...",
+		"ShopCreative": "Initializing item catalogs...",
+		"Lighting": "Initializing lighting...",
+		"Map": "Initializing map...",
+		"WGBackgrounds": "Randomizing world gen backgrounds...",
+		"MajorUhOhs": "Initializing tiles, NPCs, items and recipes...",
+		"FinishingTouches": "Applying finishing touches...",
+		"PostContent": "Applying post-content setup..." 
+	},
+
 	"UI": {
 		"Cheats": "Cheats",
 
@@ -25,7 +45,7 @@
 
 	"Bestiary": {
 		"ImmuneTo": "Immune to:",
-		"SpawnButton": "-> Spawn! <-" 
+		"SpawnButton": "-> Spawn! <-"
 	},
 
 	"Cheats": {
@@ -72,6 +92,6 @@
 		"BestiaryForceUnlockCheatDesc": "Unlocks and displays all bestiary information.",
 
 		"InfiniteChestReachCheatName": "Chest Reach",
-		"InfiniteChestReachCheatDesc": "Provides infinite chest reach. REQUIRED if you want to use bank cycling!" 
+		"InfiniteChestReachCheatDesc": "Provides infinite chest reach. REQUIRED if you want to use bank cycling!"
 	}
 }
