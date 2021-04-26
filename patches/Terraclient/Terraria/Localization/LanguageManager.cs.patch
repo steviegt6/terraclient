@@ -1,0 +1,28 @@
+--- src/Terraria/Terraria/Localization/LanguageManager.cs
++++ src/Terraclient/Terraria/Localization/LanguageManager.cs
+@@ -195,10 +_,10 @@
+ 				foreach (KeyValuePair<string, string> item2 in item.Value) {
+ 					string key = item.Key + "." + item2.Key;
+ 					if (_localizedTexts.ContainsKey(key)) {
+-						_localizedTexts[key].SetValue(item2.Value);
++						_localizedTexts[key].SetValue(TitleTextPatch(item2.Value));
+ 					}
+ 					else if (canCreateCategories) {
+-						_localizedTexts.Add(key, new LocalizedText(key, item2.Value));
++						_localizedTexts.Add(key, new LocalizedText(key, TitleTextPatch(item2.Value)));
+ 						if (!_categoryGroupedKeys.ContainsKey(item.Key))
+ 							_categoryGroupedKeys.Add(item.Key, new List<string>());
+ 
+@@ -207,6 +_,12 @@
+ 				}
+ 			}
+ 		}
++
++		// TODO: partial
++		private static string TitleTextPatch(string text) =>
++			text.Replace("Terraria:", "Terraclient:")
++				.Replace("Terraria :", "Terraclient :")
++				.Replace("泰拉瑞亚\uff1a", "Terraclient\uff1a");
+ 
+ 		[Conditional("DEBUG")]
+ 		private void ValidateAllCharactersContainedInFont(DynamicSpriteFont font) {
