@@ -354,7 +354,7 @@
  		}
  
  		private void DrawSplash_LoadingStar(Microsoft.Xna.Framework.Color splashColor) {
-@@ -42817,6 +_,11 @@
+@@ -42818,6 +_,11 @@
  				}
  
  				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
@@ -366,7 +366,7 @@
  				DrawCursor(DrawThickCursor());
  			}
  
-@@ -47201,7 +_,7 @@
+@@ -47202,7 +_,7 @@
  			base.Draw(gameTime);
  			float val = (float)screenWidth / MinimumZoomComparerX;
  			float val2 = (float)screenHeight / MinimumZoomComparerY;
