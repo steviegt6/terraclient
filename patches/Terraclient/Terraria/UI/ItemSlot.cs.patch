@@ -5,7 +5,7 @@
  			Player player = Main.player[Main.myPlayer];
  			inv[slot].newAndShiny = false;
 -			if (player.itemAnimation > 0 || RightClick_FindSpecialActions(inv, context, slot, player))
-+			if (player.itemAnimation > 0 || Terraclient.Commands.HandyFunctions.TryDupe(inv[slot]) || RightClick_FindSpecialActions(inv, context, slot, player))
++			if (player.itemAnimation > 0 || Terraclient.Cheats.HandyFunctions.TryDupe(inv[slot]) || RightClick_FindSpecialActions(inv, context, slot, player))
  				return;
  
  			if ((context == 0 || context == 4 || context == 3) && Main.mouseRight && Main.mouseRightRelease && inv[slot].maxStack == 1) {

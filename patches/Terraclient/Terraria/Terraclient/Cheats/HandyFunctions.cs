@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Terraria.Terraclient.Cheats.General;
 using Terraria.UI;
 
-namespace Terraria.Terraclient.Commands
+namespace Terraria.Terraclient.Cheats
 {
 	class HandyFunctions
 	{
