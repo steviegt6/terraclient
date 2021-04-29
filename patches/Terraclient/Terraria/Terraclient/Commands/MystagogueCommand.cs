@@ -17,10 +17,10 @@ namespace Terraria.Terraclient.Commands
 		}
 
 		static MystagogueCommand() {
-			new MystagogueCommand("help", "Returns \"test\" in chat.", delegate (List<string> args) {
+			new MystagogueCommand("help", "Returns \"test\" in chat.", new Action<List<string>>((List<string> args) => {
 				Main.NewText("test", 255, 255, 255);
-			});
-			new MystagogueCommand("i", "(Name-Concatenated/ID, Stack, Prefix) Spawns an item by converting your currently held cursor item (or thin air) to it.", delegate (List<string> args) {
+			}));
+			new MystagogueCommand("i", "(Name-Concatenated/ID, Stack, Prefix) Spawns an item by converting your currently held cursor item (or thin air) to it.", new Action<List<string>>((List<string> args) => {
 				if (args.Count == 0) {
 					Main.NewText("That command requires arguments", 255, 0, 0);
 					return;
@@ -42,10 +42,12 @@ namespace Terraria.Terraclient.Commands
 				}
 				else {
 					int indexOfStackCountArg = 1;
-					while (new Regex("\\D").IsMatch(args[indexOfStackCountArg])) {
-						indexOfStackCountArg++;
-						if (indexOfStackCountArg == args.Count) {
-							break;
+					if (args.Count < 0) {
+						while (new Regex("\\D").IsMatch(args[indexOfStackCountArg])) {
+							indexOfStackCountArg++;
+							if (indexOfStackCountArg == args.Count) {
+								break;
+							}
 						}
 					}
 					string fullItemNameQuery = string.Join(" ", args.GetRange(0, indexOfStackCountArg)).ToLower();
@@ -93,7 +95,6 @@ namespace Terraria.Terraclient.Commands
 					}
 				}
 				int stack = 1;
-				int num4 = 0;
 				if (args.Count >= 1) {
 					if (new Regex("\\D").IsMatch(args[0])) {
 						Main.NewText("Stack must be a positive integer", 255, 0, 0);
@@ -193,7 +194,7 @@ namespace Terraria.Terraclient.Commands
 					"Set cursor item to " + Main.mouseItem.stack +
 					(Main.mouseItem.prefix > 0 ? (" " + MystagogueCommand.Prefixes[(int)Main.mouseItem.prefix]) : "") + " " +
 					Lang.GetItemNameValue(Main.mouseItem.type) + " (" + Main.mouseItem.type + ")", 255, 255, 255);
-			});
+			}));
 		}
 
 		public string commandName;
