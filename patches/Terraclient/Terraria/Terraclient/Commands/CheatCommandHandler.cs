@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -8,29 +9,32 @@ namespace Terraria.Terraclient.Commands
 	public static class CheatCommandHandler
 	{
 		public static bool ParseCheatCommand(string message) {
-			if (!message.StartsWith("."))
+			if (!message.StartsWith(".") || message.Length == 1)
 				return false;
-			string[] arguments = SplitUpMessage(message);
+			List<string> arguments = SplitUpMessage(message);
+			string query = arguments[0].Substring(1).ToLower();
+			arguments.RemoveAt(0);
 
 			try {
-				switch (arguments[0]) {
-					case ".help":
-						Main.NewText("test");
+				for (int i = 0; i < MystagogueCommand.commandList.Count; i++) {
+					if (MystagogueCommand.commandList.ElementAt(i).commandName.ToLower() == query) {
+						MystagogueCommand.commandList[i].commandAction(arguments);
 						break;
+					}
 				}
 			}
-			catch (IndexOutOfRangeException) {
-				Main.NewText("Invalid argument count.", 255, 0, 0);
-				Main.NewText($"Registered text: {string.Join(" ", arguments)}", Color.Gray.R, Color.Gray.G, Color.Gray.B);
+			catch {
+				CommandBehaviorHelpers.Output(true, "Something went wrong.");
+				CommandBehaviorHelpers.Output(false, $"Registered text: {string.Join(" ", arguments)}");
 			}
 
 			return true;
 		}
 
-		private static string[] SplitUpMessage(string message) {
+		private static List<string> SplitUpMessage(string message) {
 			Regex regex = new Regex(@"[\""].+?[\""]|[^ ]+");
 
-			return regex.Matches(message).Cast<Match>().Select(x => x.Value).ToArray();
+			return regex.Matches(message).Cast<Match>().Select(x => x.Value).ToList();
 		}
 	}
 }
