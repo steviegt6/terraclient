@@ -1,3 +1,4 @@
+--- src/Terraria/Terraria/Item.cs
 +++ src/Terraclient/Terraria/Item.cs
 @@ -44892,11 +_,7 @@
  				material = ItemID.Sets.IsAMaterial[type];
