@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace Terraria.Terraclient.Cheats
 {
-	class HandyFunctions
+	public static class HandyFunctions
 	{
 		public static bool TryDupe(Item slot) {
 			if (!CheatHandler.GetCheat<AltRightClickDuplicationCheat>().isEnabled)

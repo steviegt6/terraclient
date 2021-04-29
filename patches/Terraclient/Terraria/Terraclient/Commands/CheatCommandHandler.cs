@@ -24,8 +24,8 @@ namespace Terraria.Terraclient.Commands
 				}
 			}
 			catch {
-				Main.NewText("Something went wrong.", 255, 0, 0);
-				Main.NewText($"Registered text: {string.Join(" ", arguments)}", Color.Gray.R, Color.Gray.G, Color.Gray.B);
+				CommandBehaviorHelpers.Output(true, "Something went wrong.");
+				CommandBehaviorHelpers.Output(false, $"Registered text: {string.Join(" ", arguments)}");
 			}
 
 			return true;
