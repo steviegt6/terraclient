@@ -2,9 +2,9 @@
 	"LoadCycles": {
 		"Waiting": "Waiting for load process update...",
 		"Chroma": "Initializing Chroma...",
-		"Assets": "Loading assets...", 
-		"RenderTargets": "Loading render targets", 
-		"Music": "Loading music...", 
+		"Assets": "Loading assets...",
+		"RenderTargets": "Loading render targets",
+		"Music": "Loading music...",
 		"IAE": "Beginning proper initialization...",
 		"CloudFiles": "Loading local and cloud data...",
 		"Entities": "Initializing entities...",
@@ -16,7 +16,7 @@
 		"WGBackgrounds": "Randomizing world gen backgrounds...",
 		"MajorUhOhs": "Initializing tiles, NPCs, items and recipes...",
 		"FinishingTouches": "Applying finishing touches...",
-		"PostContent": "Applying post-content setup..." 
+		"PostContent": "Applying post-content setup..."
 	},
 
 	"UI": {
@@ -45,7 +45,7 @@
 
 	"Bestiary": {
 		"ImmuneTo": "Immune to:",
-		"SpawnButton": "-> Spawn! <-"
+		"SpawnButton": "Spawn NPC"
 	},
 
 	"Cheats": {
@@ -92,6 +92,9 @@
 		"BestiaryForceUnlockCheatDesc": "Unlocks and displays all bestiary information.",
 
 		"InfiniteChestReachCheatName": "Chest Reach",
-		"InfiniteChestReachCheatDesc": "Provides infinite chest reach. REQUIRED if you want to use bank cycling!"
+		"InfiniteChestReachCheatDesc": "Provides infinite chest reach. REQUIRED if you want to use bank cycling!",
+
+		"AltRightClickDuplicationCheatName": "Item Duplicator",
+		"AltRightClickDuplicationCheatDesc": "Enables duplicating items in the inventory by right-clicking while in favoriting mode. Also hold control to make a stack of 2.1 billion."
 	}
 }

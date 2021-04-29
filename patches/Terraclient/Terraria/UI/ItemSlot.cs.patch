@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/UI/ItemSlot.cs
++++ src/Terraclient/Terraria/UI/ItemSlot.cs
+@@ -926,7 +_,7 @@
+ 		public static void RightClick(Item[] inv, int context = 0, int slot = 0) {
+ 			Player player = Main.player[Main.myPlayer];
+ 			inv[slot].newAndShiny = false;
+-			if (player.itemAnimation > 0 || RightClick_FindSpecialActions(inv, context, slot, player))
++			if (player.itemAnimation > 0 || Terraclient.Commands.HandyFunctions.TryDupe(inv[slot]) || RightClick_FindSpecialActions(inv, context, slot, player))
+ 				return;
+ 
+ 			if ((context == 0 || context == 4 || context == 3) && Main.mouseRight && Main.mouseRightRelease && inv[slot].maxStack == 1) {
