@@ -23,10 +23,6 @@ namespace Terraria.Terraclient.Commands
 					}
 				}
 			}
-			catch (IndexOutOfRangeException) {
-				Main.NewText("Invalid argument count.", 255, 0, 0);
-				Main.NewText($"Registered text: {string.Join(" ", arguments)}", Color.Gray.R, Color.Gray.G, Color.Gray.B);
-			}
 			catch {
 				Main.NewText("Something went wrong.", 255, 0, 0);
 				Main.NewText($"Registered text: {string.Join(" ", arguments)}", Color.Gray.R, Color.Gray.G, Color.Gray.B);
