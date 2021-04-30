@@ -54,6 +54,35 @@ namespace Terraria.Terraclient.Commands
 			colorTimer = 0;
 		}
 
+		public static string GetChatOverlayText() {
+			if (Main.chatText is "" or ".") {
+				return ".help";
+			}
+
+			if (!Main.chatText.StartsWith(".")) {
+				return "";
+			}
+
+			IDictionary<string, MystagogueCommand> commandsThatStartWithThis = MystagogueCommand.commandList.Where(cmd => $".{cmd.commandName.ToLower()}"
+				.StartsWith(Main.chatText.ToLower()))
+				.ToDictionary(cmd => cmd.commandName);
+
+			if (commandsThatStartWithThis.Count == 0)
+				return Main.chatText + " (no command with this name found!)"; // todo: localization
+
+			commandsThatStartWithThis = (from pair
+				in commandsThatStartWithThis 
+				orderby pair.Key 
+				select pair)
+				.ToDictionary(x => x.Key, 
+					x => x.Value);
+
+			if (Main.chatText.Contains(" "))
+				return "." + commandsThatStartWithThis.ElementAt(0).Value.commandName;
+
+			return "." + commandsThatStartWithThis.ElementAt(0).Value.commandName + " " + commandsThatStartWithThis.ElementAt(0).Value.commandDescription;
+		}
+
 		private static List<string> SplitUpMessage(string message) =>
 			new Regex(@"[\""].+?[\""]|[^ ]+").Matches(message).Select(x => x.Value).ToList();
 	}
