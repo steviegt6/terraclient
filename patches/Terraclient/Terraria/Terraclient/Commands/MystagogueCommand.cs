@@ -219,7 +219,7 @@ namespace Terraria.Terraclient.Commands
 
 		public string CommandDescription;
 
-		public List<Action<List<string>>> CommandActions;
+		public List<Action<List<string>>> CommandActions = new();
 
 		public static List<MystagogueCommand> CommandList = new();
 
