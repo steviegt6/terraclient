@@ -1,0 +1,19 @@
+--- src/Terraria/Terraria/Achievements/Achievement.cs
++++ src/Terraclient/Terraria/Achievements/Achievement.cs
+@@ -77,6 +_,16 @@
+ 			}
+ 		}
+ 
++		public void ForceUnlock() {
++			foreach (var condition in _conditions.Values)
++				condition.Complete();
++
++			if (SocialAPI.Achievements != null)
++				SocialAPI.Achievements.CompleteAchievement(Name);
++
++			OnCompleted?.Invoke(this);
++		}
++
+ 		private void UseTracker(IAchievementTracker tracker) {
+ 			tracker.ReportAs("STAT_" + Name);
+ 			_tracker = tracker;

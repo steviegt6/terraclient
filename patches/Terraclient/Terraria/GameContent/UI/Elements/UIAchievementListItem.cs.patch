@@ -1,0 +1,45 @@
+--- src/Terraria/Terraria/GameContent/UI/Elements/UIAchievementListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UIAchievementListItem.cs
+@@ -3,6 +_,9 @@
+ using ReLogic.Content;
+ using System;
+ using Terraria.Achievements;
++using Terraria.Audio;
++using Terraria.GameInput;
++using Terraria.ID;
+ using Terraria.Localization;
+ using Terraria.UI;
+ using Terraria.UI.Chat;
+@@ -128,6 +_,14 @@
+ 				vector2.X -= num5 * 1.4f + stringSize2.X;
+ 				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, text2, vector2, value3, 0f, new Vector2(0f, 0f), baseScale3, 90f);
+ 			}
++
++			if (_achievement.IsCompleted || !IsMouseHovering)
++				return;
++
++			Main.instance.MouseText("Click to unlock!");
++
++			if (PlayerInput.Triggers.Current.MouseLeft)
++				_achievement.ForceUnlock();
+ 		}
+ 
+ 		private void UpdateIconFrame() {
+@@ -156,12 +_,17 @@
+ 			base.MouseOver(evt);
+ 			BackgroundColor = new Color(46, 60, 119);
+ 			BorderColor = new Color(20, 30, 56);
++
++			SoundEngine.PlaySound(SoundID.MenuTick);
+ 		}
+ 
+ 		public override void MouseOut(UIMouseEvent evt) {
+ 			base.MouseOut(evt);
+ 			BackgroundColor = new Color(26, 40, 89) * 0.8f;
+ 			BorderColor = new Color(13, 20, 44) * 0.8f;
++
++			SoundEngine.PlaySound(SoundID.MenuTick);
++			Main.instance.MouseText("");
+ 		}
+ 
+ 		public Achievement GetAchievement() => _achievement;
