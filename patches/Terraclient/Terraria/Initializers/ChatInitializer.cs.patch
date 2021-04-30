@@ -1,0 +1,19 @@
+--- src/Terraria/Terraria/Initializers/ChatInitializer.cs
++++ src/Terraclient/Terraria/Initializers/ChatInitializer.cs
+@@ -2,6 +_,7 @@
+ using Terraria.GameContent.UI;
+ using Terraria.GameContent.UI.Chat;
+ using Terraria.Localization;
++using Terraria.Terraclient.GameContent.UI.Chat;
+ using Terraria.UI.Chat;
+ 
+ namespace Terraria.Initializers
+@@ -33,6 +_,8 @@
+ 				"g",
+ 				"glyph"
+ 			});
++
++			ChatManager.Register<TerraclientColorTagHandler>("tc");
+ 
+ 			ChatManager.Commands.AddCommand<PartyChatCommand>().AddCommand<RollCommand>().AddCommand<EmoteCommand>()
+ 				.AddCommand<ListPlayersCommand>()

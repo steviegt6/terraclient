@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/GameContent/UI/Chat/ItemTagHandler.cs
++++ src/Terraclient/Terraria/GameContent/UI/Chat/ItemTagHandler.cs
+@@ -22,7 +_,7 @@
+ 				Main.instance.MouseText(_item.Name, _item.rare, 0);
+ 			}
+ 
+-			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f) {
++			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f, bool isShadow = false) {
+ 				float num = 1f;
+ 				float num2 = 1f;
+ 				if (Main.netMode != 2 && !Main.dedServ) {

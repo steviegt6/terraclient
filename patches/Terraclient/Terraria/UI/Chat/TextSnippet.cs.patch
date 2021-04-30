@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/UI/Chat/TextSnippet.cs
++++ src/Terraclient/Terraria/UI/Chat/TextSnippet.cs
+@@ -36,7 +_,7 @@
+ 
+ 		public virtual Color GetVisibleColor() => ChatManager.WaveColor(Color);
+ 
+-		public virtual bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f) {
++		public virtual bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f, bool isShadow = false) {
+ 			size = Vector2.Zero;
+ 			return false;
+ 		}

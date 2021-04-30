@@ -1,0 +1,25 @@
+--- src/Terraria/Terraria/UI/Chat/ChatManager.cs
++++ src/Terraclient/Terraria/UI/Chat/ChatManager.cs
+@@ -161,11 +_,11 @@
+ 
+ 		public static void DrawColorCodedStringShadow(SpriteBatch spriteBatch, DynamicSpriteFont font, TextSnippet[] snippets, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, float maxWidth = -1f, float spread = 2f) {
+ 			for (int i = 0; i < ShadowDirections.Length; i++) {
+-				DrawColorCodedString(spriteBatch, font, snippets, position + ShadowDirections[i] * spread, baseColor, rotation, origin, baseScale, out int _, maxWidth, ignoreColors: true);
++				DrawColorCodedString(spriteBatch, font, snippets, position + ShadowDirections[i] * spread, baseColor, rotation, origin, baseScale, out int _, maxWidth, ignoreColors: true, isShadow: true);
+ 			}
+ 		}
+ 
+-		public static Vector2 DrawColorCodedString(SpriteBatch spriteBatch, DynamicSpriteFont font, TextSnippet[] snippets, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, out int hoveredSnippet, float maxWidth, bool ignoreColors = false) {
++		public static Vector2 DrawColorCodedString(SpriteBatch spriteBatch, DynamicSpriteFont font, TextSnippet[] snippets, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, out int hoveredSnippet, float maxWidth, bool ignoreColors = false, bool isShadow = false) {
+ 			int num = -1;
+ 			Vector2 vec = new Vector2(Main.mouseX, Main.mouseY);
+ 			Vector2 vector = position;
+@@ -181,7 +_,7 @@
+ 					color = textSnippet.GetVisibleColor();
+ 
+ 				num2 = textSnippet.Scale;
+-				if (textSnippet.UniqueDraw(justCheckingString: false, out Vector2 size, spriteBatch, vector, color, num2)) {
++				if (textSnippet.UniqueDraw(justCheckingString: false, out Vector2 size, spriteBatch, vector, color, num2, isShadow)) {
+ 					if (vec.Between(vector, vector + size))
+ 						num = i;
+ 

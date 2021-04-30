@@ -11,30 +11,29 @@ namespace Terraria.Terraclient.Commands
 		public static bool ParseCheatCommand(string message) {
 			if (!message.StartsWith(".") || message.Length == 1)
 				return false;
+
 			List<string> arguments = SplitUpMessage(message);
-			string query = arguments[0].Substring(1).ToLower();
+			string query = arguments[0][1..].ToLower();
 			arguments.RemoveAt(0);
 
 			try {
 				for (int i = 0; i < MystagogueCommand.commandList.Count; i++) {
-					if (MystagogueCommand.commandList.ElementAt(i).commandName.ToLower() == query) {
-						MystagogueCommand.commandList[i].commandAction(arguments);
-						break;
-					}
+					if (MystagogueCommand.commandList.ElementAt(i).commandName.ToLower() != query)
+						continue;
+
+					MystagogueCommand.commandList[i].commandAction(arguments);
+					break;
 				}
 			}
 			catch {
-				CommandBehaviorHelpers.Output(true, "Something went wrong.");
-				CommandBehaviorHelpers.Output(false, $"Registered text: {string.Join(" ", arguments)}");
+				CheatCommandUtils.Output(true, "Something went wrong.");
+				CheatCommandUtils.Output(false, $"Registered text: {string.Join(" ", arguments)}");
 			}
 
 			return true;
 		}
 
-		private static List<string> SplitUpMessage(string message) {
-			Regex regex = new Regex(@"[\""].+?[\""]|[^ ]+");
-
-			return regex.Matches(message).Cast<Match>().Select(x => x.Value).ToList();
-		}
+		private static List<string> SplitUpMessage(string message) =>
+			new Regex(@"[\""].+?[\""]|[^ ]+").Matches(message).Select(x => x.Value).ToList();
 	}
 }

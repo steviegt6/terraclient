@@ -18,11 +18,11 @@ namespace Terraria.Terraclient.Commands
 
 		static MystagogueCommand() {
 			new MystagogueCommand("help", "Returns \"test\" in chat.", new Action<List<string>>((List<string> args) => {
-				CommandBehaviorHelpers.Output(false, "test");
+				CheatCommandUtils.Output(false, "test");
 			}));
 			new MystagogueCommand("i", "(Name-Concatenated/ID, Stack, Prefix) Spawns an item by converting your currently held cursor item (or thin air) to it.", new Action<List<string>>((List<string> args) => {
 				if (args.Count == 0) {
-					CommandBehaviorHelpers.Output(true, "That command requires arguments");
+					CheatCommandUtils.Output(true, "That command requires arguments");
 					return;
 				}
 				int finalItemSelection = 0;
@@ -33,7 +33,7 @@ namespace Terraria.Terraclient.Commands
 					}
 					while (text != finalItemSelection.ToString()) {
 						if (finalItemSelection == ItemID.Count) {
-							CommandBehaviorHelpers.Output(true, "Given item ID does not correspond to an item");
+							CheatCommandUtils.Output(true, "Given item ID does not correspond to an item");
 							return;
 						}
 						finalItemSelection++;
@@ -59,7 +59,7 @@ namespace Terraria.Terraclient.Commands
 						}
 					}
 					if (foundItems.Count == 0) {
-						CommandBehaviorHelpers.Output(true, "No item names match");
+						CheatCommandUtils.Output(true, "No item names match");
 						return;
 					}
 					if (foundItems.Count > 1) {
@@ -81,11 +81,11 @@ namespace Terraria.Terraclient.Commands
 							if (itemNameListToCheck[k] == fullItemNameQuery) {
 								finalItemSelection = foundItems[k];
 								itemNameAndIDsToOutput.RemoveAt(k);
-								CommandBehaviorHelpers.Output(false, "Other matches include " + string.Join(", ", itemNameAndIDsToOutput));
+								CheatCommandUtils.Output(false, "Other matches include " + string.Join(", ", itemNameAndIDsToOutput));
 								break;
 							}
 							if (k + 1 == foundItems.Count) {
-								CommandBehaviorHelpers.Output(true, "Query too unspecific, found " + string.Join(", ", itemNameAndIDsToOutput));
+								CheatCommandUtils.Output(true, "Query too unspecific, found " + string.Join(", ", itemNameAndIDsToOutput));
 								return;
 							}
 						}
@@ -97,7 +97,7 @@ namespace Terraria.Terraclient.Commands
 				int stack = 1;
 				if (args.Count >= 1) {
 					if (new Regex("\\D").IsMatch(args[0])) {
-						CommandBehaviorHelpers.Output(true, "Stack must be a positive integer");
+						CheatCommandUtils.Output(true, "Stack must be a positive integer");
 						return;
 					}
 					string parsingString = args[0];
@@ -123,7 +123,7 @@ namespace Terraria.Terraclient.Commands
 						}
 						while (parsingString != finalPrefixSelection.ToString()) {
 							if (finalPrefixSelection == PrefixID.Count) {
-								CommandBehaviorHelpers.Output(true, "Given prefix ID does not correspond to a prefix");
+								CheatCommandUtils.Output(true, "Given prefix ID does not correspond to a prefix");
 								return;
 							}
 							finalPrefixSelection++;
@@ -138,7 +138,7 @@ namespace Terraria.Terraclient.Commands
 							}
 						}
 						if (foundPrefixes.Count == 0) {
-							CommandBehaviorHelpers.Output(true, "No prefix names match");
+							CheatCommandUtils.Output(true, "No prefix names match");
 							return;
 						}
 						if (foundPrefixes.Count > 1) {
@@ -152,7 +152,7 @@ namespace Terraria.Terraclient.Commands
 									")"
 								}));
 							}
-							CommandBehaviorHelpers.Output(true, "Prefix query too unspecific, found " + string.Join(", ", prefixNamesAndIDsToOutput));
+							CheatCommandUtils.Output(true, "Prefix query too unspecific, found " + string.Join(", ", prefixNamesAndIDsToOutput));
 							return;
 						}
 						finalPrefixSelection = foundPrefixes[0];
@@ -190,7 +190,7 @@ namespace Terraria.Terraclient.Commands
 				if (Main.mouseItem.prefix > 0) {
 					text5 = " " + MystagogueCommand.Prefixes[(int)Main.mouseItem.prefix];
 				}
-				CommandBehaviorHelpers.Output(false,
+				CheatCommandUtils.Output(false,
 					"Set cursor item to " + Main.mouseItem.stack +
 					(Main.mouseItem.prefix > 0 ? (" " + MystagogueCommand.Prefixes[(int)Main.mouseItem.prefix]) : "") + " " +
 					Lang.GetItemNameValue(Main.mouseItem.type) + " (" + Main.mouseItem.type + ")");

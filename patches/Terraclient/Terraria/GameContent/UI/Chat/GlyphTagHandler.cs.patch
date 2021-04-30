@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/GameContent/UI/Chat/GlyphTagHandler.cs
++++ src/Terraclient/Terraria/GameContent/UI/Chat/GlyphTagHandler.cs
+@@ -18,7 +_,7 @@
+ 				Color = Color.White;
+ 			}
+ 
+-			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f) {
++			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1f, bool isShadow = false) {
+ 				if (!justCheckingString && color != Color.Black) {
+ 					int num = _glyphIndex;
+ 					if (_glyphIndex == 25)

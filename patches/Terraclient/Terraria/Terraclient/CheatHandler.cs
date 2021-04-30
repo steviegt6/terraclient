@@ -20,7 +20,7 @@ namespace Terraria.Terraclient
 			cheats = new List<Cheat>();
 
 			foreach (Type type in typeof(CheatHandler).Assembly.GetTypes()) {
-				if (type.IsAbstract || type.GetConstructor(new Type[] { }) == null || !type.IsSubclassOf(typeof(Cheat)) || !(Activator.CreateInstance(type) is Cheat cheat))
+				if (type.IsAbstract || type.GetConstructor(Array.Empty<Type>()) == null || !type.IsSubclassOf(typeof(Cheat)) || !(Activator.CreateInstance(type) is Cheat cheat))
 					continue;
 
 				cheats.Add(cheat);
