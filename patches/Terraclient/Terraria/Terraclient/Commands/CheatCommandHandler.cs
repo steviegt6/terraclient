@@ -6,7 +6,7 @@ namespace Terraria.Terraclient.Commands
 {
 	public static class CheatCommandHandler
 	{
-		private static int colorTimer;
+		private static int _colorTimer;
 
 		public static bool ParseCheatCommand(string message) {
 			if (!message.StartsWith(".") || message.Length == 1)
@@ -34,9 +34,9 @@ namespace Terraria.Terraclient.Commands
 		}
 
 		internal static void UpdateColors() {
-			colorTimer++;
+			_colorTimer++;
 
-			if (colorTimer != 5)
+			if (_colorTimer != 5)
 				return;
 
 			List<string> errorColors = CheatCommandUtils.ErrorColors;
@@ -49,7 +49,7 @@ namespace Terraria.Terraclient.Commands
 			safeColors.RemoveAt(safeColors.Count - 2);
 			safeColors.Insert(1, safeColor);
 
-			colorTimer = 0;
+			_colorTimer = 0;
 		}
 
 		public static string GetChatOverlayText() {
