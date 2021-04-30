@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Terraclient.Cheats;
+using Terraria.Terraclient.Commands;
 
 namespace Terraria.Terraclient
 {
 	public static class CheatHandler
 	{
-		public static Version TCVersion = new Version(0, 1, 0, 0);
+		public static Version TCVersion = new(0, 1, 0, 0);
 
 		internal static List<Cheat> cheats;
 
@@ -27,6 +28,10 @@ namespace Terraria.Terraclient
 			}
 
 			cheats = cheats.OrderBy(c => c.GetType().Name).ToList();
+		}
+
+		internal static void DoUpdate_Terraclient() {
+			CheatCommandHandler.UpdateColors();
 		}
 	}
 }

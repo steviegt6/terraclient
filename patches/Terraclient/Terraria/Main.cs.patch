@@ -166,6 +166,14 @@
  		}
  
  		private void TickLoadProcess() {
+@@ -12626,6 +_,7 @@
+ 				DoUpdate_HandleInput();
+ 				DoUpdate_HandleChat();
+ 				DoUpdate_Enter_ToggleChat();
++				CheatHandler.DoUpdate_Terraclient();
+ 				if (gameMenu) {
+ 					UpdateMenu();
+ 					if (netMode != 2)
 @@ -13043,7 +_,7 @@
  			CurrentFrameFlags.SleepingPlayersCount = num2;
  			if (netMode != 2) {

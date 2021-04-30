@@ -38,8 +38,9 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 					if (!justCheckingString && !isShadow) 
 						ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, singleChar, position, colors[i], 0f, Vector2.Zero, Vector2.One);
 
-					size.X += font.MeasureString(singleChar).X;
-					position.X += font.MeasureString(singleChar).X;
+					float increase = font.MeasureString(singleChar).X;
+					size.X += increase;
+					position.X += increase;
 				}
 
 				return false;

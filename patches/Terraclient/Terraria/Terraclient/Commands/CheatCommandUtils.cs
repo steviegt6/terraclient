@@ -1,10 +1,12 @@
-﻿namespace Terraria.Terraclient.Commands
+﻿using System.Collections.Generic;
+
+namespace Terraria.Terraclient.Commands
 {
 	public static class CheatCommandUtils
 	{
 		public static int ColorIndex { get; set; }
 
-		public static string[] NonErrorColors = {
+		public static List<string> NonErrorColors = new() {
 			"fc7303",
 			"8aff9e",
 			"8affa7",
@@ -20,7 +22,7 @@
 			"fc7303"
 		};
 
-		public static string[] ErrorColors = {
+		public static List<string> ErrorColors = new() {
 			"8a8a8a",
 			"f23d2c",
 			"eb3b2a",
