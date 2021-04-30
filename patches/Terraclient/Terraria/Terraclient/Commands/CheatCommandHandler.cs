@@ -17,11 +17,11 @@ namespace Terraria.Terraclient.Commands
 			arguments.RemoveAt(0);
 
 			try {
-				for (int i = 0; i < MystagogueCommand.commandList.Count; i++) {
-					if (MystagogueCommand.commandList.ElementAt(i).commandName.ToLower() != query)
+				for (int i = 0; i < MystagogueCommand.CommandList.Count; i++) {
+					if (MystagogueCommand.CommandList.ElementAt(i).CommandName.ToLower() != query)
 						continue;
 
-					MystagogueCommand.commandList[i].commandAction(arguments);
+					MystagogueCommand.CommandList[i].CommandActions.ForEach(x => x(arguments));
 					break;
 				}
 			}
@@ -61,24 +61,26 @@ namespace Terraria.Terraclient.Commands
 				return "";
 			}
 
-			IDictionary<string, MystagogueCommand> commandsThatStartWithThis = MystagogueCommand.commandList.Where(cmd => $".{cmd.commandName.ToLower()}"
-				.StartsWith(Main.chatText.ToLower()))
-				.ToDictionary(cmd => cmd.commandName);
+			IDictionary<string, MystagogueCommand> commandsThatStartWithThis = MystagogueCommand.CommandList.Where(
+					cmd => $".{cmd.CommandName.ToLower()}"
+						.StartsWith(Main.chatText.ToLower()))
+				.ToDictionary(cmd => cmd.CommandName);
 
 			if (commandsThatStartWithThis.Count == 0)
 				return Main.chatText + " (no command with this name found!)"; // todo: localization
 
 			commandsThatStartWithThis = (from pair
-				in commandsThatStartWithThis 
-				orderby pair.Key 
-				select pair)
-				.ToDictionary(x => x.Key, 
+						in commandsThatStartWithThis
+					orderby pair.Key
+					select pair)
+				.ToDictionary(x => x.Key,
 					x => x.Value);
 
 			if (Main.chatText.Contains(" "))
-				return "." + commandsThatStartWithThis.ElementAt(0).Value.commandName;
+				return "." + commandsThatStartWithThis.ElementAt(0).Value.CommandName;
 
-			return "." + commandsThatStartWithThis.ElementAt(0).Value.commandName + " " + commandsThatStartWithThis.ElementAt(0).Value.commandDescription;
+			return "." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
+			       commandsThatStartWithThis.ElementAt(0).Value.CommandDescription;
 		}
 
 		private static List<string> SplitUpMessage(string message) =>
