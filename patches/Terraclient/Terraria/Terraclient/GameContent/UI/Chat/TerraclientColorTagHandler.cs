@@ -23,7 +23,7 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 				char[] terraclientChars = drawText.ToCharArray();
 				Color[] colors = new Color[terraclientChars.Length];
 				DynamicSpriteFont font = FontAssets.MouseText.Value;
-				size = font.MeasureString(drawText);
+				size = new Vector2();
 
 				if (IsError)
 					for (int i = 0; i < terraclientChars.Length; i++)
@@ -34,10 +34,12 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 
 				for (int i = 0; i < terraclientChars.Length; i++) {
 					string singleChar = terraclientChars[i].ToString();
-					position.X += font.MeasureString(singleChar).X;
 					
 					if (!justCheckingString && !isShadow) 
 						ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, singleChar, position, colors[i], 0f, Vector2.Zero, Vector2.One);
+
+					size.X += font.MeasureString(singleChar).X;
+					position.X += font.MeasureString(singleChar).X;
 				}
 
 				return false;
