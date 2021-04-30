@@ -6,8 +6,26 @@ using System.Threading.Tasks;
 
 namespace Terraria.Terraclient.Commands
 {
-	public static class CommandBehaviorHelpers
+	public static class SpecialChatBehaviorHelpers
 	{
+		public static string GetChatOverlayText() {
+			string ChatText = Main.chatText;
+			if (ChatText == "" || ChatText.StartsWith(".")) {
+				return ".help";
+			}
+			if (!ChatText.StartsWith(".")) {
+				return "";
+			}
+			List<MystagogueCommand> CommandsThatStartWithThis = new List<MystagogueCommand>();
+			foreach (MystagogueCommand cmd in MystagogueCommand.commandList) {
+				if (ChatText.ToLower().StartsWith(cmd.commandName.ToLower())) {
+					CommandsThatStartWithThis.Add(cmd);
+				}
+			}
+			CommandsThatStartWithThis.Sort();
+			return "." + CommandsThatStartWithThis[0].commandName + CommandsThatStartWithThis[0].commandDescription;
+		}
+
 		public static void Output(bool IsError, string Output) {
 			if (!IsError) {
 				Main.NewText("[c/fc7303:<]" +

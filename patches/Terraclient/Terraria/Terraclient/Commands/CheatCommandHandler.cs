@@ -24,8 +24,8 @@ namespace Terraria.Terraclient.Commands
 				}
 			}
 			catch {
-				CommandBehaviorHelpers.Output(true, "Something went wrong.");
-				CommandBehaviorHelpers.Output(false, $"Registered text: {string.Join(" ", arguments)}");
+				SpecialChatBehaviorHelpers.Output(true, "Something went wrong.");
+				SpecialChatBehaviorHelpers.Output(false, $"Registered text: {string.Join(" ", arguments)}");
 			}
 
 			return true;
