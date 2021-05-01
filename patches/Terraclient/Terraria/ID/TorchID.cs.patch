@@ -1,0 +1,10 @@
+--- src/Terraria/Terraria/ID/TorchID.cs
++++ src/Terraclient/Terraria/ID/TorchID.cs
+@@ -125,6 +_,7 @@
+ 		}
+ 
+ 		public static void TorchColor(int torchID, out float R, out float G, out float B) {
++			if (torchID >= _lights.Length) torchID = 0;
+ 			_lights[torchID].GetRGB(out R, out G, out B);
+ 		}
+ 	}

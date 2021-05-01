@@ -32,6 +32,27 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
 				.Build();
 
+			Create("torch",
+					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
+				.AddAction(_ => {
+					Main.mouseItem.SetDefaults(ItemID.Torch);
+					Main.mouseItem.stack = 1;
+					Main.mouseItem.Refresh();
+					Main.mouseItem.placeStyle = 99;
+					Main.mouseItem.SetNameOverride("cum torch of cum or something else that's funny");
+				})
+				.Build();
+
+			Create("unbreakable",
+					"Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client.")
+				.AddAction(_ => {
+					Main.mouseItem.SetDefaults(ItemID.DirtBlock);
+					Main.mouseItem.stack = 999;
+					Main.mouseItem.Refresh();
+					Main.mouseItem.placeStyle = 99;
+				})
+				.Build();
+
 			Create("i",
 					"(name-concatenated/ID, stack, prefix) Spawns an item by converting your currently-held cursor item (or thin air) to it. " +
 					"Automatically sent to your inventory if your inventory is closed.")
