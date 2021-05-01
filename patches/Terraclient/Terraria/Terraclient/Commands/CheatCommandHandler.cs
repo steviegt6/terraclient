@@ -57,7 +57,7 @@ namespace Terraria.Terraclient.Commands
 				return ".help";
 			}
 
-			if (!Main.chatText.StartsWith(".")) {
+			if (!Main.chatText.StartsWith(".") || Main.chatText.Contains(" ")) {
 				return "";
 			}
 
@@ -67,20 +67,20 @@ namespace Terraria.Terraclient.Commands
 				.ToDictionary(cmd => cmd.CommandName);
 
 			if (commandsThatStartWithThis.Count == 0)
-				return Main.chatText + " (no command with this name found!)"; // todo: localization
+				return Main.chatText + " No command found."; // todo: localization
+
+			if (commandsThatStartWithThis.Count == 1)
+				return "." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
+				   commandsThatStartWithThis.ElementAt(0).Value.CommandDescription;
 
 			commandsThatStartWithThis = (from pair
 						in commandsThatStartWithThis
-					orderby pair.Key
-					select pair)
+										 orderby pair.Key
+										 select pair)
 				.ToDictionary(x => x.Key,
 					x => x.Value);
 
-			if (Main.chatText.Contains(" "))
-				return "." + commandsThatStartWithThis.ElementAt(0).Value.CommandName;
-
-			return "." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
-			       commandsThatStartWithThis.ElementAt(0).Value.CommandDescription;
+			return "." + string.Join(", ", commandsThatStartWithThis.Keys);
 		}
 
 		private static List<string> SplitUpMessage(string message) =>
