@@ -35,6 +35,11 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.2. As of now, 
 - Chat command system (W.I.P.).
 - Infinite chest reach cheat.
 - Player bank (i.e. piggy, safe, etc.) cycling from the inventory. Requires the aforementioned infinite chest reach cheat to work.
+- Deprecated item support.
+- Sexy menu changes that allow for UUID regeneration, etc.
+- W.I.P. modular command system.
+- COmmand that spawns a torch that will crash a vanilla user's game.
+- - *And* safeguards against this crash on your own client, meaning anyone else that has a similar hack won't work on you.
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
