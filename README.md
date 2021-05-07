@@ -38,7 +38,7 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.2. As of now, 
 - Deprecated item support.
 - Sexy menu changes that allow for UUID regeneration, etc.
 - W.I.P. modular command system.
-- COmmand that spawns a torch that will crash a vanilla user's game.
+- Command that spawns a torch that will crash a vanilla user's game.
   - *And* safeguards against this crash on your own client, meaning anyone else that has a similar hack won't work on you.
 
 ## Contributing
