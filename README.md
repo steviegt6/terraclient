@@ -14,32 +14,30 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.2. As of now, 
 ## Features
 
 (Note that this list is ever-expanding and not always complete)
-- Godmode.
-- Journey character access bypassing
-- Fullbright.
-  - \+ options for slightly better fullbright performance.
-- Map teleportation.
-- Journey Mode spoofing.
+- Toggle Godmode.
+- Toggle the bypass for journey/classic limitations.
+- Toggle Fullbright.
+  - \+ also offers options to improve preformance.
+- Teleport to anywhere on the world map with the click of a button.
+- Spoof Journey mode.
   - (Gives your character access to all Journey mode features like research, even on servers. This does not make the server register you has a Journey mode character, though.)
-- Player ESP using multiplayer nameplates.
-  - Extra info option as well.
+- Toggle multiplayer nameplate ESP.
+  - Option to display more info as well.
     - Displays yourself as well.
-- Forced wide-screen scaling removal and forced main-menu UI scaling removal.
-- Forced PvP/team-switching cooldown removal.
-- The ability to switch between actual player difficulties (saves the file as well).
-- The ability to unlock all Journey mode items in the item spawning UI (requires rejoining the world/server).
-- The ability to unlock all bestiary entries (requires re-opening the UI).
-  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary.
-    - There is also a list of all buff immunities.
-- The ability to regenerate your UUID from the main menu.
-- Chat command system (W.I.P.).
-- Infinite chest reach cheat.
-- Player bank (i.e. piggy, safe, etc.) cycling from the inventory. Requires the aforementioned infinite chest reach cheat to work.
-- Deprecated item support.
-- Sexy menu changes that allow for UUID regeneration, etc.
-- W.I.P. modular command system.
-- Command that spawns a torch that will crash a vanilla user's game.
-  - *And* safeguards against this crash on your own client, meaning anyone else that has a similar hack won't work on you.
+- Can force the removal of wide-screen scaling and main-menu UI scaling limits.
+- Can force the removal of PvP/team-switching cooldown removal.
+- Can cycle character difficulty in the character selection screen, and save it to the player file.
+- Can unlock all Journey mode items in the item spawning UI (requires rejoining the world/server).
+- Can temporarily unlock all bestiary entries- and allow you to spawn NPCs from that menu.
+  - Also shows a list of buff immunities for enemies that have any.
+- The ability to regenerate your UUID from the main menu, with a handy button.
+- Incredibly beefy chat command system (W.I.P.).
+- Toggle an infinite chest reach cheat.
+- Player bank (i.e. piggy, safe, etc.) viewing/cycling from the inventory. Requires the aforementioned infinite chest reach cheat to work.
+- Unlocks and unbans deprecated items, including the First Fractal.
+- Helpful menu changes.
+- Torch exploit cheat: use the command to spawn a torch that players with vanilla clients can't load, locking servers.
+  - *And* Torch exploit cheat immunity, in case anyone else wants to get you back.
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
