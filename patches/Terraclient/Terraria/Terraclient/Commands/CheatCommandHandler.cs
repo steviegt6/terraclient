@@ -19,10 +19,13 @@ namespace Terraria.Terraclient.Commands
 
 			try {
 				for (int i = 0; i < MystagogueCommand.CommandList.Count; i++) {
-					if (MystagogueCommand.CommandList.ElementAt(i).CommandName.ToLower() != query)
+					if (MystagogueCommand.CommandList[i].CommandName.ToLower() != query)
 						continue;
 
-					MystagogueCommand.CommandList[i].CommandActions.ForEach(x => x(arguments));
+					List<object> throwup = Digest(arguments, MystagogueCommand.CommandList[i].CommandArgumentDetails[0]);
+					if (throwup.Count > 0 && throwup[0] is bool)
+						return true;
+					MystagogueCommand.CommandList[i].CommandActions.ForEach(x => x(throwup));
 					break;
 				}
 			}
@@ -60,12 +63,12 @@ namespace Terraria.Terraclient.Commands
 					break;
 
 				//declaring these here because declaring inside switch statements caused variable names to no longer be available
-				List<string> matches = new List<string> { };
-				string query = "";
+				List<string> matches = new List<string>();
+				string query;
 				int indexOfFirstOmitted = arguments.Count;
 
 				switch (argumentDetails[i].InputType) {
-					case CommandArgument.PositiveIntegerRange:
+					case CommandArgument.ArgInputType.PositiveIntegerRange:
 						if (new Regex("\\D").IsMatch(arguments[0])) {
 							CheatCommandUtils.Output(true, argumentDetails[i].ArgumentName + " must be a positive integer.", 1);
 							goto Errored;
@@ -90,7 +93,7 @@ namespace Terraria.Terraclient.Commands
 						arguments.RemoveAt(0);
 						break;
 
-					case CommandArgument.Text:
+					case CommandArgument.ArgInputType.Text:
 						query = arguments[0].ToLower();
 
 						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
@@ -121,7 +124,41 @@ namespace Terraria.Terraclient.Commands
 						arguments.RemoveAt(0);
 						break;
 
-					case CommandArgument.TextConcatenationUntilNextInt:
+					case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
+						if (!new Regex("\\D").IsMatch(arguments[0])) {
+							goto IAmANumber;
+						}
+						query = arguments[0].ToLower();
+
+						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count - 2; j++)
+							if (CheatCommandUtils.ConvertToStrings(argumentDetails[i].ExpectedInputs.GetRange(2, argumentDetails[i].ExpectedInputs.Count - 2))[j].ToLower().StartsWith(query))
+								matches.Add((string)argumentDetails[i].ExpectedInputs.GetRange(2, argumentDetails[i].ExpectedInputs.Count - 2)[j]);
+
+						switch (matches.Count) {
+							case 0:
+								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " did not autocomplete to or directly match any options for " + argumentDetails[i].ArgumentName + ".", 3);
+								goto Errored;
+
+							case > 1:
+								foreach (string thing in matches) {
+									if (thing.Equals(query)) {
+										polished.Add(thing);
+										matches.Remove(thing);
+										CheatCommandUtils.Output(false, "Input for argument " + argumentDetails[i].ArgumentName + " found a direct match (" + thing + "), skipping other results including " +
+											string.Join(", ", matches));
+										arguments.RemoveAt(0);
+										goto CanNowMoveToNextArgument;
+									}
+								}
+								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
+									string.Join(", ", matches), 2);
+								goto Errored;
+						}
+						polished.Add(matches[0]);
+						arguments.RemoveAt(0);
+						break;
+
+					case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
 						for (int j = 1; j < arguments.Count; j++) {
 							if (new Regex("\\D").IsMatch(arguments[j]))
 								continue;
@@ -158,7 +195,7 @@ namespace Terraria.Terraclient.Commands
 						arguments.RemoveRange(0, indexOfFirstOmitted);
 						break;
 
-					case CommandArgument.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
+					case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
 						if (!new Regex("\\D").IsMatch(arguments[0])) {
 							goto IAmANumber;
 						}
@@ -170,9 +207,9 @@ namespace Terraria.Terraclient.Commands
 						}
 						query = string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)).ToLower();
 
-						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (CheatCommandUtils.ConvertToStrings(argumentDetails[i].ExpectedInputs)[j].ToLower().StartsWith(query))
-								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
+						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count - 2; j++)
+							if (CheatCommandUtils.ConvertToStrings(argumentDetails[i].ExpectedInputs.GetRange(2, argumentDetails[i].ExpectedInputs.Count - 2))[j].ToLower().StartsWith(query))
+								matches.Add((string)argumentDetails[i].ExpectedInputs.GetRange(2, argumentDetails[i].ExpectedInputs.Count - 2)[j]);
 
 						switch (matches.Count) {
 							case 0:
@@ -198,12 +235,12 @@ namespace Terraria.Terraclient.Commands
 						arguments.RemoveRange(0, indexOfFirstOmitted);
 						break;
 
-					case CommandArgument.CustomText:
+					case CommandArgument.ArgInputType.CustomText:
 						polished.Add(arguments[0]);
 						arguments.RemoveAt(0);
 						break;
 
-					case CommandArgument.CustomTextConcatenationUntilNextInt:
+					case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
 						for (int j = 1; j < arguments.Count; j++) {
 							if (new Regex("\\D").IsMatch(arguments[j]))
 								continue;

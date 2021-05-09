@@ -8,36 +8,35 @@ namespace Terraria.Terraclient.Commands
 
 		public List<object> ExpectedInputs;
 
-		public byte InputType;
+		public ArgInputType InputType;
 
 		public bool MayBeSkipped;
 
-		public const byte PositiveIntegerRange = 0;
-
-		public const byte Text = 1;
-
-		public const byte TextConcatenationUntilNextInt = 2;
-
-		public const byte PositiveIntegerRangeOrTextConcatenationUntilNextInt = 3;
-
-		public const byte CustomText = 4;
-
-		public const byte CustomTextConcatenationUntilNextInt = 5;
+		public enum ArgInputType
+		{
+			PositiveIntegerRange,
+			Text,
+			PositiveIntegerRangeOrText,
+			TextConcatenationUntilNextInt,
+			PositiveIntegerRangeOrTextConcatenationUntilNextInt,
+			CustomText,
+			CustomTextConcatenationUntilNextInt
+		}
 
 		public CommandArgument(string name, List<object> inputs, bool concat, bool skippable = false) {
 			//Assumptions:
 			/*
 			First, inputs will be any of these things:
-			If Concat is true,
-				it is possible that it is {}: Custom concat reaching the next integer or the end of the argument list.
-				it is possible that it is {int, int, string...}: Either a positive integer range (the first two ints) or any one of the inputs after that.
-				it is possible that it is {string...}: Concat that may match any of these values (or autocomplete to them).
-			or,	then
-				it is possible that it is {int, int}: A range of expected integers, clamped to this minimum and maximum.
-				it is possible that it is {}: Any single word of text.
-				it is possible that it is {string...}: A single word of text that may match any of these values (or autocomplete to them).
+				{int, int}            NOT concat : Integer range
+				{string...}           NOT concat : Expected single word
+				{int, int, string...} NOT concat : Integer range OR Expected single word
+				{string...}           IS  concat : Expected word or phrase, pulled from the user arguments up to the next integer or the end of the arguments
+				{int, int, string...} IS  concat : Integer range OR Expected word or phrase, pulled from the user arguments up to the next integer or the end of the arguments
+				{}                    NOT concat : Any single word
+				{}                    IS concat : Any word or phrase, pulled from the user arguments up to the next integer or the end of the arguments
+				Not choosing any of these may cause serious problems.
 
-			the Name parameter is the display name that will be shown to the player when necessary. It should be capitalized.
+			the Name parameter is the display name that will be shown to the player when necessary. It should be capitalized correctly.
 
 			the first CommandArgument that is set to Skippable in a list of CommandArguments will render all
 			other CommandArguments further along the list also "skippable", regardless of their setting, because math.
@@ -52,22 +51,22 @@ namespace Terraria.Terraclient.Commands
 			 */
 			ArgumentName = name;
 			ExpectedInputs = inputs;
-			if (concat) {
-				if (inputs.Count == 0)
-					InputType = CustomTextConcatenationUntilNextInt;
-				else if (inputs[0] is int && inputs[1] is int)
-					InputType = PositiveIntegerRangeOrTextConcatenationUntilNextInt;
-				else
-					InputType = TextConcatenationUntilNextInt;
-			}
-			else {
-				if (inputs.Count == 2 && inputs[0] is int && inputs[1] is int)
-					InputType = PositiveIntegerRange;
-				else if (inputs.Count == 0)
-					InputType = CustomText;
-				else
-					InputType = Text;
-			}
+			if (!concat && ExpectedInputs.Count == 2 && ExpectedInputs[0] is int && ExpectedInputs[1] is int)
+				InputType = ArgInputType.PositiveIntegerRange;
+			else if (!concat && ExpectedInputs.Count > 0 && !(ExpectedInputs[0] is int))
+				InputType = ArgInputType.Text;
+			else if (!concat && ExpectedInputs.Count > 0 && ExpectedInputs[0] is int)
+				InputType = ArgInputType.PositiveIntegerRangeOrText;
+			else if (concat && ExpectedInputs.Count > 0 && !(ExpectedInputs[0] is int))
+				InputType = ArgInputType.TextConcatenationUntilNextInt;
+			else if (concat && ExpectedInputs.Count > 0 && ExpectedInputs[0] is int)
+				InputType = ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt;
+			else if (!concat && ExpectedInputs.Count == 0)
+				InputType = ArgInputType.CustomText;
+			else if (concat && ExpectedInputs.Count == 0)
+				InputType = ArgInputType.CustomTextConcatenationUntilNextInt;
+			else
+				InputType = ArgInputType.CustomText;
 			MayBeSkipped = skippable;
 		}
 	}
