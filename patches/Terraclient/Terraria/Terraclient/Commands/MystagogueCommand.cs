@@ -33,30 +33,6 @@ namespace Terraria.Terraclient.Commands
 
 		// TODO: localization
 		static MystagogueCommand() {
-			Create("tester", "Returns \"test\" in chat")
-				.AddParameters(new List<CommandArgument> {
-					new CommandArgument("number", new List<object> { 0, 200 }, false),
-					new CommandArgument("text", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false),
-					new CommandArgument("number or text", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false),
-					new CommandArgument("text concat", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true),
-					new CommandArgument("number", new List<object> { 0, 200 }, false),
-					new CommandArgument("number or text concat", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true),
-					new CommandArgument("number", new List<object> { 0, 200 }, false),
-					new CommandArgument("custom text", new List<object>(), false),
-					new CommandArgument("custom text concat", new List<object>(), true),
-					new CommandArgument("number", new List<object> { 0, 200 }, false),
-					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
-					new CommandArgument("text skippable", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false, true),
-					new CommandArgument("number or text skippable", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false, true),
-					new CommandArgument("text concat skippable", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true, true),
-					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
-					new CommandArgument("number or text concat skippable", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true, true),
-					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
-					new CommandArgument("custom text skippable", new List<object>(), false, true),
-					new CommandArgument("custom text concat skippable", new List<object>(), true, true) })
-				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
-				.Build();
-
 			Create("help", "Returns \"test\" in chat")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
