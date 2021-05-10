@@ -33,6 +33,30 @@ namespace Terraria.Terraclient.Commands
 
 		// TODO: localization
 		static MystagogueCommand() {
+			Create("tester", "Returns \"test\" in chat")
+				.AddParameters(new List<CommandArgument> {
+					new CommandArgument("number", new List<object> { 0, 200 }, false),
+					new CommandArgument("text", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false),
+					new CommandArgument("number or text", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false),
+					new CommandArgument("text concat", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true),
+					new CommandArgument("number", new List<object> { 0, 200 }, false),
+					new CommandArgument("number or text concat", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true),
+					new CommandArgument("number", new List<object> { 0, 200 }, false),
+					new CommandArgument("custom text", new List<object>(), false),
+					new CommandArgument("custom text concat", new List<object>(), true),
+					new CommandArgument("number", new List<object> { 0, 200 }, false),
+					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
+					new CommandArgument("text skippable", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false, true),
+					new CommandArgument("number or text skippable", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta" }, false, true),
+					new CommandArgument("text concat skippable", new List<object> { "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true, true),
+					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
+					new CommandArgument("number or text concat skippable", new List<object> { 0, 200, "abcde", "abecde", "becde", "cdedeba", "defauaa", "defatta", "abcde def" }, true, true),
+					new CommandArgument("number skippable", new List<object> { 0, 200 }, false, true),
+					new CommandArgument("custom text skippable", new List<object>(), false, true),
+					new CommandArgument("custom text concat skippable", new List<object>(), true, true) })
+				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
+				.Build();
+
 			Create("help", "Returns \"test\" in chat")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
@@ -46,7 +70,7 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.stack = 1;
 					Main.mouseItem.Refresh();
 					Main.mouseItem.placeStyle = 99;
-					Main.mouseItem.SetNameOverride("cum torch of cum or something else that's funny");
+					Main.mouseItem.SetNameOverride("really fucking annoying placeable object");
 				})
 				.Build();
 
@@ -58,7 +82,7 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.stack = 999;
 					Main.mouseItem.Refresh();
 					Main.mouseItem.placeStyle = 99;
-					Main.mouseItem.SetNameOverride("block of cock block");
+					Main.mouseItem.SetNameOverride("dirt but it's really stupid");
 				})
 				.Build();
 
@@ -114,108 +138,6 @@ namespace Terraria.Terraclient.Commands
 						$"Set cursor item to {Main.mouseItem.stack}{(Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "")} {Lang.GetItemNameValue(Main.mouseItem.type)} ({Main.mouseItem.type})");
 				})
 				.Build();
-
-			Create("duplicatenames",
-					"Finds all the duplicate item, npc, and buff names in the game and outputs them to chat.")
-				.AddParameters(new List<CommandArgument>())
-				.AddAction(_ => {
-					//ITEMS
-					Dictionary<string, int> found = new Dictionary<string, int>();
-					for (int i = 0; i < ItemID.Count; i++) {
-						if (!found.ContainsKey(CheatCommandUtils.ItemNames[i])) {
-							found.Add(CheatCommandUtils.ItemNames[i], 1);
-						}
-						else {
-							found[CheatCommandUtils.ItemNames[i]]++;
-						}
-					}
-					for (int i = 0; i < found.Count; i++) {
-						if (found.ElementAt(i).Value == 1) {
-							found.Remove(found.ElementAt(i).Key);
-							i--;
-						}
-					}
-					string output = "Duplicate item names: ";
-					for (int i = 0; i < found.Count; i++) {
-						string ids = "";
-						for (int j = 0; j < ItemID.Count; j++) {
-							if (CheatCommandUtils.ItemNames[j] == found.ElementAt(i).Key) {
-								ids += j + ", ";
-							}
-						}
-						ids = ids.Substring(0, ids.Length - 2);
-						output += found.ElementAt(i).Key + " (" + found.ElementAt(i).Value + " occurences: " + ids + ")" + ", ";
-					}
-					output = output.Substring(0, output.Length - 2);
-					CheatCommandUtils.Output(false, output);
-					//NPCS
-					found = new Dictionary<string, int>();
-					for (int i = 0; i < NPCID.Count; i++) {
-						if (!found.ContainsKey(CheatCommandUtils.NPCNames[i])) {
-							found.Add(CheatCommandUtils.NPCNames[i], 1);
-						}
-						else {
-							found[CheatCommandUtils.NPCNames[i]]++;
-						}
-					}
-					for (int i = 0; i < found.Count; i++) {
-						if (found.ElementAt(i).Value == 1) {
-							found.Remove(found.ElementAt(i).Key);
-							i--;
-						}
-					}
-					output = "Duplicate NPC names: ";
-					for (int i = 0; i < found.Count; i++) {
-						string ids = "";
-						for (int j = 0; j < NPCID.Count; j++) {
-							if (CheatCommandUtils.NPCNames[j] == found.ElementAt(i).Key) {
-								ids += j + ", ";
-							}
-						}
-						ids = ids.Substring(0, ids.Length - 2);
-						output += found.ElementAt(i).Key + " (" + found.ElementAt(i).Value + " occurences: " + ids + ")" + ", ";
-					}
-					output = output.Substring(0, output.Length - 2);
-					for (int i = 0; true;) {
-						if (output.Length < i + 160) {
-							CheatCommandUtils.Output(false, output.Substring(i));
-							break;
-						}
-						CheatCommandUtils.Output(false, output.Substring(i, 160));
-						i += 160;
-					}
-					//BUFFS
-					found = new Dictionary<string, int>();
-					for (int i = 0; i < BuffID.Count; i++) {
-						if (!found.ContainsKey(CheatCommandUtils.BuffNames[i])) {
-							found.Add(CheatCommandUtils.BuffNames[i], 1);
-						}
-						else {
-							found[CheatCommandUtils.BuffNames[i]]++;
-						}
-					}
-					for (int i = 0; i < found.Count; i++) {
-						if (found.ElementAt(i).Value == 1) {
-							found.Remove(found.ElementAt(i).Key);
-							i--;
-						}
-					}
-					output = "Duplicate buff names: ";
-					for (int i = 0; i < found.Count; i++) {
-						string ids = "";
-						for (int j = 0; j < BuffID.Count; j++) {
-							if (CheatCommandUtils.BuffNames[j] == found.ElementAt(i).Key) {
-								ids += j + ", ";
-							}
-						}
-						ids = ids.Substring(0, ids.Length - 2);
-						output += found.ElementAt(i).Key + " (" + found.ElementAt(i).Value + " occurences: " + ids + ")" + ", ";
-					}
-					output = output.Substring(0, output.Length - 2);
-					CheatCommandUtils.Output(false, output);
-				})
-				.Build();
-
 		}
 
 		public string CommandName;
