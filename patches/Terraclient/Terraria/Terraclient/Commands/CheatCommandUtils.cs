@@ -96,35 +96,8 @@ namespace Terraria.Terraclient.Commands
 						_buffNames.Add(i, Lang.GetBuffName(i));
 					}
 					_buffNames[0] = "Nothing";
-					_buffNames[95] = "Beetle Endurance (15%)";
-					_buffNames[96] = "Beetle Endurance (30%)";
-					_buffNames[97] = "Beetle Endurance (45%)";
-					_buffNames[98] = "Beetle Might (10%)";
-					_buffNames[99] = "Beetle Might (20%)";
-					_buffNames[100] = "Beetle Might (30%)";
-					_buffNames[118] = "Minecart (Generic)";
-					_buffNames[138] = "Minecart (Generic)";
 					_buffNames[166] = "Minecart (Mechanical)";
 					_buffNames[167] = "Minecart (Mechanical)";
-					_buffNames[184] = "Minecart (Wooden)";
-					_buffNames[185] = "Minecart (Wooden)";
-					_buffNames[208] = "Minecart (Desert)";
-					_buffNames[209] = "Minecart (Desert)";
-					_buffNames[210] = "Minecart (Minecarp)";
-					_buffNames[211] = "Minecart (Minecarp)";
-					_buffNames[220] = "Minecart (Bee)";
-					_buffNames[221] = "Minecart (Bee)";
-					_buffNames[222] = "Minecart (Ladybug)";
-					_buffNames[223] = "Minecart (Ladybug)";
-					_buffNames[224] = "Minecart (Pigron)";
-					_buffNames[225] = "Minecart (Pigron)";
-					_buffNames[226] = "Minecart (Sunflower)";
-					_buffNames[227] = "Minecart (Sunflower)";
-					_buffNames[228] = "Minecart (Demonic Hellcart)";
-					_buffNames[229] = "Minecart (Demonic Hellcart)";
-					_buffNames[231] = "Minecart (Shroom)";
-					_buffNames[232] = "Minecart (Shroom)";
-
 				}
 				return _buffNames;
 			}
@@ -170,9 +143,9 @@ namespace Terraria.Terraclient.Commands
 			else if (errorType == 1)
 				errorTypeName = "Syntax"; //Command entered incorrectly
 			else if (errorType == 2)
-				errorTypeName = "Disparity"; //Command stopped at indecision between two options in autocomplete selection or otherwise
+				errorTypeName = "Indecision"; //Command stopped at indecision between two options in autocomplete selection or otherwise
 			else if (errorType == 3)
-				errorTypeName = "Missing Object"; //There's no thing corresponding to thingID
+				errorTypeName = "Not an Option"; //There's no thing corresponding to thingID
 			else if (errorType == 4)
 				errorTypeName = "Fatal"; //Literally broke
 			if (!isError)

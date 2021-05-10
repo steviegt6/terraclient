@@ -16,7 +16,7 @@ namespace Terraria.Terraclient.Commands
 		public static MystagogueCommand Create(string commandName, string commandDescription) =>
 			new(commandName, commandDescription);
 
-		public MystagogueCommand AddAction(Action<List<string>> action) {
+		public MystagogueCommand AddAction(Action<List<object>> action) {
 			CommandActions.Add(action);
 			return this;
 		}
@@ -34,11 +34,13 @@ namespace Terraria.Terraclient.Commands
 		// TODO: localization
 		static MystagogueCommand() {
 			Create("help", "Returns \"test\" in chat")
+				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => CheatCommandUtils.Output(false, "test"))
 				.Build();
 
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
+				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.mouseItem.SetDefaults(ItemID.Torch);
 					Main.mouseItem.stack = 1;
@@ -50,6 +52,7 @@ namespace Terraria.Terraclient.Commands
 
 			Create("unbreakable",
 					"Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client.")
+				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.mouseItem.SetDefaults(ItemID.DirtBlock);
 					Main.mouseItem.stack = 999;
@@ -59,171 +62,44 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			List<object> IDsRangeThenItemNames = new List<object> { 0, ItemID.Count - 1 };
+			IDsRangeThenItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
+			List<object> IDsRangeThenPrefixNames = new List<object> { 0, Prefixes.Length - 1 };
+			IDsRangeThenPrefixNames.AddRange(Prefixes);
+
 			Create("i",
 					"Spawns an item by converting your currently-held cursor item (or thin air) to it. " +
-					"Automatically sent to your inventory if your inventory is closed.")
+					"The item will be automatically sent to your inventory if your inventory is closed.")
+				.AddParameters(new List<CommandArgument> {new CommandArgument("ItemID/Name", IDsRangeThenItemNames, true),
+					new CommandArgument("Amount", new List<object>{0,int.MaxValue}, false, true),
+					new CommandArgument("Prefix", IDsRangeThenPrefixNames, false, true) })
 				.AddAction(args => {
-					if (args.Count == 0) {
-						CheatCommandUtils.Output(true, "That command requires arguments", 1);
-						return;
-					}
-
 					int itemType = 0;
-					if (!new Regex("\\D").IsMatch(args[0])) {
-						string text = args[0];
-
-						while (text.StartsWith("0"))
-							text = text.Remove(0, 1);
-
-						while (text != itemType.ToString()) {
-							if (itemType == ItemID.Count) {
-								CheatCommandUtils.Output(true, "Given item ID does not correspond to an item", 3);
-								return;
-							}
-
-							itemType++;
-						}
-
-						args.RemoveAt(0);
-					}
-					else {
-						int stackIndex = 1;
-
-						if (args.Count < 0) {
-							while (new Regex("\\D").IsMatch(args[stackIndex])) {
-								stackIndex++;
-
-								if (stackIndex == args.Count)
-									break;
-							}
-						}
-
-						string nameQuery = string.Join(" ", args.GetRange(0, stackIndex)).ToLower();
-						args = args.GetRange(stackIndex, args.Count - stackIndex);
-
-						List<int> foundItems = new List<int>();
-
-						for (int i = 0; i < ItemID.Count; i++)
-							if (Lang.GetItemNameValue(i).ToLower().StartsWith(nameQuery))
-								foundItems.Add(i);
-
-						switch (foundItems.Count) {
-							case 0:
-								CheatCommandUtils.Output(true, "No item names match", 3);
-								return;
-
-							case > 1: {
-									List<string> itemNameListToCheck =
-										foundItems.Select(id => Lang.GetItemNameValue(id).ToLower()).ToList();
-									List<string> itemNameAndIDsToOutput = foundItems
-										.Select(id => string.Concat(Lang.GetItemNameValue(id), " (", id, ")")).ToList();
-
-									for (int k = 0; k < itemNameListToCheck.Count; k++) {
-										if (itemNameListToCheck[k] == nameQuery) {
-											itemType = foundItems[k];
-											itemNameAndIDsToOutput.RemoveAt(k);
-											CheatCommandUtils.Output(false,
-												"Other matches include " + string.Join(", ", itemNameAndIDsToOutput));
-											break;
-										}
-
-										if (k + 1 != foundItems.Count)
-											continue;
-
-										CheatCommandUtils.Output(true,
-											"Query too unspecific, found " + string.Join(", ", itemNameAndIDsToOutput), 2);
-										return;
-									}
-
-									break;
-								}
-
-							default:
-								itemType = foundItems[0];
-								break;
-						}
-					}
-
 					int stack = 1;
-					if (args.Count >= 1) {
-						if (new Regex("\\D").IsMatch(args[0])) {
-							CheatCommandUtils.Output(true, "Stack must be a positive integer", 1);
-							return;
-						}
-
-						string parsingString = args[0];
-
-						while (parsingString.StartsWith("0"))
-							parsingString = parsingString.Remove(0, 1);
-
-						if (parsingString.Length > 10)
-							stack = int.MaxValue;
-						else if (Convert.ToInt64(parsingString) > 2147483647L)
-							stack = int.MaxValue;
-						else if (parsingString.Length > 0)
-							stack = int.Parse(parsingString);
-					}
-
-					int finalPrefixSelection = 0;
-
-					if (args.Count >= 2) {
-						if (!new Regex("\\D").IsMatch(args[1])) {
-							string parsingString = args[1];
-
-							while (parsingString.StartsWith("0"))
-								parsingString = parsingString.Remove(0, 1);
-
-							while (parsingString != finalPrefixSelection.ToString()) {
-								if (finalPrefixSelection == PrefixID.Count) {
-									CheatCommandUtils.Output(true, "Given prefix ID does not correspond to a prefix", 3);
-									return;
-								}
-
-								finalPrefixSelection++;
-							}
-						}
-						else {
-							string parsingString = args[1].ToLower();
-							List<int> foundPrefixes = new List<int>();
-
-							for (int i = 0; i < Prefixes.Length; i++)
-								if (Prefixes[i].ToLower().StartsWith(parsingString) && i != 75 && i != 43 && i != 76)
-									foundPrefixes.Add(i);
-
-							switch (foundPrefixes.Count) {
-								case 0:
-									CheatCommandUtils.Output(true, "No prefix names match", 3);
-									return;
-
-								case > 1: {
-										List<string> prefixNamesAndIDsToOutput = foundPrefixes
-											.Select(i => string.Concat(Prefixes[i], " (", i, ")")).ToList();
-										CheatCommandUtils.Output(true,
-											"Prefix query too unspecific, found " +
-											string.Join(", ", prefixNamesAndIDsToOutput), 2);
-										return;
-									}
-
-								default:
-									finalPrefixSelection = foundPrefixes[0];
-									break;
-							}
-						}
-
-						if (finalPrefixSelection is 18 or 75) {
-							finalPrefixSelection = !ContentSamples.ItemsByType[itemType].accessory
+					int prefix = 0;
+					if (args[0] is string)
+						itemType = CheatCommandUtils.ItemNames.Values.ToList().IndexOf((string)args[0]);
+					else
+						prefix = (int)args[0];
+					if (args.Count >= 2)
+						stack = (int)args[1];
+					if (args.Count >= 3) {
+						if (args[2] is string)
+							prefix = Array.IndexOf(Prefixes, (string)args[2]);
+						else
+							prefix = (int)args[2];
+						if (prefix is 18 or 75) {
+							prefix = !ContentSamples.ItemsByType[itemType].accessory
 								? 18
 								: 75;
 						}
-
-						if (finalPrefixSelection is 20 or 43) {
-							finalPrefixSelection = ContentSamples.ItemsByType[itemType].ranged
+						if (prefix is 20 or 43) {
+							prefix = ContentSamples.ItemsByType[itemType].ranged
 								? 20
 								: 43;
 						}
-
-						if (finalPrefixSelection is 42 or 76) {
-							finalPrefixSelection = !ContentSamples.ItemsByType[itemType].accessory
+						if (prefix is 42 or 76) {
+							prefix = !ContentSamples.ItemsByType[itemType].accessory
 								? 42
 								: 76;
 						}
@@ -231,7 +107,7 @@ namespace Terraria.Terraclient.Commands
 
 					Main.mouseItem.SetDefaults(itemType);
 					Main.mouseItem.stack = stack;
-					Main.mouseItem.prefix = (byte)finalPrefixSelection;
+					Main.mouseItem.prefix = (byte)prefix;
 					Main.mouseItem.Refresh();
 
 					CheatCommandUtils.Output(false,
@@ -241,6 +117,7 @@ namespace Terraria.Terraclient.Commands
 
 			Create("duplicatenames",
 					"Finds all the duplicate item, npc, and buff names in the game and outputs them to chat.")
+				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					//ITEMS
 					Dictionary<string, int> found = new Dictionary<string, int>();
@@ -345,7 +222,7 @@ namespace Terraria.Terraclient.Commands
 
 		public string CommandDescription;
 
-		public List<Action<List<string>>> CommandActions = new();
+		public List<Action<List<object>>> CommandActions = new();
 
 		public List<List<CommandArgument>> CommandArgumentDetails = new();
 
