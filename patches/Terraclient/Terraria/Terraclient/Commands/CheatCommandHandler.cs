@@ -354,15 +354,34 @@ namespace Terraria.Terraclient.Commands
 				}
 				if (argumentDetails.Count < finished.Count)
 					return "";
-				if (Main.chatText.EndsWith(" ") && !(argumentDetails[finished.Count - 2].InputType
-						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
-						or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt
-						|| argumentDetails[finished.Count - 2].InputType
-						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
-						&& new Regex("\\D").IsMatch(finished[finished.Count - 2]))) {
+				if (Main.chatText.EndsWith(" ")) {
 					string addon = "";
-					if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRange)
+					if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRange) {
+						if (finished.Count > 0 && (argumentDetails[finished.Count - 1].InputType
+						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
+						|| (argumentDetails[finished.Count - 1].InputType
+						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
+						&& new Regex("\\D").IsMatch(finished[finished.Count - 1])))) {
+							List<string> matches = new List<string>();
+							int j = 0;
+							if (argumentDetails[finished.Count - 1].InputType
+								is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
+								j = 2;
+							}
+							for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
+								if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(finished.Last(), StringComparison.OrdinalIgnoreCase))
+									matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
+							if (matches.Count == 0)
+								return Main.chatText.Trim() + " No matches found for this argument.";
+							if (matches.Count > 1) {
+								matches.Sort();
+								string output = "";
+								output = Main.chatText.Trim() + matches[0][finished.Last().Length..] + ", " + string.Join(", ", matches.GetRange(1, matches.Count - 1));
+								return output.Substring(0, Math.Min(150, output.Length)) + (output.Length >= 150 ? "..." : "");
+							}
+						}
 						addon = "(Input accepts a number in between " + argumentDetails[finished.Count].ExpectedInputs[0] + " and " + argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+					}
 					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.Text)
 						addon = "(Input accepts specific text options)";
 					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrText)
@@ -378,28 +397,6 @@ namespace Terraria.Terraclient.Commands
 					return Main.chatText + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
 				}
 				else {
-					List<string> matches = new List<string>();
-					string output = "";
-					int j = 0;
-					if (argumentDetails[finished.Count - 2].InputType
-						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
-						or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt
-						|| argumentDetails[finished.Count - 2].InputType
-						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
-						&& new Regex("\\D").IsMatch(finished[finished.Count - 2])) {
-						if (argumentDetails[finished.Count - 2].InputType
-							is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
-							j = 2;
-						}
-						for (; j < argumentDetails[finished.Count - 2].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[finished.Count - 2].ExpectedInputs[j]).StartsWith(finished[finished.Count - 2], StringComparison.OrdinalIgnoreCase))
-								matches.Add((string)argumentDetails[finished.Count - 2].ExpectedInputs[j]);
-						if (matches.Count > 1) {
-							matches.Sort();
-							output = Main.chatText + matches[0][finished.Last().Length..] + ", " + string.Join(", ", matches.GetRange(1, matches.Count - 1));
-							return output.Substring(0, Math.Min(150, output.Length)) + (output.Length >= 150 ? "..." : "");
-						}
-					}
 					if (argumentDetails[finished.Count - 1].InputType
 						is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
 						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
@@ -415,8 +412,8 @@ namespace Terraria.Terraclient.Commands
 						&& new Regex("\\D").IsMatch(finished.Last())) {
 						return Main.chatText.Trim() + " Cannot input a word here; Must be a positive number.";
 					}
-					matches = new List<string>();
-					j = 0;
+					List<string> matches = new List<string>();
+					int j = 0;
 					if (argumentDetails[finished.Count - 1].InputType
 						is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
 						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
@@ -426,7 +423,7 @@ namespace Terraria.Terraclient.Commands
 						if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(finished.Last(), StringComparison.OrdinalIgnoreCase))
 							matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
 					matches.Sort();
-					output = "";
+					string output = "";
 					if (matches.Count == 0)
 						return Main.chatText.Trim() + " No matches found for this argument.";
 					if (matches.Count == 1)
