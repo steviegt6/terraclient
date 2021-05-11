@@ -360,6 +360,23 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("favoriteall", "Favorites every item in the inventory.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					foreach (Item item in Main.player[Main.myPlayer].inventory) {
+						if (item.IsAir)
+							continue;
+						item.favorited = true;
+					}
+					foreach (Item item in Main.player[Main.myPlayer].miscEquips) {
+						if (item.IsAir)
+							continue;
+						item.favorited = true;
+					}
+					CheatCommandUtils.Output(false, "All items favorited.");
+				})
+				.Build();
+
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
 				.AddParameters(new List<CommandArgument>())
