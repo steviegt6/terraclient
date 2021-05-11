@@ -80,6 +80,31 @@ namespace Terraria.Terraclient.Cheats
 				ToolGodBuffMyTools();
 			}
 		}
+		public static void MoveMouseItemToInventory() {
+			if (Main.mouseItem.type > 0) {
+				Main.mouseItem.position = Main.player[Main.myPlayer].Center;
+				if (Main.mouseItem.stack > 0) {
+					int itemInstanceID = Item.NewItem((int)Main.player[Main.myPlayer].position.X,
+						(int)Main.player[Main.myPlayer].position.Y,
+						Main.player[Main.myPlayer].width,
+						Main.player[Main.myPlayer].height,
+						Main.mouseItem.type,
+						Main.mouseItem.stack,
+						false,
+						Main.mouseItem.prefix,
+						false,
+						true);
+					Main.item[itemInstanceID].newAndShiny = false;
+					if (Main.netMode == 1)
+						NetMessage.SendData(21, -1, -1, null, itemInstanceID, 1f);
+				}
+				Main.mouseItem = new Item();
+				Main.player[Main.myPlayer].inventory[58] = new Item();
+				Recipe.FindRecipes();
+			}
+		}
+		public static void MarkItemAsModified(Item item) => item.SetNameOverride(item.HoverName + "*");
+		public static void UnmarkItemAsModified(Item item) => item.ClearNameOverride();
 		private static int HeavyTasksTimer;
 	}
 }
