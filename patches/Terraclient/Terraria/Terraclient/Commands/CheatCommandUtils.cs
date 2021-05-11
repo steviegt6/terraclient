@@ -177,21 +177,5 @@ namespace Terraria.Terraclient.Commands
 							 "[c/cc3325:t]" +
 							 "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
 		}
-
-		public static List<string> ConvertToStrings(List<object> things) {
-			List<string> strings = new List<string>();
-			foreach (object thing in things) {
-				strings.Add((string)thing);
-			}
-			return strings;
-		}
-
-		public static List<object> ConvertToObjects(List<string> strings) {
-			List<object> things = new List<object>();
-			foreach (string text in strings) {
-				things.Add(text);
-			}
-			return things;
-		}
 	}
 }
