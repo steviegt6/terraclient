@@ -47,4 +47,6 @@ View a list of planned features [here](https://github.com/TML-Patcher/Terraclien
 
 ### And remember...
 ![Screenshot 2021-05-11 at 7 53 07 AM](https://user-images.githubusercontent.com/27323911/117837093-ff370380-b22d-11eb-9cbf-107253645ffb.png)
+
 Be afraid! Ignore the fact that this program is open-source and utilitizes *trusted tModLoader software* to perform its *open-source and public patches*! :((((
+If you have any actual questions about functionality, I can usually explain almost everything in full. Happy hacking.
