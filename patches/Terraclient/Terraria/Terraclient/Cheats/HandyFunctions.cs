@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Terraclient.Cheats.General;
+﻿using Terraria.Terraclient.Cheats.General;
 using Terraria.UI;
 
 namespace Terraria.Terraclient.Cheats
@@ -29,5 +24,10 @@ namespace Terraria.Terraclient.Cheats
 			}
 			return false;
 		}
+		public static void ResetEffectsMod() {
+			if (HeavyTasksTimer > 0)
+				HeavyTasksTimer--;
+		}
+		private static int HeavyTasksTimer;
 	}
 }

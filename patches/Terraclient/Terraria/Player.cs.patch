@@ -1,10 +1,11 @@
 --- src/Terraria/Terraria/Player.cs
 +++ src/Terraclient/Terraria/Player.cs
-@@ -29,6 +_,8 @@
+@@ -29,6 +_,9 @@
  using Terraria.Localization;
  using Terraria.ObjectData;
  using Terraria.Social;
 +using Terraria.Terraclient;
++using Terraria.Terraclient.Cheats;
 +using Terraria.Terraclient.Cheats.General;
  using Terraria.UI;
  using Terraria.UI.Chat;
@@ -27,6 +28,15 @@
  					BuffID.Sets.BuffMountData buffMountData = BuffID.Sets.BasicMountData[buffType[j]];
  					mount.SetMount(buffMountData.mountID, this, buffMountData.faceLeft);
  					buffTime[j] = 10;
+@@ -13119,7 +_,7 @@
+ 					}
+ 				}
+ 			}
+-
++			HandyFunctions.ResetEffectsMod();
+ 			mount.CheckMountBuff(this);
+ 		}
+ 
 @@ -16164,6 +_,9 @@
  				else
  					Dust.NewDust(new Vector2(position.X + (float)(12 * direction), position.Y + (float)num4 + 4f * gravDir), width - 8, 8, 34, 0f, 0f, 0, default(Color), 1.2f);

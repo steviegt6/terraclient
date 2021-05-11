@@ -163,7 +163,7 @@ namespace Terraria.Terraclient.Commands
 					if (args[0] is string)
 						itemType = CheatCommandUtils.ItemNames.Values.ToList().IndexOf((string)args[0]);
 					else
-						prefix = (int)args[0];
+						itemType = (int)args[0];
 					if (args.Count >= 2)
 						stack = (int)args[1];
 					if (args.Count >= 3) {
