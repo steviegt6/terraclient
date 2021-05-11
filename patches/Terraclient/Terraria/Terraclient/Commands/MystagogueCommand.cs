@@ -78,6 +78,23 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("searchitems", "Search all the items by name using a keyword. Can be used to get the item ID of an item from its name.")
+				.AddParameters(new List<CommandArgument> { new CommandArgument("Keyword to search for", new List<object>(), true) })
+				.AddAction(args => {
+					List<string> matches = new List<string>();
+					for (int j = 1; j < CheatCommandUtils.ItemNames.Count; j++)
+						if (CheatCommandUtils.ItemNames[j].Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
+							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + CheatCommandUtils.ItemNames.Values.ToList().IndexOf(CheatCommandUtils.ItemNames[j]) + ")");
+					if (matches.Count < 1) {
+						CheatCommandUtils.Output(false, "No item names match.");
+						return;
+					}
+					if (matches.Count > 1)
+						matches.Sort();
+					CheatCommandUtils.Output(false, "Found these items: " + string.Join(", ", matches));
+				})
+				.Build();
+
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
 				.AddParameters(new List<CommandArgument>())
