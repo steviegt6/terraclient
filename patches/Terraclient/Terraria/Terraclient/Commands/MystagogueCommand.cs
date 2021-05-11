@@ -95,6 +95,22 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("ri", "Refreshes the item selected in the hotbar.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					Main.player[Main.myPlayer].HeldItem.Refresh();
+					CheatCommandUtils.Output(false, "Selected item refreshed.");
+				})
+				.Build();
+
+			Create("ris", "Refreshes all items in all inventories of the character.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					Main.player[Main.myPlayer].RefreshItems();
+					CheatCommandUtils.Output(false, "All inventory items refreshed.");
+				})
+				.Build();
+
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
 				.AddParameters(new List<CommandArgument>())
