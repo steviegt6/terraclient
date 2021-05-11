@@ -1,6 +1,6 @@
 ﻿namespace Terraria.Terraclient.Cheats.General
 {
-	public class AltRightClickDuplicationCheat : Cheat
+	public class ToolGodCheat : Cheat
 	{
 	}
 }
