@@ -28,7 +28,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		public UIManageCheats() : base() => uiScaleOnCtor = Main.UIScale;
 
 		public override void OnInitialize() {
-			foreach (Cheat cheat in CheatHandler.cheats)
+			foreach (Cheat cheat in CheatHandler.Cheats)
 				if (cheat.IsImportant)
 					_cheatsFullLine.Add(cheat);
 
@@ -93,7 +93,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			List<Cheat> fullbright = new List<Cheat>();
 			List<Cheat> playerESP = new List<Cheat>();
 			List<Cheat> forceUnlocks = new List<Cheat>();
-			List<Cheat> cheats = CheatHandler.cheats.OrderBy(c => _cheatsFullLine.Contains(c)).ToList();
+			List<Cheat> cheats = CheatHandler.Cheats.OrderBy(c => _cheatsFullLine.Contains(c)).ToList();
 
 			foreach (Cheat cheat in cheats)
 				switch (cheat.Category) {

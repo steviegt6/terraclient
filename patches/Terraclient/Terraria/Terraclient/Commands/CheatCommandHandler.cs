@@ -8,25 +8,27 @@ namespace Terraria.Terraclient.Commands
 	public static class CheatCommandHandler
 	{
 		private static int _colorTimer;
+		private static string _chatOverlayText;
 
-		internal static string _chatOverlayText;
-
-		internal static string _lastChatText = "insert default value here that isn't blank lol";
+		internal static string LastChatText = "insert default value here that isn't blank lol";
 
 		public static string ChatOverlayText {
 			get {
-				if (_lastChatText == Main.chatText) {
+				if (LastChatText == Main.chatText)
 					return _chatOverlayText;
-				}
-				_lastChatText = Main.chatText;
+
+				LastChatText = Main.chatText;
+
 				try {
 					_chatOverlayText = GetChatOverlayText();
 				}
 				catch (Exception e) {
 					CheatCommandUtils.Output(true, "Something went wrong. " + e.Message + "\n" + e.StackTrace, 4);
 				}
+
 				return _chatOverlayText;
 			}
+
 			internal set => _chatOverlayText = value;
 		}
 
@@ -41,7 +43,8 @@ namespace Terraria.Terraclient.Commands
 			try {
 				for (int i = 0; i < MystagogueCommand.CommandList.Count; i++) {
 					if (MystagogueCommand.CommandList[i].CommandName.ToLower() == query) {
-						List<object> throwup = Digest(arguments, MystagogueCommand.CommandList[i].CommandArgumentDetails[0]);
+						List<object> throwup = Digest(arguments,
+							MystagogueCommand.CommandList[i].CommandArgumentDetails[0]);
 						if (throwup.Count > 0 && throwup[0] is bool)
 							return true;
 						MystagogueCommand.CommandList[i].CommandActions.ForEach(x => x(throwup));
@@ -66,8 +69,10 @@ namespace Terraria.Terraclient.Commands
 				foreach (string text in arguments) {
 					things.Add(text);
 				}
+
 				return things;
 			}
+
 			List<object> polished = new List<object>();
 			//Quotation concatenation is handled before this preprocessing, effectively making this post-preprocessing.
 			for (int i = 0; i < argumentDetails.Count; i++) {
@@ -80,12 +85,16 @@ namespace Terraria.Terraclient.Commands
 						for (int j = i; j < argumentDetails.Count; j++) {
 							missingArguments.Add(argumentDetails[j].ArgumentName);
 						}
+
 						CheatCommandUtils.Output(true, "You did not submit all the required arguments."
-							+ " Every required argument will be before the optional arguments, no matter what command you run."
-							+ " Please try again. Missing arguments: " + string.Join(", ", missingArguments), 1);
+						                               + " Every required argument will be before the optional arguments, no matter what command you run."
+						                               + " Please try again. Missing arguments: " +
+						                               string.Join(", ", missingArguments), 1);
 					}
-					goto Errored;
+
+					goto OnError;
 				}
+
 				if (arguments.Count == 0)
 					break;
 
@@ -97,12 +106,12 @@ namespace Terraria.Terraclient.Commands
 				switch (argumentDetails[i].InputType) {
 					case CommandArgument.ArgInputType.PositiveIntegerRange:
 						if (new Regex("\\D").IsMatch(arguments[0])) {
-							CheatCommandUtils.Output(true, argumentDetails[i].ArgumentName + " must be a positive integer.", 1);
-							goto Errored;
+							CheatCommandUtils.Output(true,
+								argumentDetails[i].ArgumentName + " must be a positive integer.", 1);
+							goto OnError;
 						}
 
-					IAmANumber:
-
+						IAmANumber:
 						string parsingString = arguments[0];
 
 						while (parsingString.StartsWith("0"))
@@ -111,11 +120,12 @@ namespace Terraria.Terraclient.Commands
 						polished.Add(0);
 
 						if (parsingString.Length > argumentDetails[i].ExpectedInputs[1].ToString().Length)
-							polished[polished.Count - 1] = argumentDetails[i].ExpectedInputs[1];
-						else if (argumentDetails[i].ExpectedInputs[1].ToString().Length == 10 && Convert.ToInt64(parsingString) > 2147483647L)
-							polished[polished.Count - 1] = argumentDetails[i].ExpectedInputs[1];
+							polished[^1] = argumentDetails[i].ExpectedInputs[1];
+						else if (argumentDetails[i].ExpectedInputs[1].ToString().Length == 10 &&
+						         Convert.ToInt64(parsingString) > 2147483647L)
+							polished[^1] = argumentDetails[i].ExpectedInputs[1];
 						else if (parsingString.Length > 0)
-							polished[polished.Count - 1] = int.Parse(parsingString);
+							polished[^1] = int.Parse(parsingString);
 
 						arguments.RemoveAt(0);
 						break;
@@ -124,29 +134,37 @@ namespace Terraria.Terraclient.Commands
 						query = arguments[0].ToLower();
 
 						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query, StringComparison.OrdinalIgnoreCase))
+							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
+								StringComparison.OrdinalIgnoreCase))
 								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " did not autocomplete to or directly match any options for " + argumentDetails[i].ArgumentName + ".", 3);
-								goto Errored;
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" did not autocomplete to or directly match any options for " +
+									argumentDetails[i].ArgumentName + ".", 3);
+								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches) {
-									if (thing.Equals(query)) {
-										polished.Add(thing);
-										matches.Remove(thing);
-										CheatCommandUtils.Output(false, "Input for argument " + argumentDetails[i].ArgumentName + " found a direct match (" + thing + "), skipping other results including " +
-											string.Join(", ", matches));
-										arguments.RemoveAt(0);
-										goto CanNowMoveToNextArgument;
-									}
+								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+									polished.Add(thing);
+									matches.Remove(thing);
+									CheatCommandUtils.Output(false,
+										"Input for argument " + argumentDetails[i].ArgumentName +
+										" found a direct match (" + thing + "), skipping other results including " +
+										string.Join(", ", matches));
+									arguments.RemoveAt(0);
+									goto CanNowMoveToNextArgument;
 								}
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
+
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
 									string.Join(", ", matches), 2);
-								goto Errored;
+								goto OnError;
 						}
+
 						polished.Add(matches[0]);
 						arguments.RemoveAt(0);
 						break;
@@ -157,29 +175,37 @@ namespace Terraria.Terraclient.Commands
 						query = arguments[0].ToLower();
 
 						for (int j = 2; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query, StringComparison.OrdinalIgnoreCase))
+							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
+								StringComparison.OrdinalIgnoreCase))
 								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " did not autocomplete to or directly match any options for " + argumentDetails[i].ArgumentName + ".", 3);
-								goto Errored;
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" did not autocomplete to or directly match any options for " +
+									argumentDetails[i].ArgumentName + ".", 3);
+								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches) {
-									if (thing.Equals(query)) {
-										polished.Add(thing);
-										matches.Remove(thing);
-										CheatCommandUtils.Output(false, "Input for argument " + argumentDetails[i].ArgumentName + " found a direct match (" + thing + "), skipping other results including " +
-											string.Join(", ", matches));
-										arguments.RemoveAt(0);
-										goto CanNowMoveToNextArgument;
-									}
+								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+									polished.Add(thing);
+									matches.Remove(thing);
+									CheatCommandUtils.Output(false,
+										"Input for argument " + argumentDetails[i].ArgumentName +
+										" found a direct match (" + thing + "), skipping other results including " +
+										string.Join(", ", matches));
+									arguments.RemoveAt(0);
+									goto CanNowMoveToNextArgument;
 								}
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
+
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
 									string.Join(", ", matches), 2);
-								goto Errored;
+								goto OnError;
 						}
+
 						polished.Add(matches[0]);
 						arguments.RemoveAt(0);
 						break;
@@ -191,32 +217,41 @@ namespace Terraria.Terraclient.Commands
 							indexOfFirstOmitted = j;
 							break;
 						}
+
 						query = string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)).ToLower();
 
 						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query, StringComparison.OrdinalIgnoreCase))
+							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
+								StringComparison.OrdinalIgnoreCase))
 								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " did not autocomplete to or directly match any options for " + argumentDetails[i].ArgumentName + ".", 3);
-								goto Errored;
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" did not autocomplete to or directly match any options for " +
+									argumentDetails[i].ArgumentName + ".", 3);
+								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches) {
-									if (thing.Equals(query)) {
-										polished.Add(thing);
-										matches.Remove(thing);
-										CheatCommandUtils.Output(false, "Input for argument " + argumentDetails[i].ArgumentName + " found a direct match (" + thing + "), skipping other results including " +
-											string.Join(", ", matches));
-										arguments.RemoveRange(0, indexOfFirstOmitted);
-										goto CanNowMoveToNextArgument;
-									}
+								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+									polished.Add(thing);
+									matches.Remove(thing);
+									CheatCommandUtils.Output(false,
+										"Input for argument " + argumentDetails[i].ArgumentName +
+										" found a direct match (" + thing + "), skipping other results including " +
+										string.Join(", ", matches));
+									arguments.RemoveRange(0, indexOfFirstOmitted);
+									goto CanNowMoveToNextArgument;
 								}
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
+
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
 									string.Join(", ", matches), 2);
-								goto Errored;
+								goto OnError;
 						}
+
 						polished.Add(matches[0]);
 						arguments.RemoveRange(0, indexOfFirstOmitted);
 						break;
@@ -230,32 +265,41 @@ namespace Terraria.Terraclient.Commands
 							indexOfFirstOmitted = j;
 							break;
 						}
+
 						query = string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)).ToLower();
 
 						for (int j = 2; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query, StringComparison.OrdinalIgnoreCase))
+							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
+								StringComparison.OrdinalIgnoreCase))
 								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " did not autocomplete to or directly match any options for " + argumentDetails[i].ArgumentName + ".", 3);
-								goto Errored;
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" did not autocomplete to or directly match any options for " +
+									argumentDetails[i].ArgumentName + ".", 3);
+								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches) {
-									if (thing.Equals(query)) {
-										polished.Add(thing);
-										matches.Remove(thing);
-										CheatCommandUtils.Output(false, "Input for argument " + argumentDetails[i].ArgumentName + " found a direct match (" + thing + "), skipping other results including " +
-											string.Join(", ", matches));
-										arguments.RemoveRange(0, indexOfFirstOmitted);
-										goto CanNowMoveToNextArgument;
-									}
+								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+									polished.Add(thing);
+									matches.Remove(thing);
+									CheatCommandUtils.Output(false,
+										"Input for argument " + argumentDetails[i].ArgumentName +
+										" found a direct match (" + thing + "), skipping other results including " +
+										string.Join(", ", matches));
+									arguments.RemoveRange(0, indexOfFirstOmitted);
+									goto CanNowMoveToNextArgument;
 								}
-								CheatCommandUtils.Output(true, "Input for argument " + argumentDetails[i].ArgumentName + " was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
+
+								CheatCommandUtils.Output(true,
+									"Input for argument " + argumentDetails[i].ArgumentName +
+									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
 									string.Join(", ", matches), 2);
-								goto Errored;
+								goto OnError;
 						}
+
 						polished.Add(matches[0]);
 						arguments.RemoveRange(0, indexOfFirstOmitted);
 						break;
@@ -269,20 +313,27 @@ namespace Terraria.Terraclient.Commands
 						for (int j = 1; j < arguments.Count; j++) {
 							if (new Regex("\\D").IsMatch(arguments[j]))
 								continue;
+
 							indexOfFirstOmitted = j;
+
 							break;
 						}
+
 						polished.Add(string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)));
 						arguments.RemoveRange(0, indexOfFirstOmitted);
 						break;
+
+					default:
+						throw new ArgumentOutOfRangeException();
 				}
 
-			CanNowMoveToNextArgument:
-				continue;
+				CanNowMoveToNextArgument: ;
 			}
+
 			return polished;
-		Errored:
-			return new List<object> { false };
+
+			OnError:
+			return new List<object> {false};
 		}
 
 		internal static void UpdateColors() {
@@ -315,7 +366,8 @@ namespace Terraria.Terraclient.Commands
 				List<string> words = SplitUpMessage(Main.chatText);
 				string command = words[0][1..];
 				words.RemoveAt(0);
-				IDictionary<string, MystagogueCommand> commandsThatStartWithCommandField = MystagogueCommand.CommandList.Where(
+				IDictionary<string, MystagogueCommand> commandsThatStartWithCommandField = MystagogueCommand.CommandList
+					.Where(
 						cmd => cmd.CommandName.Equals(command, StringComparison.OrdinalIgnoreCase))
 					.ToDictionary(cmd => cmd.CommandName);
 
@@ -323,20 +375,21 @@ namespace Terraria.Terraclient.Commands
 					return Main.chatText.Trim() + " No command found.";
 
 				if (commandsThatStartWithCommandField.Count > 1)
-					return Main.chatText.Trim() + " Only one command should have this name, yet two have it. Please contact a developer.";
+					return Main.chatText.Trim() +
+					       " Only one command should have this name, yet two have it. Please contact a developer.";
 
-				List<CommandArgument> argumentDetails = commandsThatStartWithCommandField.ElementAt(0).Value.CommandArgumentDetails[0];
+				List<CommandArgument> argumentDetails =
+					commandsThatStartWithCommandField.ElementAt(0).Value.CommandArgumentDetails[0];
 				if (argumentDetails.Count == 0)
 					return "";
 				List<string> finished = new List<string>();
 
-				for (int i = 0; i < argumentDetails.Count; i++) {
-					if (words.Count == 0)
-						break;
-					CommandArgument detailsOfThis = argumentDetails[i];
-					if (detailsOfThis.InputType == CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt
-						|| detailsOfThis.InputType == CommandArgument.ArgInputType.TextConcatenationUntilNextInt
-						|| (detailsOfThis.InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt && new Regex("\\D").IsMatch(words[0]))) {
+				foreach (CommandArgument detailsOfThis in argumentDetails.TakeWhile(_ => words.Count != 0)) {
+					if (detailsOfThis.InputType is CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt or
+						    CommandArgument.ArgInputType.TextConcatenationUntilNextInt ||
+					    (detailsOfThis.InputType ==
+					     CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt &&
+					     new Regex("\\D").IsMatch(words[0]))) {
 						int indexOfFirstOmitted = words.Count;
 						for (int j = 1; j < words.Count; j++) {
 							if (new Regex("\\D").IsMatch(words[j]))
@@ -344,6 +397,7 @@ namespace Terraria.Terraclient.Commands
 							indexOfFirstOmitted = j;
 							break;
 						}
+
 						finished.Add(string.Join(" ", words.GetRange(0, indexOfFirstOmitted)));
 						words.RemoveRange(0, indexOfFirstOmitted);
 					}
@@ -352,66 +406,94 @@ namespace Terraria.Terraclient.Commands
 						words.RemoveAt(0);
 					}
 				}
+
 				if (argumentDetails.Count < finished.Count)
 					return "";
 				if (Main.chatText.EndsWith(" ")) {
-					string addon = "";
-					if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRange) {
-						if (finished.Count > 0 && (argumentDetails[finished.Count - 1].InputType
-						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
-						|| (argumentDetails[finished.Count - 1].InputType
-						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
-						&& new Regex("\\D").IsMatch(finished[finished.Count - 1])))) {
-							List<string> matches = new List<string>();
-							int j = 0;
-							if (argumentDetails[finished.Count - 1].InputType
-								is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
-								j = 2;
+					string addon;
+					switch (argumentDetails[finished.Count].InputType) {
+						case CommandArgument.ArgInputType.PositiveIntegerRange: {
+							if (finished.Count > 0 && (argumentDetails[finished.Count - 1].InputType
+								                           is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
+							                           || (argumentDetails[finished.Count - 1].InputType
+								                               is CommandArgument.ArgInputType
+									                               .PositiveIntegerRangeOrTextConcatenationUntilNextInt
+							                               && new Regex("\\D").IsMatch(finished[^1])))) {
+								List<string> matches = new List<string>();
+								int j = 0;
+								if (argumentDetails[finished.Count - 1].InputType
+									is CommandArgument.ArgInputType
+										.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
+									j = 2;
+								}
+
+								for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
+									if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(
+										finished.Last(), StringComparison.OrdinalIgnoreCase))
+										matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
+								switch (matches.Count) {
+									case 0:
+										return Main.chatText.Trim() + " No matches found for this argument.";
+									case > 1: {
+										matches.Sort();
+										string output = Main.chatText.Trim() + matches[0][finished.Last().Length..] +
+										                ", " + string.Join(", ",
+											                matches.GetRange(1, matches.Count - 1));
+										return output[..Math.Min(150, output.Length)] +
+										       (output.Length >= 150 ? "..." : "");
+									}
+								}
 							}
-							for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
-								if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(finished.Last(), StringComparison.OrdinalIgnoreCase))
-									matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
-							if (matches.Count == 0)
-								return Main.chatText.Trim() + " No matches found for this argument.";
-							if (matches.Count > 1) {
-								matches.Sort();
-								string output = "";
-								output = Main.chatText.Trim() + matches[0][finished.Last().Length..] + ", " + string.Join(", ", matches.GetRange(1, matches.Count - 1));
-								return output.Substring(0, Math.Min(150, output.Length)) + (output.Length >= 150 ? "..." : "");
-							}
+
+							addon = "(Input accepts a number in between " +
+							        argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
+							        argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+							break;
 						}
-						addon = "(Input accepts a number in between " + argumentDetails[finished.Count].ExpectedInputs[0] + " and " + argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+						case CommandArgument.ArgInputType.Text:
+							addon = "(Input accepts specific text options)";
+							break;
+						case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
+							addon = "(Input accepts specific text options or a number in between " +
+							        argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
+							        argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+							break;
+						case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
+							addon = "(Input accepts specific text options)";
+							break;
+						case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
+							addon = "(Input accepts specific text options or a number in between " +
+							        argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
+							        argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+							break;
+						case CommandArgument.ArgInputType.CustomText:
+						case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
+							addon = "(Input accepts any text)";
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
 					}
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.Text)
-						addon = "(Input accepts specific text options)";
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrText)
-						addon = "(Input accepts specific text options or a number in between " + argumentDetails[finished.Count].ExpectedInputs[0] + " and " + argumentDetails[finished.Count].ExpectedInputs[1] + ")";
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.TextConcatenationUntilNextInt)
-						addon = "(Input accepts specific text options)";
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt)
-						addon = "(Input accepts specific text options or a number in between " + argumentDetails[finished.Count].ExpectedInputs[0] + " and " + argumentDetails[finished.Count].ExpectedInputs[1] + ")";
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.CustomText)
-						addon = "(Input accepts any text)";
-					else if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt)
-						addon = "(Input accepts any text)";
+
 					return Main.chatText + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
 				}
 				else {
 					if (argumentDetails[finished.Count - 1].InputType
-						is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
-						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
-						or CommandArgument.ArgInputType.PositiveIntegerRange
-						&& !new Regex("\\D").IsMatch(finished.Last())
-						|| argumentDetails[finished.Count - 1].InputType
-						is CommandArgument.ArgInputType.CustomText
-						or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt) {
+						    is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
+						    or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
+						    or CommandArgument.ArgInputType.PositiveIntegerRange
+					    && !new Regex("\\D").IsMatch(finished.Last())
+					    || argumentDetails[finished.Count - 1].InputType
+						    is CommandArgument.ArgInputType.CustomText
+						    or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt) {
 						return "";
 					}
+
 					if (argumentDetails[finished.Count - 1].InputType
-						is CommandArgument.ArgInputType.PositiveIntegerRange
-						&& new Regex("\\D").IsMatch(finished.Last())) {
+						    is CommandArgument.ArgInputType.PositiveIntegerRange
+					    && new Regex("\\D").IsMatch(finished.Last())) {
 						return Main.chatText.Trim() + " Cannot input a word here; Must be a positive number.";
 					}
+
 					List<string> matches = new List<string>();
 					int j = 0;
 					if (argumentDetails[finished.Count - 1].InputType
@@ -419,17 +501,22 @@ namespace Terraria.Terraclient.Commands
 						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
 						j = 2;
 					}
+
 					for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
-						if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(finished.Last(), StringComparison.OrdinalIgnoreCase))
+						if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(finished.Last(),
+							StringComparison.OrdinalIgnoreCase))
 							matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
 					matches.Sort();
-					string output = "";
-					if (matches.Count == 0)
-						return Main.chatText.Trim() + " No matches found for this argument.";
-					if (matches.Count == 1)
-						return Main.chatText + matches[0][finished.Last().Length..];
-					output = Main.chatText + matches[0][finished.Last().Length..] + ", " + string.Join(", ", matches.GetRange(1, matches.Count - 1));
-					return output.Substring(0, Math.Min(150, output.Length)) + (output.Length >= 150 ? "..." : "");
+					switch (matches.Count) {
+						case 0:
+							return Main.chatText.Trim() + " No matches found for this argument.";
+						case 1:
+							return Main.chatText + matches[0][finished.Last().Length..];
+						default:
+							string output = Main.chatText + matches[0][finished.Last().Length..] + ", " +
+							                string.Join(", ", matches.GetRange(1, matches.Count - 1));
+							return output[..Math.Min(150, output.Length)] + (output.Length >= 150 ? "..." : "");
+					}
 				}
 			}
 
@@ -438,21 +525,24 @@ namespace Terraria.Terraclient.Commands
 						.StartsWith(Main.chatText.ToLower()))
 				.ToDictionary(cmd => cmd.CommandName);
 
-			if (commandsThatStartWithThis.Count == 0)
-				return Main.chatText.Trim() + " No command found."; // todo: localization
+			switch (commandsThatStartWithThis.Count) {
+				case 0:
+					return Main.chatText.Trim() + " No command found."; // todo: localization
+				case 1:
+					return Main.chatText + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
+					                        commandsThatStartWithThis.ElementAt(0).Value.CommandDescription)
+						.Substring(Main.chatText.Length);
+				default:
+					commandsThatStartWithThis = (from pair
+								in commandsThatStartWithThis
+							orderby pair.Key
+							select pair)
+						.ToDictionary(x => x.Key,
+							x => x.Value);
 
-			if (commandsThatStartWithThis.Count == 1)
-				return Main.chatText + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
-				   commandsThatStartWithThis.ElementAt(0).Value.CommandDescription).Substring(Main.chatText.Length);
-
-			commandsThatStartWithThis = (from pair
-						in commandsThatStartWithThis
-										 orderby pair.Key
-										 select pair)
-				.ToDictionary(x => x.Key,
-					x => x.Value);
-
-			return Main.chatText + ("." + string.Join(", ", commandsThatStartWithThis.Keys)).Substring(Main.chatText.Length);
+					return Main.chatText +
+					       ("." + string.Join(", ", commandsThatStartWithThis.Keys)).Substring(Main.chatText.Length);
+			}
 		}
 
 		private static List<string> SplitUpMessage(string message) =>

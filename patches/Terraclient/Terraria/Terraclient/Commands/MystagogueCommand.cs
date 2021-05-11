@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Terraria.ID;
 using Terraria.Terraclient.Cheats;
 using Terraria.Terraclient.Cheats.General;
@@ -35,62 +34,94 @@ namespace Terraria.Terraclient.Commands
 
 		// TODO: localization
 		static MystagogueCommand() {
-			List<object> IDsRangeThenItemNames = new List<object> { 0, ItemID.Count - 1 };
-			IDsRangeThenItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
-			List<object> IDsRangeThenPrefixNames = new List<object> { 0, Prefixes.Length - 1 };
-			IDsRangeThenPrefixNames.AddRange(Prefixes);
+			List<object> idsRangeItemNames = new List<object> {0, ItemID.Count - 1};
+			List<object> idsRangePrefixNames = new List<object> {0, Prefixes.Length - 1};
+			idsRangeItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
+			idsRangePrefixNames.AddRange(Prefixes);
 
-			Create("help", "Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.")
-				.AddParameters(new List<CommandArgument> { new CommandArgument("Command Query", CommandListNames.ToList<object>(), false, true) })
+			Create("help",
+					"Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.")
+				.AddParameters(new List<CommandArgument> {
+					new("Command Query", CommandListNames.ToList<object>(), false, true)
+				})
 				.AddAction(args => {
 					if (args.Count > 0) {
-						MystagogueCommand match = null;
-						for (int i = 0; i < CommandList.Count; i++) {
-							if (CommandList[i].CommandName.StartsWith((string)args[0], StringComparison.OrdinalIgnoreCase)) {
-								match = CommandList[i];
-								break;
-							}
-						}
+						MystagogueCommand match = CommandList.FirstOrDefault(t =>
+							t.CommandName.StartsWith((string)args[0], StringComparison.OrdinalIgnoreCase));
 						string argsText = "";
+
+						if (match == null)
+							return;
+
 						foreach (CommandArgument arg in match.CommandArgumentDetails[0]) {
-							argsText += (argsText.Length > 0 ? ", " : "") + "(" + arg.ArgumentName + ": Input type: Input accepts ";
-							if (arg.InputType == CommandArgument.ArgInputType.PositiveIntegerRange)
-								argsText += "a number in between " + arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
-							else if (arg.InputType == CommandArgument.ArgInputType.Text)
-								argsText += "specific text options";
-							else if (arg.InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrText)
-								argsText += "specific text options or a number in between " + arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
-							else if (arg.InputType == CommandArgument.ArgInputType.TextConcatenationUntilNextInt)
-								argsText += "specific text options";
-							else if (arg.InputType == CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt)
-								argsText += "specific text options or a number in between " + arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
-							else if (arg.InputType == CommandArgument.ArgInputType.CustomText)
-								argsText += "any text";
-							else if (arg.InputType == CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt)
-								argsText += "any text";
+							argsText += (argsText.Length > 0 ? ", " : "") + "(" + arg.ArgumentName +
+							            ": Input type: Input accepts ";
+							switch (arg.InputType) {
+								case CommandArgument.ArgInputType.PositiveIntegerRange:
+									argsText += "a number in between " + arg.ExpectedInputs[0] + " and " +
+									            arg.ExpectedInputs[1];
+									break;
+
+								case CommandArgument.ArgInputType.Text:
+									argsText += "specific text options";
+									break;
+
+								case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
+									argsText += "specific text options or a number in between " +
+									            arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
+									break;
+
+								case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
+									argsText += "specific text options";
+									break;
+
+								case CommandArgument.ArgInputType
+									.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
+									argsText += "specific text options or a number in between " +
+									            arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
+									break;
+
+								case CommandArgument.ArgInputType.CustomText:
+								case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
+									argsText += "any text";
+									break;
+
+								default:
+									throw new ArgumentOutOfRangeException();
+							}
+
 							argsText += ")";
 						}
-						CheatCommandUtils.Output(false, "You chose to read about: \"" + match.CommandName + "\".\nDescripton: " + match.CommandDescription + "\nArguments:" + argsText);
+
+						CheatCommandUtils.Output(false,
+							"You chose to read about: \"" + match.CommandName + "\".\nDescription: " +
+							match.CommandDescription + "\nArguments:" + argsText);
 					}
 					else {
-						CheatCommandUtils.Output(false, "Thank you for using Terraclient by @convicted tomatophile#0001 and @MarauderKnight3#9269!"
-							+ "\nRead about a command's function by executing .help (query).\nThere are " + CommandList.Count + " commands loaded."
+						CheatCommandUtils.Output(false,
+							"Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!"
+							+ "\nRead about a command's function by executing .help (query).\nThere are " +
+							CommandList.Count + " commands loaded."
 							+ "\nList of commands: " + string.Join(", ", CommandListNames));
 					}
 				})
 				.Build();
 
-			Create("searchitems", "Search all the items by name using a keyword. Can be used to get the item ID of an item from its name.")
-				.AddParameters(new List<CommandArgument> { new CommandArgument("Keyword to search for", new List<object>(), true) })
+			Create("searchitems",
+					"Search all the items by name using a keyword. Can be used to get the item ID of an item from its name.")
+				.AddParameters(new List<CommandArgument> {new("Keyword to search for", new List<object>(), true)})
 				.AddAction(args => {
 					List<string> matches = new List<string>();
 					for (int j = 1; j < CheatCommandUtils.ItemNames.Count; j++)
-						if (CheatCommandUtils.ItemNames[j].Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
-							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + CheatCommandUtils.ItemNames.Values.ToList().IndexOf(CheatCommandUtils.ItemNames[j]) + ")");
+						if (CheatCommandUtils.ItemNames[j]
+							.Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
+							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + CheatCommandUtils.ItemNames.Values
+								.ToList().IndexOf(CheatCommandUtils.ItemNames[j]) + ")");
 					if (matches.Count < 1) {
 						CheatCommandUtils.Output(false, "No item names match.");
 						return;
 					}
+
 					if (matches.Count > 1)
 						matches.Sort();
 					CheatCommandUtils.Output(false, "Found these items: " + string.Join(", ", matches));
@@ -115,19 +146,24 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("invclear", "Turns all items that are not favorited in the inventory and all items in the Void inventory into air.")
+			Create("invclear",
+					"Turns all items that are not favorited in the inventory and all items in the Void inventory into air.")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
 						if (!item.favorited) {
-							item.SetDefaults(0);
+							item.SetDefaults();
 						}
 					}
+
 					foreach (Item item in Main.player[Main.myPlayer].bank4.item) {
-						item.SetDefaults(0);
+						item.SetDefaults();
 					}
+          
 					HandyFunctions.ToolGodBuffMyTools();
-					CheatCommandUtils.Output(false, "Cleaned all items not favorited in the inventory and all items in the Void inventory.");
+          
+					CheatCommandUtils.Output(false,
+						"Cleaned all items not favorited in the inventory and all items in the Void inventory.");
 				})
 				.Build();
 
@@ -148,11 +184,11 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.stack = 1;
 					Main.mouseItem.Refresh();
 					Main.mouseItem.placeStyle = 99;
-					Main.mouseItem.SetNameOverride("really fucking annoying placeable object");
+					Main.mouseItem.SetNameOverride("really annoying (and totally safe) place-able object");
 				})
 				.Build();
 
-			Create("unbreakable",
+			/*Create("unbreakable",
 					"Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client.")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
@@ -162,20 +198,22 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.placeStyle = 99;
 					Main.mouseItem.SetNameOverride("dirt but it's really stupid");
 				})
-				.Build();
+				.Build();*/
 
 			Create("i",
 					"Spawns an item by converting your currently-held cursor item (or thin air) to it. " +
 					"The item will be automatically sent to your inventory if your inventory is closed.")
-				.AddParameters(new List<CommandArgument> {new CommandArgument("ItemID/Name", IDsRangeThenItemNames, true),
-					new CommandArgument("Amount", new List<object>{0,int.MaxValue}, false, true),
-					new CommandArgument("Prefix", IDsRangeThenPrefixNames, false, true) })
+				.AddParameters(new List<CommandArgument> {
+					new("ItemID/Name", idsRangeItemNames, true),
+					new("Amount", new List<object> {0, int.MaxValue}, false, true),
+					new("Prefix", idsRangePrefixNames, false, true)
+				})
 				.AddAction(args => {
 					int itemType = 0;
 					int stack = 1;
 					int prefix = 0;
-					if (args[0] is string)
-						itemType = CheatCommandUtils.ItemNames.Values.ToList().IndexOf((string)args[0]);
+					if (args[0] is string str)
+						itemType = CheatCommandUtils.ItemNames.Values.ToList().IndexOf(str);
 					else
 						itemType = (int)args[0];
 					if (args.Count >= 2)
@@ -190,11 +228,13 @@ namespace Terraria.Terraclient.Commands
 								? 18
 								: 75;
 						}
+
 						if (prefix is 20 or 43) {
 							prefix = ContentSamples.ItemsByType[itemType].ranged
 								? 20
 								: 43;
 						}
+
 						if (prefix is 42 or 76) {
 							prefix = !ContentSamples.ItemsByType[itemType].accessory
 								? 42
@@ -225,15 +265,17 @@ namespace Terraria.Terraclient.Commands
 
 		public static List<MystagogueCommand> CommandList = new();
 
-		internal static List<string> _commandListNames = new List<string>();
+		private static List<string> _commandListNames = new();
 
 		public static List<string> CommandListNames {
 			get {
-				if (_commandListNames.Count == 0) {
-					foreach (MystagogueCommand cmd in CommandList) {
-						_commandListNames.Add(cmd.CommandName);
-					}
+				if (_commandListNames.Count != 0)
+					return _commandListNames;
+
+				foreach (MystagogueCommand cmd in CommandList) {
+					_commandListNames.Add(cmd.CommandName);
 				}
+
 				return _commandListNames;
 			}
 			internal set => _commandListNames = value;

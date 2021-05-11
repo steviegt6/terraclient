@@ -41,7 +41,7 @@ namespace Terraria.Terraclient.Commands
 			the first CommandArgument that is set to Skippable in a list of CommandArguments will render all
 			other CommandArguments further along the list also "skippable", regardless of their setting, because math.
 
-			If any command would be better off handling the more raw userinputted arguments by itself, the list of CommandArguments should be inputted blank when creating the command.
+			If any command would be better off handling the more raw user-input arguments by itself, the list of CommandArguments should be inputted blank when creating the command.
 
 			Please keep in mind that when comparing strings, CheatCommandHandler.Digest() will always make all strings lowercase. This can be changed if needed, with a later patch.
 			Custom text input types won't be turned lowercase before the effective argument is polished and returned by CheatCommandHandler.Digest().
