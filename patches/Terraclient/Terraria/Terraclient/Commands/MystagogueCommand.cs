@@ -108,7 +108,7 @@ namespace Terraria.Terraclient.Commands
 				.Build();
 
 			Create("i",
-					"Spawns an item by converting your currently-held cursor item (or thin air) to it. " +
+					"Spawns an item in your cursor slot. " +
 					"The item will be automatically sent to your inventory if your inventory is closed.")
 				.AddParameters(new List<CommandArgument> {
 					new("ItemID/Name", idsRangeItemNames, true),
@@ -135,13 +135,11 @@ namespace Terraria.Terraclient.Commands
 								? 18
 								: 75;
 						}
-
 						if (prefix is 20 or 43) {
 							prefix = ContentSamples.ItemsByType[itemType].ranged
 								? 20
 								: 43;
 						}
-
 						if (prefix is 42 or 76) {
 							prefix = !ContentSamples.ItemsByType[itemType].accessory
 								? 42
@@ -149,6 +147,7 @@ namespace Terraria.Terraclient.Commands
 						}
 					}
 
+					HandyFunctions.MoveMouseItemToInventory();
 					Main.mouseItem.SetDefaults(itemType);
 					Main.mouseItem.stack = stack;
 					Main.mouseItem.prefix = (byte)prefix;
