@@ -354,7 +354,12 @@ namespace Terraria.Terraclient.Commands
 				}
 				if (argumentDetails.Count < finished.Count)
 					return "";
-				if (Main.chatText.EndsWith(" ")) {
+				if (Main.chatText.EndsWith(" ") && !(argumentDetails[finished.Count - 2].InputType
+						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
+						or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt
+						|| argumentDetails[finished.Count - 2].InputType
+						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
+						&& new Regex("\\D").IsMatch(finished[finished.Count - 2]))) {
 					string addon = "";
 					if (argumentDetails[finished.Count].InputType == CommandArgument.ArgInputType.PositiveIntegerRange)
 						addon = "(Input accepts a number in between " + argumentDetails[finished.Count].ExpectedInputs[0] + " and " + argumentDetails[finished.Count].ExpectedInputs[1] + ")";
@@ -375,13 +380,13 @@ namespace Terraria.Terraclient.Commands
 				else {
 					List<string> matches = new List<string>();
 					string output = "";
+					int j = 0;
 					if (argumentDetails[finished.Count - 2].InputType
 						is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
 						or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt
 						|| argumentDetails[finished.Count - 2].InputType
 						is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
 						&& new Regex("\\D").IsMatch(finished[finished.Count - 2])) {
-						int j = 0;
 						if (argumentDetails[finished.Count - 2].InputType
 							is CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
 							j = 2;
@@ -411,7 +416,7 @@ namespace Terraria.Terraclient.Commands
 						return Main.chatText.Trim() + " Cannot input a word here; Must be a positive number.";
 					}
 					matches = new List<string>();
-					int j = 0;
+					j = 0;
 					if (argumentDetails[finished.Count - 1].InputType
 						is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
 						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
