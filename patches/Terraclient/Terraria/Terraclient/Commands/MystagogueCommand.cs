@@ -111,6 +111,21 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("invclear", "Turns all items that are not favorited in the inventory and all items in the Void inventory into air.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					foreach (Item item in Main.player[Main.myPlayer].inventory) {
+						if (!item.favorited) {
+							item.SetDefaults(0);
+						}
+					}
+					foreach (Item item in Main.player[Main.myPlayer].bank4.item) {
+						item.SetDefaults(0);
+					}
+					CheatCommandUtils.Output(false, "Cleaned all items not favorited in the inventory and all items in the Void inventory.");
+				})
+				.Build();
+
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
 				.AddParameters(new List<CommandArgument>())
