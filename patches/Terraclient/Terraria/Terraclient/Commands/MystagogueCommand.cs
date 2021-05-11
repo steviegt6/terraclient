@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.ID;
+using Terraria.Terraclient.Cheats;
+using Terraria.Terraclient.Cheats.General;
 
 namespace Terraria.Terraclient.Commands
 {
@@ -130,6 +132,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].HeldItem.Refresh();
+					HandyFunctions.ToolGodBuffMyTools();
 					CheatCommandUtils.Output(false, "Selected item refreshed.");
 				})
 				.Build();
@@ -138,6 +141,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].RefreshItems();
+					HandyFunctions.ToolGodBuffMyTools();
 					CheatCommandUtils.Output(false, "All inventory items refreshed.");
 				})
 				.Build();
@@ -155,9 +159,20 @@ namespace Terraria.Terraclient.Commands
 					foreach (Item item in Main.player[Main.myPlayer].bank4.item) {
 						item.SetDefaults();
 					}
-
+          
+					HandyFunctions.ToolGodBuffMyTools();
+          
 					CheatCommandUtils.Output(false,
 						"Cleaned all items not favorited in the inventory and all items in the Void inventory.");
+				})
+				.Build();
+
+			Create("toolgod", "Toggles the Tool God Cheat in the Cheat Menu.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					CheatHandler.GetCheat<ToolGodCheat>().Toggle();
+					HandyFunctions.ToolGodBuffMyTools();
+					CheatCommandUtils.Output(false, "Tool god toggled " + (CheatHandler.GetCheat<ToolGodCheat>().isEnabled ? "on" : "off") + ".");
 				})
 				.Build();
 
