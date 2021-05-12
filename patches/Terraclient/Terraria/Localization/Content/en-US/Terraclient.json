@@ -98,6 +98,9 @@
 		"AltRightClickDuplicationCheatDesc": "Enables duplicating items in the inventory by right-clicking while in favoriting mode. Also hold control to make a stack of 2.1 billion.",
 
 		"ToolGodCheatName": "Tool God",
-		"ToolGodCheatDesc": "Enables a check that refreshes all the tools in your inventory and then overpowers the select few that shift-clicking would select periodically."
+		"ToolGodCheatDesc": "Enables a check that refreshes all the tools in your inventory and then overpowers the select few that shift-clicking would select periodically.",
+
+		"RefillsCheatName": "Favorited Item Refills",
+		"RefillsCheatDesc": "Enables a check that fills up the stacks of all favorited items in the inventory periodically."
 	}
 }

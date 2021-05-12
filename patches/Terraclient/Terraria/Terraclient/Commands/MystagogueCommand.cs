@@ -377,6 +377,14 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("refills", "Toggles the Favorited Item Refills Cheat in the Cheat Menu.")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					CheatHandler.GetCheat<RefillsCheat>().Toggle();
+					CheatCommandUtils.Output(false, "Favorited item refills toggled " + (CheatHandler.GetCheat<ToolGodCheat>().isEnabled ? "on" : "off") + ".");
+				})
+				.Build();
+
 			Create("torch",
 					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
 				.AddParameters(new List<CommandArgument>())

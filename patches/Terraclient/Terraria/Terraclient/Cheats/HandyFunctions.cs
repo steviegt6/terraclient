@@ -79,6 +79,18 @@ namespace Terraria.Terraclient.Cheats
 				HeavyTasksTimer = 8;
 				ToolGodBuffMyTools();
 			}
+			if (CheatHandler.GetCheat<ToolGodCheat>().isEnabled) {
+				foreach (Item item in Main.player[Main.myPlayer].inventory) {
+					if (!item.IsAir && item.favorited && item.stack < item.maxStack) {
+						item.stack = item.maxStack;
+					}
+				}
+				foreach (Item item in Main.player[Main.myPlayer].miscEquips) {
+					if (!item.IsAir && item.favorited && item.stack < item.maxStack) {
+						item.stack = item.maxStack;
+					}
+				}
+			}
 		}
 		public static void MoveMouseItemToInventory() {
 			if (Main.mouseItem.type > 0) {
