@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.Terraclient.Cheats;
 using Terraria.Terraclient.Cheats.General;
 
@@ -9,13 +10,12 @@ namespace Terraria.Terraclient.Commands
 {
 	public class MystagogueCommand
 	{
-		private MystagogueCommand(string commandName, string commandDescription) {
+		private MystagogueCommand(string commandName) {
 			CommandName = commandName;
-			CommandDescription = commandDescription;
 		}
 
-		public static MystagogueCommand Create(string commandName, string commandDescription) =>
-			new(commandName, commandDescription);
+		public static MystagogueCommand Create(string commandName) =>
+			new(commandName);
 
 		public MystagogueCommand AddAction(Action<List<object>> action) {
 			CommandActions.Add(action);
@@ -39,8 +39,7 @@ namespace Terraria.Terraclient.Commands
 			idsRangeItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
 			idsRangePrefixNames.AddRange(Prefixes);
 
-			Create("help",
-					"Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.")
+			Create("help")
 				.AddParameters(new List<CommandArgument> {
 					new("Command Query", CommandListNames.ToList<object>(), false, true)
 				})
@@ -107,9 +106,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("i",
-					"Spawns an item in your cursor slot. " +
-					"The item will be automatically sent to your inventory if your inventory is closed.")
+			Create("i")
 				.AddParameters(new List<CommandArgument> {
 					new("ItemID/Name", idsRangeItemNames, true),
 					new("Amount", new List<object> {0, int.MaxValue}, false, true),
@@ -158,8 +155,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("searchitems",
-					"Search all the items by name using a keyword. Can be used to get the item ID of an item from its name.")
+			Create("searchitems")
 				.AddParameters(new List<CommandArgument> { new("Keyword to search for", new List<object>(), true) })
 				.AddAction(args => {
 					List<string> matches = new List<string>();
@@ -179,7 +175,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("ri", "Refreshes the item selected in the hotbar.")
+			Create("ri")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].HeldItem.Refresh();
@@ -188,7 +184,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("ris", "Refreshes all items in all inventories of the character.")
+			Create("ris")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].RefreshItems();
@@ -197,8 +193,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("invclear",
-					"Turns all items that are not favorited in the inventory and all items in the Void inventory into air.")
+			Create("invclear")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -218,7 +213,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("toolgod", "Toggles the Tool God Cheat in the Cheat Menu.")
+			Create("toolgod")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					CheatHandler.GetCheat<ToolGodCheat>().Toggle();
@@ -227,7 +222,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("setstacks2b", "Sets the stack of all stackable items in the inventory and all the banks to 2147483647.")
+			Create("setstacks2b")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -264,7 +259,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("setstackslegit", "Limits the stack of all stackable items in the inventory and all the banks to their maxstacks.")
+			Create("setstackslegit")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -316,7 +311,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("setmaxstacks2b", "Sets the max stack of all stackable items in the inventory and void to their default values.")
+			Create("setmaxstacks2b")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -338,7 +333,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("setmaxstackslegit", "Sets the max stack of all stackable items in the inventory and void to 2147483647.")
+			Create("setmaxstackslegit")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -360,7 +355,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("favoriteall", "Favorites every item in the inventory.")
+			Create("favoriteall")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
@@ -377,7 +372,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("refills", "Toggles the Favorited Item Refills Cheat in the Cheat Menu.")
+			Create("refills")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					CheatHandler.GetCheat<RefillsCheat>().Toggle();
@@ -385,8 +380,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			Create("torch",
-					"Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.")
+			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					HandyFunctions.MoveMouseItemToInventory();
@@ -398,8 +392,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
-			/*Create("unbreakable",
-					"Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client.")
+			/*Create("unbreakable")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.mouseItem.SetDefaults(ItemID.DirtBlock);
@@ -415,7 +408,10 @@ namespace Terraria.Terraclient.Commands
 
 		public string CommandName;
 
-		public string CommandDescription;
+		public string CommandDescription {
+			get => Language.GetTextValue($"CommandDescriptions.{CommandName}");
+			set { }
+		}
 
 		public List<Action<List<object>>> CommandActions = new();
 

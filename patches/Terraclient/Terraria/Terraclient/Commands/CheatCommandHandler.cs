@@ -474,7 +474,7 @@ namespace Terraria.Terraclient.Commands
 							throw new ArgumentOutOfRangeException();
 					}
 
-					return Main.chatText + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
+					return Main.chatText.Trim() + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
 				}
 				else {
 					if (argumentDetails[finished.Count - 1].InputType

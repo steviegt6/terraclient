@@ -102,5 +102,23 @@
 
 		"RefillsCheatName": "Favorited Item Refills",
 		"RefillsCheatDesc": "Enables a check that fills up the stacks of all favorited items in the inventory periodically."
+	},
+
+	"CommandDescriptions": {
+		"help": "Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.",
+		"i": "Spawns an item in your cursor slot. The item will be automatically sent to your inventory if your inventory is closed.",
+		"searchitems": "Spawns an item in your cursor slot. The item will be automatically sent to your inventory if your inventory is closed.",
+		"ri": "Refreshes the item selected in the hotbar.",
+		"ris": "Refreshes all items in all inventories of the character.",
+		"invclear": "Turns all items that are not favorited in the inventory and all items in the Void inventory into air.",
+		"toolgod": "Toggles the Tool God Cheat in the Cheat Menu.",
+		"setstacks2b": "Sets the stack of all stackable items in the inventory and all the banks to 2147483647.",
+		"setstackslegit": "Limits the stack of all stackable items in the inventory and all the banks to their maxstacks.",
+		"setmaxstacks2b": "Sets the max stack of all items in the inventory and void to 2147483647.",
+		"setmaxstackslegit": "Sets the max stack of all items in the inventory and void to their default values.",
+		"favoriteall": "Favorites every item in the inventory.",
+		"refills": "Toggles the Favorited Item Refills Cheat in the Cheat Menu.",
+		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.",
+		"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	}
 }
