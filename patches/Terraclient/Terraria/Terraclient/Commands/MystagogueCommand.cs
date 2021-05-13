@@ -91,17 +91,17 @@ namespace Terraria.Terraclient.Commands
 
 							argsText += ")";
 						}
-
 						CheatCommandUtils.Output(false,
-							"You chose to read about: \"" + match.CommandName + "\".\nDescription: " +
-							match.CommandDescription + "\nArguments:" + (argsText.Length > 0 ? argsText : "There are none."));
+							Language.GetTextValue("CommandOutputs.help_SpecificResponse",
+							match.CommandName,
+							match.CommandDescription,
+							argsText.Length > 0 ? argsText : "There are none."));
 					}
 					else {
 						CheatCommandUtils.Output(false,
-							"Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!"
-							+ "\nRead about a command's function by executing .help (query).\nThere are " +
-							CommandList.Count + " commands loaded."
-							+ "\nList of commands: " + string.Join(", ", CommandListNames));
+							Language.GetTextValue("CommandOutputs.help_StandardResponse",
+							CommandList.Count,
+							string.Join(", ", CommandListNames)));
 					}
 				})
 				.Build();
@@ -152,6 +152,13 @@ namespace Terraria.Terraclient.Commands
 
 					CheatCommandUtils.Output(false,
 						$"Set cursor item to {Main.mouseItem.stack}{(Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "")} {Lang.GetItemNameValue(Main.mouseItem.type)} ({Main.mouseItem.type})");
+
+					CheatCommandUtils.Output(false,
+						Language.GetTextValue("CommandOutputs.i_ItemSpawnedResponse",
+						Main.mouseItem.stack,
+						Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
+						Lang.GetItemNameValue(Main.mouseItem.type),
+						Main.mouseItem.type));
 				})
 				.Build();
 
