@@ -151,9 +151,6 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.Refresh();
 
 					CheatCommandUtils.Output(false,
-						$"Set cursor item to {Main.mouseItem.stack}{(Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "")} {Lang.GetItemNameValue(Main.mouseItem.type)} ({Main.mouseItem.type})");
-
-					CheatCommandUtils.Output(false,
 						Language.GetTextValue("CommandOutputs.i_ItemSpawnedResponse",
 						Main.mouseItem.stack,
 						Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
