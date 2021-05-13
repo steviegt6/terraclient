@@ -381,7 +381,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					CheatHandler.GetCheat<RefillsCheat>().Toggle();
-					CheatCommandUtils.Output(false, "Favorited item refills toggled " + (CheatHandler.GetCheat<ToolGodCheat>().isEnabled ? "on" : "off") + ".");
+					CheatCommandUtils.Output(false, "Favorited item refills toggled " + (CheatHandler.GetCheat<RefillsCheat>().isEnabled ? "on" : "off") + ".");
 				})
 				.Build();
 

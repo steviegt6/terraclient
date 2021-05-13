@@ -79,7 +79,7 @@ namespace Terraria.Terraclient.Cheats
 				HeavyTasksTimer = 8;
 				ToolGodBuffMyTools();
 			}
-			if (CheatHandler.GetCheat<ToolGodCheat>().isEnabled) {
+			if (CheatHandler.GetCheat<RefillsCheat>().isEnabled) {
 				foreach (Item item in Main.player[Main.myPlayer].inventory) {
 					if (!item.IsAir && item.favorited && item.stack < item.maxStack) {
 						item.stack = item.maxStack;
