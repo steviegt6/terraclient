@@ -10,7 +10,7 @@ namespace Terraria.Terraclient.Commands
 		private static int _colorTimer;
 		private static string _chatOverlayText;
 
-		internal static string LastChatText = "insert default value here that isn't blank lol";
+		internal static string LastChatText;
 
 		public static string ChatOverlayText {
 			get {
@@ -407,7 +407,7 @@ namespace Terraria.Terraclient.Commands
 					}
 				}
 
-				if (argumentDetails.Count < finished.Count)
+				if (argumentDetails.Count < finished.Count - 1)
 					return "";
 				if (message.EndsWith(" ")) {
 					string addon;

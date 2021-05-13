@@ -40,9 +40,7 @@ namespace Terraria.Terraclient.Commands
 			idsRangePrefixNames.AddRange(Prefixes);
 
 			Create("help")
-				.AddParameters(new List<CommandArgument> {
-					new("Command Query", CommandListNames.ToList<object>(), false, true)
-				})
+				.AddParameters(new List<CommandArgument> {}) // adds args later
 				.AddAction(args => {
 					if (args.Count > 0) {
 						MystagogueCommand match = CommandList.FirstOrDefault(t =>
@@ -407,7 +405,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();*/
 
-			CommandList[0].CommandArgumentDetails[0][0].ExpectedInputs = CommandListNames.ToList<object>();
+			CommandList[0].CommandArgumentDetails[0] = new List<CommandArgument> {new("Command Query", CommandListNames.ToList<object>(), false, true)};
 		}
 
 		public string CommandName;
