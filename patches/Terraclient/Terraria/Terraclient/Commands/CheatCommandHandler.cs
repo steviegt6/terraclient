@@ -20,7 +20,7 @@ namespace Terraria.Terraclient.Commands
 				LastChatText = Main.chatText;
 
 				try {
-					_chatOverlayText = GetChatOverlayText();
+					_chatOverlayText = GetChatOverlayText(LastChatText);
 				}
 				catch (Exception e) {
 					CheatCommandUtils.Output(true, "Something went wrong. " + e.Message + "\n" + e.StackTrace, 4);
@@ -355,15 +355,15 @@ namespace Terraria.Terraclient.Commands
 			_colorTimer = 0;
 		}
 
-		internal static string GetChatOverlayText() {
-			if (Main.chatText is "" or ".")
+		internal static string GetChatOverlayText(String message) {
+			if (message is "" or ".")
 				return ".help";
 
-			if (!Main.chatText.StartsWith("."))
+			if (!message.StartsWith("."))
 				return "";
 
-			if (Main.chatText.Contains(" ")) {
-				List<string> words = SplitUpMessage(Main.chatText);
+			if (message.Contains(" ")) {
+				List<string> words = SplitUpMessage(message);
 				string command = words[0][1..];
 				words.RemoveAt(0);
 				IDictionary<string, MystagogueCommand> commandsThatStartWithCommandField = MystagogueCommand.CommandList
@@ -372,10 +372,10 @@ namespace Terraria.Terraclient.Commands
 					.ToDictionary(cmd => cmd.CommandName);
 
 				if (commandsThatStartWithCommandField.Count < 1)
-					return Main.chatText.Trim() + " No command found.";
+					return message.Trim() + " No command found.";
 
 				if (commandsThatStartWithCommandField.Count > 1)
-					return Main.chatText.Trim() +
+					return message.Trim() +
 					       " Only one command should have this name, yet two have it. Please contact a developer.";
 
 				List<CommandArgument> argumentDetails =
@@ -409,7 +409,7 @@ namespace Terraria.Terraclient.Commands
 
 				if (argumentDetails.Count < finished.Count)
 					return "";
-				if (Main.chatText.EndsWith(" ")) {
+				if (message.EndsWith(" ")) {
 					string addon;
 					switch (argumentDetails[finished.Count].InputType) {
 						case CommandArgument.ArgInputType.PositiveIntegerRange: {
@@ -433,10 +433,10 @@ namespace Terraria.Terraclient.Commands
 										matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
 								switch (matches.Count) {
 									case 0:
-										return Main.chatText.Trim() + " No matches found for this argument.";
+										return message.Trim() + " No matches found for this argument.";
 									case > 1: {
 										matches.Sort();
-										string output = Main.chatText.Trim() + matches[0][finished.Last().Length..] +
+										string output = message.Trim() + matches[0][finished.Last().Length..] +
 										                ", " + string.Join(", ",
 											                matches.GetRange(1, matches.Count - 1));
 										return output[..Math.Min(150, output.Length)] +
@@ -474,7 +474,7 @@ namespace Terraria.Terraclient.Commands
 							throw new ArgumentOutOfRangeException();
 					}
 
-					return Main.chatText.Trim() + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
+					return message.Trim() + " " + argumentDetails[finished.Count].ArgumentName + " " + addon;
 				}
 				else {
 					if (argumentDetails[finished.Count - 1].InputType
@@ -491,7 +491,7 @@ namespace Terraria.Terraclient.Commands
 					if (argumentDetails[finished.Count - 1].InputType
 						    is CommandArgument.ArgInputType.PositiveIntegerRange
 					    && new Regex("\\D").IsMatch(finished.Last())) {
-						return Main.chatText.Trim() + " Cannot input a word here; Must be a positive number.";
+						return message.Trim() + " Cannot input a word here; Must be a positive number.";
 					}
 
 					List<string> matches = new List<string>();
@@ -509,11 +509,11 @@ namespace Terraria.Terraclient.Commands
 					matches.Sort();
 					switch (matches.Count) {
 						case 0:
-							return Main.chatText.Trim() + " No matches found for this argument.";
+							return message.Trim() + " No matches found for this argument.";
 						case 1:
-							return Main.chatText + matches[0][finished.Last().Length..];
+							return message + matches[0][finished.Last().Length..];
 						default:
-							string output = Main.chatText + matches[0][finished.Last().Length..] + ", " +
+							string output = message + matches[0][finished.Last().Length..] + ", " +
 							                string.Join(", ", matches.GetRange(1, matches.Count - 1));
 							return output[..Math.Min(150, output.Length)] + (output.Length >= 150 ? "..." : "");
 					}
