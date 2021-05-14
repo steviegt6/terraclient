@@ -9,13 +9,3 @@
  
  namespace Terraria.GameContent.Bestiary
  {
-@@ -40,6 +_,9 @@
- 		}
- 
- 		public int GetKillCount(string persistentId) {
-+			if (CheatHandler.GetCheat<BestiaryForceUnlockCheat>().isEnabled)
-+				return 100;
-+
- 			_killCountsByNpcId.TryGetValue(persistentId, out int value);
- 			return value;
- 		}
