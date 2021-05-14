@@ -18,3 +18,23 @@
  			};
  
  			foreach (int key2 in Main.RegisterdGameModes.Keys) {
+@@ -61,7 +_,8 @@
+ 			List<IBestiaryInfoElement> list = new List<IBestiaryInfoElement> {
+ 				new NPCNetIdBestiaryInfoElement(npcNetId),
+ 				new NamePlateInfoElement(Lang.GetNPCName(npcNetId).Key, npcNetId),
+-				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId])
++				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId]),
++				new SpawnButtonBestiaryElement(npcNetId)
+ 			};
+ 
+ 			string key = Lang.GetNPCName(nPC.netID).Key;
+@@ -82,7 +_,8 @@
+ 			List<IBestiaryInfoElement> list = new List<IBestiaryInfoElement> {
+ 				new NPCNetIdBestiaryInfoElement(npcNetId),
+ 				new NamePlateInfoElement(Lang.GetNPCName(npcNetId).Key, npcNetId),
+-				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId])
++				new NPCPortraitInfoElement(ContentSamples.NpcBestiaryRarityStars[npcNetId]),
++				new SpawnButtonBestiaryElement(npcNetId)
+ 			};
+ 
+ 			string key = Lang.GetNPCName(nPC.netID).Key;
