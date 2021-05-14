@@ -11,7 +11,7 @@ namespace Terraria.Terraclient
 		public static string Version => TerraclientVersion + TerraclientVersionEx;
 
 		private static readonly Version TerraclientVersion = new(0, 0, 1, 0);
-		private const string TerraclientVersionEx = " alpha-21w20a";
+		private const string TerraclientVersionEx = " alpha-21w20b";
 
 		internal static List<Cheat> Cheats;
 
