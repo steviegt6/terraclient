@@ -40,7 +40,7 @@ namespace Terraria.Terraclient.Commands
 			idsRangePrefixNames.AddRange(Prefixes);
 
 			Create("help")
-				.AddParameters(new List<CommandArgument> {}) // adds args later
+				.AddParameters(new List<CommandArgument>()) // adds args later
 				.AddAction(args => {
 					if (args.Count > 0) {
 						MystagogueCommand match = CommandList.FirstOrDefault(t =>
@@ -220,7 +220,7 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(_ => {
 					CheatHandler.GetCheat<ToolGodCheat>().Toggle();
 					HandyFunctions.ToolGodBuffMyTools();
-					CheatCommandUtils.Output(false, "Tool god toggled " + (CheatHandler.GetCheat<ToolGodCheat>().isEnabled ? "on" : "off") + ".");
+					CheatCommandUtils.ToggleMessage(CheatHandler.GetCheat<ToolGodCheat>());
 				})
 				.Build();
 
@@ -378,7 +378,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					CheatHandler.GetCheat<RefillsCheat>().Toggle();
-					CheatCommandUtils.Output(false, "Favorited item refills toggled " + (CheatHandler.GetCheat<RefillsCheat>().isEnabled ? "on" : "off") + ".");
+					CheatCommandUtils.ToggleMessage(CheatHandler.GetCheat<ToolGodCheat>());
 				})
 				.Build();
 
@@ -405,7 +405,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();*/
 
-			CommandList[0].CommandArgumentDetails[0] = new List<CommandArgument> {new("Command Query", CommandListNames.ToList<object>(), false, true)};
+			CommandList[0].CommandArgumentDetails[0] = new List<CommandArgument> { new("Command Query", CommandListNames.ToList<object>(), false, true) };
 		}
 
 		public string CommandName;

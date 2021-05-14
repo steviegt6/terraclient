@@ -178,5 +178,13 @@ namespace Terraria.Terraclient.Commands
 				             "[c/cc3325:t]" +
 				             "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
 		}
+
+		public static void ToggleMessage(Cheats.Cheat cheat) {
+			string activated = "[c/d4f01f:Activated]";
+			if (!cheat.isEnabled) {
+				activated = "[c/f0421f:Deactivated]";
+			}
+			Output(false, string.Format("{0} {1}.", cheat.Name, activated));
+		}
 	}
 }
