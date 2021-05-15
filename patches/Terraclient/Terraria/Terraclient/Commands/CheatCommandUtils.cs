@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Terraria.Terraclient.Commands
 {
@@ -138,53 +139,52 @@ namespace Terraria.Terraclient.Commands
 
 		public static void Output(bool isError, string outputText, int errorType = 0) {
 			string errorTypeName = "";
-			if (errorType == 0)
-				errorTypeName = "";
-			else if (errorType == 1)
-				errorTypeName = "Syntax"; //Command entered incorrectly
+			if (errorType == 1)
+				errorTypeName = Language.GetTextValue("CommandErrors.InputDidNotCompute");
 			else if (errorType == 2)
-				errorTypeName =
-					"Indecision"; //Command stopped at indecision between two options in autocomplete selection or otherwise
+				errorTypeName = Language.GetTextValue("CommandErrors.>1OptionSelected");
 			else if (errorType == 3)
-				errorTypeName = "Not an Option"; //There's no thing corresponding to thingID
+				errorTypeName = Language.GetTextValue("CommandErrors.<1OptionSelected");
 			else if (errorType == 4)
-				errorTypeName = "Fatal"; //Literally broke
+				errorTypeName = Language.GetTextValue("CommandErrors.HadAStrokeAndDied");
 			if (!isError)
 				Main.NewText("[c/fc7303:<]" +
-				             "[c/8aff9e:T]" +
-				             "[c/8affa7:e]" +
-				             "[c/8affb1:r]" +
-				             "[c/8affbb:r]" +
-				             "[c/8affc5:a]" +
-				             "[c/8affce:c]" +
-				             "[c/8affd8:l]" +
-				             "[c/8affe2:i]" +
-				             "[c/8affeb:e]" +
-				             "[c/8afff5:n]" +
-				             "[c/8affff:t]" +
-				             "[c/fc7303:>] " + outputText, 138, 255, 206);
+							 "[c/8aff9e:T]" +
+							 "[c/8affa7:e]" +
+							 "[c/8affb1:r]" +
+							 "[c/8affbb:r]" +
+							 "[c/8affc5:a]" +
+							 "[c/8affce:c]" +
+							 "[c/8affd8:l]" +
+							 "[c/8affe2:i]" +
+							 "[c/8affeb:e]" +
+							 "[c/8afff5:n]" +
+							 "[c/8affff:t]" +
+							 "[c/fc7303:>] " + outputText, 138, 255, 206);
 			else
 				Main.NewText("[c/8a8a8a:<]" +
-				             "[c/f23d2c:T]" +
-				             "[c/eb3b2a:e]" +
-				             "[c/e33929:r]" +
-				             "[c/db3727:r]" +
-				             "[c/d43526:a]" +
-				             "[c/cc3325:c]" +
-				             "[c/c43123:l]" +
-				             "[c/bd2f22:i]" +
-				             "[c/bd2f22:e]" +
-				             "[c/c43123:n]" +
-				             "[c/cc3325:t]" +
-				             "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
+							 "[c/f23d2c:T]" +
+							 "[c/eb3b2a:e]" +
+							 "[c/e33929:r]" +
+							 "[c/db3727:r]" +
+							 "[c/d43526:a]" +
+							 "[c/cc3325:c]" +
+							 "[c/c43123:l]" +
+							 "[c/bd2f22:i]" +
+							 "[c/bd2f22:e]" +
+							 "[c/c43123:n]" +
+							 "[c/cc3325:t]" +
+							 "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
 		}
 
 		public static void ToggleMessage(Cheats.Cheat cheat) {
-			string activated = "[c/d4f01f:Activated]";
-			if (!cheat.isEnabled) {
-				activated = "[c/f0421f:Deactivated]";
-			}
-			Output(false, string.Format("{0} {1}.", cheat.Name, activated));
+			string activated;
+			if (cheat.isEnabled)
+				activated = "[c/d802f0:" + Language.GetTextValue("CommandResponse.ToggleOn") + "]";
+			else
+				activated = "[c/d802f0:" + Language.GetTextValue("CommandResponse.ToggleOff") + "]";
+
+			Output(false, Language.GetTextValue("CommandResponse.ToggleSentence", cheat.Name, activated));
 		}
 	}
 }

@@ -90,14 +90,14 @@ namespace Terraria.Terraclient.Commands
 							argsText += ")";
 						}
 						CheatCommandUtils.Output(false,
-							Language.GetTextValue("CommandOutputs.help_SpecificResponse",
+							Language.GetTextValue("CommandOutputs.help_Sel",
 							match.CommandName,
 							match.CommandDescription,
-							argsText.Length > 0 ? argsText : "There are none."));
+							argsText.Length > 0 ? argsText : Language.GetTextValue("CommandsOutput.help_Sel_NoArgs")));
 					}
 					else {
 						CheatCommandUtils.Output(false,
-							Language.GetTextValue("CommandOutputs.help_StandardResponse",
+							Language.GetTextValue("CommandOutputs.help_NoSel",
 							CommandList.Count,
 							string.Join(", ", CommandListNames)));
 					}
@@ -106,9 +106,9 @@ namespace Terraria.Terraclient.Commands
 
 			Create("i")
 				.AddParameters(new List<CommandArgument> {
-					new("ItemID/Name", idsRangeItemNames, true),
-					new("Amount", new List<object> {0, int.MaxValue}, false, true),
-					new("Prefix", idsRangePrefixNames, false, true)
+					new(Language.GetTextValue("CommandArguments.ItemNameOrID"), idsRangeItemNames, true),
+					new(Language.GetTextValue("CommandArguments.ItemStack"), new List<object> {0, int.MaxValue}, false, true),
+					new(Language.GetTextValue("CommandArguments.ItemPrefix"), idsRangePrefixNames, false, true)
 				})
 				.AddAction(args => {
 					int itemType = 0;
@@ -149,7 +149,7 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.Refresh();
 
 					CheatCommandUtils.Output(false,
-						Language.GetTextValue("CommandOutputs.i_ItemSpawnedResponse",
+						Language.GetTextValue("CommandOutputs.i_Succ",
 						Main.mouseItem.stack,
 						Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
 						Lang.GetItemNameValue(Main.mouseItem.type),
@@ -158,7 +158,7 @@ namespace Terraria.Terraclient.Commands
 				.Build();
 
 			Create("searchitems")
-				.AddParameters(new List<CommandArgument> { new("Keyword to search for", new List<object>(), true) })
+				.AddParameters(new List<CommandArgument> { new(Language.GetTextValue("CommandArguments.searchitems_KeyWordToSearchFor"), new List<object>(), true) })
 				.AddAction(args => {
 					List<string> matches = new List<string>();
 					for (int j = 1; j < CheatCommandUtils.ItemNames.Count; j++)
@@ -167,7 +167,7 @@ namespace Terraria.Terraclient.Commands
 							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + CheatCommandUtils.ItemNames.Values
 								.ToList().IndexOf(CheatCommandUtils.ItemNames[j]) + ")");
 					if (matches.Count < 1) {
-						CheatCommandUtils.Output(false, "No item names match.");
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandErrors.searchitems_NoItemNameFound"));
 						return;
 					}
 
@@ -405,7 +405,7 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();*/
 
-			CommandList[0].CommandArgumentDetails[0] = new List<CommandArgument> { new("Command Query", CommandListNames.ToList<object>(), false, true) };
+			CommandList[0].CommandArgumentDetails[0] = new List<CommandArgument> { new(Language.GetTextValue("CommandArguments.help_CommandQuery"), CommandListNames.ToList<object>(), false, true) };
 		}
 
 		public string CommandName;
