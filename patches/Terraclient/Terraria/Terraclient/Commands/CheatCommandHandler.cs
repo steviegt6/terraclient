@@ -15,13 +15,19 @@ namespace Terraria.Terraclient.Commands
 
 		public static string ChatOverlayText {
 			get {
-				if (LastChatText == Main.chatText)
+				if (LastChatText == Main.chatText && ViewingThisCommandTimer != 0) {
+					if (ViewingThisCommandTimer > 0)
+						ViewingThisCommandTimer--;
 					return _chatOverlayText;
-
+				}
 				LastChatText = Main.chatText;
-
 				try {
 					_chatOverlayText = GetChatOverlayText(LastChatText);
+					ViewingThisCommandTimer = -1;
+					if (StartTheViewingThisCommandTimer) {
+						StartTheViewingThisCommandTimer = false;
+						ViewingThisCommandTimer = 50;
+					}
 				}
 				catch (Exception e) {
 					CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.PrettyMessageAboutDeath", e.Message, e.StackTrace), 4);
@@ -329,19 +335,19 @@ namespace Terraria.Terraclient.Commands
 				List<string> words = SplitUpMessage(message);
 				string command = words[0][1..];
 				words.RemoveAt(0);
-				IDictionary<string, MystagogueCommand> commandsThatStartWithCommandField = MystagogueCommand.CommandList
+				IDictionary<string, MystagogueCommand> commandsWithThisName = MystagogueCommand.CommandList
 					.Where(
 						cmd => cmd.CommandName.Equals(command, StringComparison.OrdinalIgnoreCase))
 					.ToDictionary(cmd => cmd.CommandName);
 
-				if (commandsThatStartWithCommandField.Count < 1)
+				if (commandsWithThisName.Count < 1)
 					return Language.GetTextValue("PredictiveText.NoCommandFound", message.Trim());
 
-				if (commandsThatStartWithCommandField.Count > 1)
+				if (commandsWithThisName.Count > 1)
 					return Language.GetTextValue("PredictiveText.MoreThanOneCommandWithThisName", message.Trim());
 
 				List<CommandArgument> argumentDetails =
-					commandsThatStartWithCommandField.ElementAt(0).Value.CommandArgumentDetails[0];
+					commandsWithThisName.ElementAt(0).Value.CommandArgumentDetails[0];
 				if (argumentDetails.Count == 0)
 					return "";
 				List<string> finished = new List<string>();
@@ -477,18 +483,32 @@ namespace Terraria.Terraclient.Commands
 			}
 
 			IDictionary<string, MystagogueCommand> commandsThatStartWithThis = MystagogueCommand.CommandList.Where(
-					cmd => $".{cmd.CommandName.ToLower()}"
-						.StartsWith(Main.chatText.ToLower()))
-				.ToDictionary(cmd => cmd.CommandName);
+				cmd => $".{cmd.CommandName}"
+					.StartsWith(message, StringComparison.OrdinalIgnoreCase))
+					.ToDictionary(cmd => cmd.CommandName);
 
 			switch (commandsThatStartWithThis.Count) {
 				case 0:
 					return Language.GetTextValue("PredictiveText.NoCommandFound", message.Trim());
 				case 1:
-					return Main.chatText + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
-											commandsThatStartWithThis.ElementAt(0).Value.CommandDescription)
-						.Substring(Main.chatText.Length);
+					return message + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
+											commandsThatStartWithThis.ElementAt(0).Value.CommandDescription)[message.Length..];
 				default:
+					IDictionary<string, MystagogueCommand> commandNamesThatDirectlyMatch = MystagogueCommand.CommandList.Where(
+						cmd => $".{cmd.CommandName}"
+							.Equals(message, StringComparison.OrdinalIgnoreCase))
+							.ToDictionary(cmd => cmd.CommandName);
+					if (commandNamesThatDirectlyMatch.Count > 0) {
+						if (commandNamesThatDirectlyMatch.Count > 1)
+							return Language.GetTextValue("PredictiveText.MoreThanOneCommandWithThisName", message.Trim());
+						if (ViewingThisCommandTimer == -1)
+							StartTheViewingThisCommandTimer = true;
+						if (ViewingThisCommandTimer == 0) {
+							return message + ("." + commandNamesThatDirectlyMatch.ElementAt(0).Value.CommandName + " " +
+													commandNamesThatDirectlyMatch.ElementAt(0).Value.CommandDescription)[message.Length..];
+						}
+					}
+
 					commandsThatStartWithThis = (from pair
 								in commandsThatStartWithThis
 												 orderby pair.Key
@@ -496,12 +516,15 @@ namespace Terraria.Terraclient.Commands
 						.ToDictionary(x => x.Key,
 							x => x.Value);
 
-					return Main.chatText +
-						   ("." + string.Join(", ", commandsThatStartWithThis.Keys)).Substring(Main.chatText.Length);
+					return message +
+						   ("." + string.Join(", ", commandsThatStartWithThis.Keys))[message.Length..];
 			}
 		}
 
 		private static List<string> SplitUpMessage(string message) =>
 			new Regex(@"[\""].+?[\""]|[^ ]+").Matches(message).Select(x => x.Value).ToList();
+
+		internal static int ViewingThisCommandTimer = -1;
+		internal static bool StartTheViewingThisCommandTimer;
 	}
 }
