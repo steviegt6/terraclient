@@ -142,21 +142,15 @@ namespace Terraria.Terraclient.Commands
 								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
 									polished.Add(thing);
 									matches.Remove(thing);
-									CheatCommandUtils.Output(false,
-										"Input for argument " + argumentDetails[i].ArgumentName +
-										" found a direct match (" + thing + "), skipping other results including " +
-										string.Join(", ", matches));
+									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
 									arguments.RemoveAt(0);
 									goto CanNowMoveToNextArgument;
 								}
 
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
-									string.Join(", ", matches), 2);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
 								goto OnError;
 						}
 
@@ -176,28 +170,19 @@ namespace Terraria.Terraclient.Commands
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" did not autocomplete to or directly match any options for " +
-									argumentDetails[i].ArgumentName + ".", 3);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
 								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
 									polished.Add(thing);
 									matches.Remove(thing);
-									CheatCommandUtils.Output(false,
-										"Input for argument " + argumentDetails[i].ArgumentName +
-										" found a direct match (" + thing + "), skipping other results including " +
-										string.Join(", ", matches));
+									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
 									arguments.RemoveAt(0);
 									goto CanNowMoveToNextArgument;
 								}
 
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
-									string.Join(", ", matches), 2);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
 								goto OnError;
 						}
 
@@ -222,28 +207,19 @@ namespace Terraria.Terraclient.Commands
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" did not autocomplete to or directly match any options for " +
-									argumentDetails[i].ArgumentName + ".", 3);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
 								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
 									polished.Add(thing);
 									matches.Remove(thing);
-									CheatCommandUtils.Output(false,
-										"Input for argument " + argumentDetails[i].ArgumentName +
-										" found a direct match (" + thing + "), skipping other results including " +
-										string.Join(", ", matches));
+									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
 									arguments.RemoveRange(0, indexOfFirstOmitted);
 									goto CanNowMoveToNextArgument;
 								}
 
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
-									string.Join(", ", matches), 2);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
 								goto OnError;
 						}
 
@@ -270,28 +246,19 @@ namespace Terraria.Terraclient.Commands
 
 						switch (matches.Count) {
 							case 0:
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" did not autocomplete to or directly match any options for " +
-									argumentDetails[i].ArgumentName + ".", 3);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
 								goto OnError;
 
 							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query))) {
+								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
 									polished.Add(thing);
 									matches.Remove(thing);
-									CheatCommandUtils.Output(false,
-										"Input for argument " + argumentDetails[i].ArgumentName +
-										" found a direct match (" + thing + "), skipping other results including " +
-										string.Join(", ", matches));
+									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
 									arguments.RemoveRange(0, indexOfFirstOmitted);
 									goto CanNowMoveToNextArgument;
 								}
 
-								CheatCommandUtils.Output(true,
-									"Input for argument " + argumentDetails[i].ArgumentName +
-									" was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included " +
-									string.Join(", ", matches), 2);
+								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
 								goto OnError;
 						}
 
@@ -368,11 +335,10 @@ namespace Terraria.Terraclient.Commands
 					.ToDictionary(cmd => cmd.CommandName);
 
 				if (commandsThatStartWithCommandField.Count < 1)
-					return message.Trim() + " No command found.";
+					return Language.GetTextValue("PredictiveText.NoCommandFound", message.Trim());
 
 				if (commandsThatStartWithCommandField.Count > 1)
-					return message.Trim() +
-						   " Only one command should have this name, yet two have it. Please contact a developer.";
+					return Language.GetTextValue("PredictiveText.MoreThanOneCommandWithThisName", message.Trim());
 
 				List<CommandArgument> argumentDetails =
 					commandsThatStartWithCommandField.ElementAt(0).Value.CommandArgumentDetails[0];
@@ -429,7 +395,7 @@ namespace Terraria.Terraclient.Commands
 											matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
 									switch (matches.Count) {
 										case 0:
-											return message.Trim() + " No matches found for this argument.";
+											return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
 										case > 1: {
 												matches.Sort();
 												string output = message.Trim() + matches[0][finished.Last().Length..] +
@@ -441,30 +407,24 @@ namespace Terraria.Terraclient.Commands
 									}
 								}
 
-								addon = "(Input accepts a number in between " +
-										argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
-										argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+								addon = Language.GetTextValue("InputDescriptions.PositiveIntRange",
+									argumentDetails[finished.Count].ExpectedInputs[0],
+									argumentDetails[finished.Count].ExpectedInputs[1]);
 								break;
 							}
 						case CommandArgument.ArgInputType.Text:
-							addon = "(Input accepts specific text options)";
+						case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
+							addon = Language.GetTextValue("InputDescriptions.Text");
 							break;
 						case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
-							addon = "(Input accepts specific text options or a number in between " +
-									argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
-									argumentDetails[finished.Count].ExpectedInputs[1] + ")";
-							break;
-						case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
-							addon = "(Input accepts specific text options)";
-							break;
 						case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
-							addon = "(Input accepts specific text options or a number in between " +
-									argumentDetails[finished.Count].ExpectedInputs[0] + " and " +
-									argumentDetails[finished.Count].ExpectedInputs[1] + ")";
+							addon = Language.GetTextValue("InputDescriptions.PositiveIntRangeOrText",
+								argumentDetails[finished.Count].ExpectedInputs[0],
+								argumentDetails[finished.Count].ExpectedInputs[1]);
 							break;
 						case CommandArgument.ArgInputType.CustomText:
 						case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
-							addon = "(Input accepts any text)";
+							addon = Language.GetTextValue("InputDescriptions.CustomText");
 							break;
 						default:
 							throw new ArgumentOutOfRangeException();
@@ -487,7 +447,7 @@ namespace Terraria.Terraclient.Commands
 					if (argumentDetails[finished.Count - 1].InputType
 							is CommandArgument.ArgInputType.PositiveIntegerRange
 						&& new Regex("\\D").IsMatch(finished.Last())) {
-						return message.Trim() + " Cannot input a word here; Must be a positive number.";
+						return message.Trim() + " " + Language.GetTextValue("CommandErrors.MustBePositiveInteger", argumentDetails[finished.Count - 1].ArgumentName);
 					}
 
 					List<string> matches = new List<string>();
@@ -505,7 +465,7 @@ namespace Terraria.Terraclient.Commands
 					matches.Sort();
 					switch (matches.Count) {
 						case 0:
-							return message.Trim() + " No matches found for this argument.";
+							return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
 						case 1:
 							return message + matches[0][finished.Last().Length..];
 						default:
@@ -523,7 +483,7 @@ namespace Terraria.Terraclient.Commands
 
 			switch (commandsThatStartWithThis.Count) {
 				case 0:
-					return Main.chatText.Trim() + " No command found."; // todo: localization
+					return Language.GetTextValue("PredictiveText.NoCommandFound", message.Trim());
 				case 1:
 					return Main.chatText + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
 											commandsThatStartWithThis.ElementAt(0).Value.CommandDescription)

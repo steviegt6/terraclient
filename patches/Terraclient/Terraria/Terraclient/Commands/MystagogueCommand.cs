@@ -44,56 +44,37 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(args => {
 					if (args.Count > 0) {
 						MystagogueCommand match = CommandList.FirstOrDefault(t =>
-							t.CommandName.StartsWith((string)args[0], StringComparison.OrdinalIgnoreCase));
+							t.CommandName.Equals((string)args[0]));
 						string argsText = "";
-
-						if (match == null)
-							return;
-
 						foreach (CommandArgument arg in match.CommandArgumentDetails[0]) {
-							argsText += (argsText.Length > 0 ? ", " : "") + "(" + arg.ArgumentName +
-										": Input type: Input accepts ";
+							argsText += (argsText.Length > 0 ? ", " : "") + arg.ArgumentName + " ";
 							switch (arg.InputType) {
 								case CommandArgument.ArgInputType.PositiveIntegerRange:
-									argsText += "a number in between " + arg.ExpectedInputs[0] + " and " +
-												arg.ExpectedInputs[1];
+									argsText += Language.GetTextValue("InputDescriptions.PositiveIntRange",
+										arg.ExpectedInputs[0],
+										arg.ExpectedInputs[1]);
 									break;
-
 								case CommandArgument.ArgInputType.Text:
-									argsText += "specific text options";
-									break;
-
-								case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
-									argsText += "specific text options or a number in between " +
-												arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
-									break;
-
 								case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
-									argsText += "specific text options";
+									argsText += Language.GetTextValue("InputDescriptions.Text");
 									break;
-
-								case CommandArgument.ArgInputType
-									.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
-									argsText += "specific text options or a number in between " +
-												arg.ExpectedInputs[0] + " and " + arg.ExpectedInputs[1];
+								case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
+								case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
+									argsText += Language.GetTextValue("InputDescriptions.PositiveIntRangeOrText",
+										arg.ExpectedInputs[0],
+										arg.ExpectedInputs[1]);
 									break;
-
 								case CommandArgument.ArgInputType.CustomText:
 								case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
-									argsText += "any text";
+									argsText += Language.GetTextValue("InputDescriptions.CustomText");
 									break;
-
-								default:
-									throw new ArgumentOutOfRangeException();
 							}
-
-							argsText += ")";
 						}
 						CheatCommandUtils.Output(false,
 							Language.GetTextValue("CommandOutputs.help_Sel",
 							match.CommandName,
 							match.CommandDescription,
-							argsText.Length > 0 ? argsText : Language.GetTextValue("CommandsOutput.help_Sel_NoArgs")));
+							argsText.Length > 0 ? argsText : Language.GetTextValue("CommandOutputs.help_Sel_NoArgs")));
 					}
 					else {
 						CheatCommandUtils.Output(false,
@@ -106,9 +87,9 @@ namespace Terraria.Terraclient.Commands
 
 			Create("i")
 				.AddParameters(new List<CommandArgument> {
-					new(Language.GetTextValue("CommandArguments.ItemNameOrID"), idsRangeItemNames, true),
-					new(Language.GetTextValue("CommandArguments.ItemStack"), new List<object> {0, int.MaxValue}, false, true),
-					new(Language.GetTextValue("CommandArguments.ItemPrefix"), idsRangePrefixNames, false, true)
+					new(Language.GetTextValue("CommandArguments.i_ItemNameOrID"), idsRangeItemNames, true),
+					new(Language.GetTextValue("CommandArguments.i_ItemStack"), new List<object> {0, int.MaxValue}, false, true),
+					new(Language.GetTextValue("CommandArguments.i_ItemPrefix"), idsRangePrefixNames, false, true)
 				})
 				.AddAction(args => {
 					int itemType = 0;
@@ -125,21 +106,12 @@ namespace Terraria.Terraclient.Commands
 							prefix = Array.IndexOf(Prefixes, (string)args[2]);
 						else
 							prefix = (int)args[2];
-						if (prefix is 18 or 75) {
-							prefix = !ContentSamples.ItemsByType[itemType].accessory
-								? 18
-								: 75;
-						}
-						if (prefix is 20 or 43) {
-							prefix = ContentSamples.ItemsByType[itemType].ranged
-								? 20
-								: 43;
-						}
-						if (prefix is 42 or 76) {
-							prefix = !ContentSamples.ItemsByType[itemType].accessory
-								? 42
-								: 76;
-						}
+						if (prefix is 18 or 75)
+							prefix = !ContentSamples.ItemsByType[itemType].accessory ? 18 : 75;
+						if (prefix is 20 or 43)
+							prefix = ContentSamples.ItemsByType[itemType].ranged ? 20 : 43;
+						if (prefix is 42 or 76)
+							prefix = !ContentSamples.ItemsByType[itemType].accessory ? 42 : 76;
 					}
 
 					HandyFunctions.MoveMouseItemToInventory();
@@ -170,10 +142,9 @@ namespace Terraria.Terraclient.Commands
 						CheatCommandUtils.Output(false, Language.GetTextValue("CommandErrors.searchitems_NoItemNameFound"));
 						return;
 					}
-
 					if (matches.Count > 1)
 						matches.Sort();
-					CheatCommandUtils.Output(false, "Found these items: " + string.Join(", ", matches));
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.searchitems_Succ", string.Join(", ", matches)));
 				})
 				.Build();
 
@@ -182,7 +153,7 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].HeldItem.Refresh();
 					HandyFunctions.ToolGodBuffMyTools();
-					CheatCommandUtils.Output(false, "Selected item refreshed.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ri_Succ"));
 				})
 				.Build();
 
@@ -191,7 +162,7 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].RefreshItems();
 					HandyFunctions.ToolGodBuffMyTools();
-					CheatCommandUtils.Output(false, "All inventory items refreshed.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ris_Succ"));
 				})
 				.Build();
 
@@ -210,8 +181,7 @@ namespace Terraria.Terraclient.Commands
 
 					HandyFunctions.ToolGodBuffMyTools();
 
-					CheatCommandUtils.Output(false,
-						"Cleaned all items not favorited in the inventory and all items in the Void inventory.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.invclear_Succ"));
 				})
 				.Build();
 
@@ -257,7 +227,7 @@ namespace Terraria.Terraclient.Commands
 							continue;
 						item.stack = int.MaxValue;
 					}
-					CheatCommandUtils.Output(false, "Stacks overflown.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.setstacks2b_Succ"));
 				})
 				.Build();
 
@@ -309,7 +279,7 @@ namespace Terraria.Terraclient.Commands
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack ? ContentSamples.ItemsByType[item.type].maxStack : item.stack;
 					}
-					CheatCommandUtils.Output(false, "Stacks regulated.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.setstackslegit_Succ"));
 				})
 				.Build();
 
@@ -331,7 +301,7 @@ namespace Terraria.Terraclient.Commands
 							continue;
 						item.maxStack = int.MaxValue;
 					}
-					CheatCommandUtils.Output(false, "Max stacks expanded.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.setmaxstacks2b_Succ"));
 				})
 				.Build();
 
@@ -353,7 +323,7 @@ namespace Terraria.Terraclient.Commands
 							continue;
 						item.maxStack = ContentSamples.ItemsByType[item.type].maxStack;
 					}
-					CheatCommandUtils.Output(false, "Max stacks regulated.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.setmaxstackslegit_Succ"));
 				})
 				.Build();
 
@@ -370,7 +340,7 @@ namespace Terraria.Terraclient.Commands
 							continue;
 						item.favorited = true;
 					}
-					CheatCommandUtils.Output(false, "All items favorited.");
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.favoriteall_Succ"));
 				})
 				.Build();
 
@@ -390,7 +360,8 @@ namespace Terraria.Terraclient.Commands
 					Main.mouseItem.stack = 1;
 					Main.mouseItem.Refresh();
 					Main.mouseItem.placeStyle = 99;
-					Main.mouseItem.SetNameOverride("torch of loneliness");
+					Main.mouseItem.SetNameOverride(Language.GetTextValue("CustomNames.ExploitTorch"));
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.torch_Succ"));
 				})
 				.Build();
 
