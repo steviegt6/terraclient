@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Terraria.Terraclient.Commands
 {
@@ -19,36 +20,32 @@ namespace Terraria.Terraclient.Commands
 				for (int i = 0; i < ItemID.Count; i++)
 					_itemNames.Add(i, Lang.GetItemNameValue(i));
 
-				_itemNames[0] = "Air";
-				_itemNames[4143] = "Mana Cloak Star";
-				_itemNames[753] = "Seaweed (Turtle pet)";
-				_itemNames[2338] = "Seaweed (Fishing garbage)";
-				_itemNames[865] = "Princess dress (From clothier)";
-				_itemNames[1773] = "Princess dress (From halloween)";
-				_itemNames[3217] = "Deathweed Planter Box (Corruption)";
-				_itemNames[3218] = "Deathweed Planter Box (Crimson)";
-				_itemNames[3318] = "Treasure Bag (King Slime)";
-				_itemNames[3319] = "Treasure Bag (Eye of Cthulhu)";
-				_itemNames[3320] = "Treasure Bag (Eater of Worlds)";
-				_itemNames[3321] = "Treasure Bag (Brain of Cthulhu)";
-				_itemNames[3322] = "Treasure Bag (Queen Bee)";
-				_itemNames[3323] = "Treasure Bag (Skeletron)";
-				_itemNames[3324] = "Treasure Bag (Wall of Flesh)";
-				_itemNames[3325] = "Treasure Bag (Destroyer)";
-				_itemNames[3326] = "Treasure Bag (Twins)";
-				_itemNames[3327] = "Treasure Bag (Skeletron Prime)";
-				_itemNames[3328] = "Treasure Bag (Plantera)";
-				_itemNames[3329] = "Treasure Bag (Golem)";
-				_itemNames[3330] = "Treasure Bag (Fishron)";
-				_itemNames[3331] = "Treasure Bag (Cultist)";
-				_itemNames[3332] = "Treasure Bag (Moon Lord)";
-				_itemNames[3860] = "Treasure Bag (Betsy)";
-				_itemNames[4782] = "Treasure Bag (Fairy Queen)";
-				_itemNames[4957] = "Treasure Bag (Queen Slime)";
-				//_itemNames[3386] = "(Variant 2) Strange Plant";
-				//_itemNames[3387] = "(Variant 3) Strange Plant";
-				//_itemNames[3388] = "(Variant 4) Strange Plant";
-				//Just designate these other plants in-game via item ID.
+				_itemNames[0] = Language.GetTextValue("CustomItemNames.Air");
+				_itemNames[4143] = Lang.GetItemNameValue(ItemID.ManaCloak) + " " + Lang.GetItemNameValue(ItemID.Star);
+				_itemNames[753] = Lang.GetItemNameValue(ItemID.Seaweed) + " (" + Lang.GetBuffName(BuffID.PetTurtle) + ")";
+				_itemNames[2338] = Lang.GetItemNameValue(ItemID.FishingSeaweed) + " (Fishing garbage)";
+				_itemNames[865] = Lang.GetItemNameValue(ItemID.PrincessDress) + " (From " + Lang.GetNPCNameValue(NPCID.Clothier) + ")";
+				_itemNames[1773] = Lang.GetItemNameValue(ItemID.PrincessDressNew) + " (From Halloween)";
+				_itemNames[3217] = Lang.GetItemNameValue(ItemID.CorruptPlanterBox) + " (Corruption)";
+				_itemNames[3218] = Lang.GetItemNameValue(ItemID.CrimsonPlanterBox) + " (Crimson)";
+				_itemNames[3318] = Lang.GetItemNameValue(ItemID.KingSlimeBossBag) + " (" + Lang.GetNPCNameValue(NPCID.KingSlime) + ")";
+				_itemNames[3319] = Lang.GetItemNameValue(ItemID.EyeOfCthulhuBossBag) + " (" + Lang.GetNPCNameValue(NPCID.EyeofCthulhu) + ")";
+				_itemNames[3320] = Lang.GetItemNameValue(ItemID.EaterOfWorldsBossBag) + " (" + Lang.GetNPCNameValue(NPCID.EaterofWorldsHead) + ")";
+				_itemNames[3321] = Lang.GetItemNameValue(ItemID.BrainOfCthulhuBossBag) + " (" + Lang.GetNPCNameValue(NPCID.BrainofCthulhu) + ")";
+				_itemNames[3322] = Lang.GetItemNameValue(ItemID.QueenBeeBossBag) + " (" + Lang.GetNPCNameValue(NPCID.QueenBee) + ")";
+				_itemNames[3323] = Lang.GetItemNameValue(ItemID.SkeletronBossBag) + " (" + Lang.GetNPCNameValue(NPCID.SkeletronHead) + ")";
+				_itemNames[3324] = Lang.GetItemNameValue(ItemID.WallOfFleshBossBag) + " (" + Lang.GetNPCNameValue(NPCID.WallofFlesh) + ")";
+				_itemNames[3325] = Lang.GetItemNameValue(ItemID.DestroyerBossBag) + " (" + Lang.GetNPCNameValue(NPCID.TheDestroyer) + ")";
+				_itemNames[3326] = Lang.GetItemNameValue(ItemID.TwinsBossBag) + " (" + Language.GetTextValue("Enemies.TheTwins") + ")";
+				_itemNames[3327] = Lang.GetItemNameValue(ItemID.SkeletronPrimeBossBag) + " (" + Lang.GetNPCNameValue(NPCID.SkeletronPrime) + ")";
+				_itemNames[3328] = Lang.GetItemNameValue(ItemID.PlanteraBossBag) + " (" + Lang.GetNPCNameValue(NPCID.Plantera) + ")";
+				_itemNames[3329] = Lang.GetItemNameValue(ItemID.GolemBossBag) + " (" + Lang.GetNPCNameValue(NPCID.Golem) + ")";
+				_itemNames[3330] = Lang.GetItemNameValue(ItemID.FishronBossBag) + " (" + Lang.GetNPCNameValue(NPCID.DukeFishron) + ")";
+				_itemNames[3331] = Lang.GetItemNameValue(ItemID.CultistBossBag) + " (" + Lang.GetNPCNameValue(NPCID.CultistBoss) + ")";
+				_itemNames[3332] = Lang.GetItemNameValue(ItemID.MoonLordBossBag) + " (" + Language.GetTextValue("Enemies.MoonLord") + ")";
+				_itemNames[3860] = Lang.GetItemNameValue(ItemID.BossBagBetsy) + " (" + Lang.GetNPCNameValue(NPCID.DD2Betsy) + ")";
+				_itemNames[4782] = Lang.GetItemNameValue(ItemID.FairyQueenBossBag) + " (" + Lang.GetNPCNameValue(NPCID.HallowBoss) + ")";
+				_itemNames[4957] = Lang.GetItemNameValue(ItemID.QueenSlimeBossBag) + " (" + Lang.GetNPCNameValue(NPCID.QueenSlimeBoss) + ")";
 				return _itemNames;
 			}
 			internal set => _itemNames = value;
@@ -67,18 +64,18 @@ namespace Terraria.Terraclient.Commands
 					_npcNames.Add(i, Lang.GetNPCNameValue(i));
 
 				_npcNames[0] = "Nothing";
-				_npcNames[-65] = "Big Hornet";
-				_npcNames[-64] = "Little Hornet";
-				_npcNames[-55] = "Big Raincoat Zombie";
-				_npcNames[-54] = "Little Raincoat Zombie";
-				_npcNames[-47] = "Big Skeleton";
-				_npcNames[-46] = "Little Skeleton";
-				_npcNames[-27] = "Big Zombie";
-				_npcNames[-26] = "Little Zombie";
-				_npcNames[-17] = "Big Weak Hornet";
-				_npcNames[-16] = "Little Weak Hornet";
-				_npcNames[590] = "Torch Zombie";
-				_npcNames[656] = "Town Bunny";
+				_npcNames[-65] = "Big " + Lang.GetNPCNameValue(NPCID.Hornet);
+				_npcNames[-64] = "Little " + Lang.GetNPCNameValue(NPCID.Hornet);
+				_npcNames[-55] = "Big " + Lang.GetNPCNameValue(NPCID.ZombieRaincoat);
+				_npcNames[-54] = "Little " + Lang.GetNPCNameValue(NPCID.ZombieRaincoat);
+				_npcNames[-47] = "Big " + Lang.GetNPCNameValue(NPCID.Skeleton);
+				_npcNames[-46] = "Little " + Lang.GetNPCNameValue(NPCID.Skeleton);
+				_npcNames[-27] = "Big " + Lang.GetNPCNameValue(NPCID.Zombie);
+				_npcNames[-26] = "Little " + Lang.GetNPCNameValue(NPCID.Zombie);
+				_npcNames[-17] = "Big Weak " + Lang.GetNPCNameValue(NPCID.MossHornet);
+				_npcNames[-16] = "Little Weak " + Lang.GetNPCNameValue(NPCID.MossHornet);
+				_npcNames[590] = "Torch " + Lang.GetNPCNameValue(NPCID.Zombie);
+				_npcNames[656] = "Town " + Lang.GetNPCNameValue(NPCID.Bunny);
 				return _npcNames;
 			}
 			internal set => _npcNames = value;
@@ -97,8 +94,8 @@ namespace Terraria.Terraclient.Commands
 					_buffNames.Add(i, Lang.GetBuffName(i));
 
 				_buffNames[0] = "Nothing";
-				_buffNames[166] = "Minecart (Mechanical)";
-				_buffNames[167] = "Minecart (Mechanical)";
+				_buffNames[166] = Lang.GetBuffName(BuffID.MinecartRightMech) + " (Mechanical)";
+				_buffNames[167] = Lang.GetBuffName(BuffID.MinecartLeftMech) + " (Mechanical)";
 				return _buffNames;
 			}
 			internal set => _buffNames = value;
@@ -138,45 +135,52 @@ namespace Terraria.Terraclient.Commands
 
 		public static void Output(bool isError, string outputText, int errorType = 0) {
 			string errorTypeName = "";
-			if (errorType == 0)
-				errorTypeName = "";
-			else if (errorType == 1)
-				errorTypeName = "Syntax"; //Command entered incorrectly
+			if (errorType == 1)
+				errorTypeName = Language.GetTextValue("CommandErrors.InputDidNotCompute");
 			else if (errorType == 2)
-				errorTypeName =
-					"Indecision"; //Command stopped at indecision between two options in autocomplete selection or otherwise
+				errorTypeName = Language.GetTextValue("CommandErrors.>1OptionSelected");
 			else if (errorType == 3)
-				errorTypeName = "Not an Option"; //There's no thing corresponding to thingID
+				errorTypeName = Language.GetTextValue("CommandErrors.<1OptionSelected");
 			else if (errorType == 4)
-				errorTypeName = "Fatal"; //Literally broke
+				errorTypeName = Language.GetTextValue("CommandErrors.HadAStrokeAndDied");
 			if (!isError)
 				Main.NewText("[c/fc7303:<]" +
-				             "[c/8aff9e:T]" +
-				             "[c/8affa7:e]" +
-				             "[c/8affb1:r]" +
-				             "[c/8affbb:r]" +
-				             "[c/8affc5:a]" +
-				             "[c/8affce:c]" +
-				             "[c/8affd8:l]" +
-				             "[c/8affe2:i]" +
-				             "[c/8affeb:e]" +
-				             "[c/8afff5:n]" +
-				             "[c/8affff:t]" +
-				             "[c/fc7303:>] " + outputText, 138, 255, 206);
+							 "[c/8aff9e:T]" +
+							 "[c/8affa7:e]" +
+							 "[c/8affb1:r]" +
+							 "[c/8affbb:r]" +
+							 "[c/8affc5:a]" +
+							 "[c/8affce:c]" +
+							 "[c/8affd8:l]" +
+							 "[c/8affe2:i]" +
+							 "[c/8affeb:e]" +
+							 "[c/8afff5:n]" +
+							 "[c/8affff:t]" +
+							 "[c/fc7303:>] " + outputText, 138, 255, 206);
 			else
 				Main.NewText("[c/8a8a8a:<]" +
-				             "[c/f23d2c:T]" +
-				             "[c/eb3b2a:e]" +
-				             "[c/e33929:r]" +
-				             "[c/db3727:r]" +
-				             "[c/d43526:a]" +
-				             "[c/cc3325:c]" +
-				             "[c/c43123:l]" +
-				             "[c/bd2f22:i]" +
-				             "[c/bd2f22:e]" +
-				             "[c/c43123:n]" +
-				             "[c/cc3325:t]" +
-				             "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
+							 "[c/f23d2c:T]" +
+							 "[c/eb3b2a:e]" +
+							 "[c/e33929:r]" +
+							 "[c/db3727:r]" +
+							 "[c/d43526:a]" +
+							 "[c/cc3325:c]" +
+							 "[c/c43123:l]" +
+							 "[c/bd2f22:i]" +
+							 "[c/bd2f22:e]" +
+							 "[c/c43123:n]" +
+							 "[c/cc3325:t]" +
+							 "[c/8a8a8a:>] " + errorTypeName + " Error: " + outputText, 235, 59, 42);
+		}
+
+		public static void ToggleMessage(Cheats.Cheat cheat) {
+			string activated;
+			if (cheat.isEnabled)
+				activated = "[c/d802f0:" + Language.GetTextValue("CommandResponse.ToggleOn") + "]";
+			else
+				activated = "[c/d802f0:" + Language.GetTextValue("CommandResponse.ToggleOff") + "]";
+
+			Output(false, Language.GetTextValue("CommandResponse.ToggleSentence", cheat.Name, activated));
 		}
 	}
 }

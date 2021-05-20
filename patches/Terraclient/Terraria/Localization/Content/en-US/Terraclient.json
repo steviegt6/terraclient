@@ -98,6 +98,95 @@
 		"AltRightClickDuplicationCheatDesc": "Enables duplicating items in the inventory by right-clicking while in favoriting mode. Also hold control to make a stack of 2.1 billion.",
 
 		"ToolGodCheatName": "Tool God",
-		"ToolGodCheatDesc": "Enables a check that refreshes all the tools in your inventory and then overpowers the select few that shift-clicking would select periodically."
+		"ToolGodCheatDesc": "Enables a check that refreshes all the tools in your inventory and then overpowers the select few that shift-clicking would select periodically.",
+
+		"RefillsCheatName": "Favorited Item Refills",
+		"RefillsCheatDesc": "Enables a check that fills up the stacks of all favorited items in the inventory periodically."
+	},
+
+	"CommandDescriptions": {
+		"help": "Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.",
+		"i": "Spawns an item in your cursor slot. The item will be automatically sent to your inventory if your inventory is closed.",
+		"searchitems": "Searches item names by keyword, then returns all matches (case unspecific) with their item IDs.",
+		"ri": "Refreshes the item selected in the hotbar.",
+		"ris": "Refreshes all items in all inventories of the character.",
+		"invclear": "Turns all items that are not favorited in the inventory and all items in the Void inventory into air.",
+		"toolgod": "Toggles the Tool God Cheat in the Cheat Menu.",
+		"setstacks2b": "Sets the stack of all stackable items in the inventory and all the banks to 2147483647.",
+		"setstackslegit": "Limits the stack of all stackable items in the inventory and all the banks to their maxstacks.",
+		"setmaxstacks2b": "Sets the max stack of all items in the inventory and void to 2147483647.",
+		"setmaxstackslegit": "Sets the max stack of all items in the inventory and void to their default values.",
+		"favoriteall": "Favorites every item in the inventory.",
+		"refills": "Toggles the Favorited Item Refills Cheat in the Cheat Menu.",
+		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.",
+		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
+	},
+
+	"CommandOutputs": {
+		"ToggleSentence": "{0} {1}.",
+		"ToggleOn": "Activated",
+		"ToggleOff": "Deactivated",
+		"help_NoSel": "Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!\nRead about a command's function by executing .help (query).\nThere are {0} commands loaded.\nList of commands: {1}",
+		"help_Sel": "You chose to read about: \"{0}\".\nDescription: {1}\nArguments: {2}",
+		"help_Sel_NoArgs": "There are none.",
+		"i_Succ": "Set cursor item to {0}{1} {2} ({3})",
+		"searchitems_Succ": "Found these items: {0}",
+		"ri_Succ": "Selected item refreshed.",
+		"ris_Succ": "All inventory items refreshed.",
+		"invclear_Succ": "Cleaned all items not favorited in the inventory and all items in the Void inventory.",
+		"setstacks2b_Succ": "Stacks overflown.",
+		"setstackslegit_Succ": "Stacks regulated.",
+		"setmaxstacks2b_Succ": "Max stacks expanded.",
+		"setmaxstackslegit_Succ": "Max stacks regulated.",
+		"favoriteall_Succ": "All items favorited.",
+		"torch_Succ": "Have fun being alone."
+	},
+
+	"CommandArguments": {
+		"help_CommandQuery": "Command Query",
+		"i_ItemNameOrID": "ItemID/Name",
+		"i_ItemStack": "Amount",
+		"i_ItemPrefix": "Prefix",
+		"searchitems_KeyWordToSearchFor": "Keyword to search for"
+	},
+
+	"CommandErrors": {
+		"HadAStrokeAndDied": "Fatal",
+		"PrettyMessageAboutDeath": "Something went wrong. {0}\n{1}",
+		"PrettyMessageAboutRegisteredText": "Command: \"{0}\", Command arguments: \"{1}\"",
+		"InputDidNotCompute": "Syntax",
+		">1OptionSelected": "Indecision",
+		"<1OptionSelected": "Not An Option",
+		"CommandNotRecognized": "{0} is not a recognized command.",
+		"CommandRequiresArgs": "This command requires arguments to run.",
+		"CommandRequiresMoreArgs": "You did not submit all the required arguments. Every required argument will be before the optional arguments, no matter what command you run. Please try again. Missing arguments: {0}",
+		"MustBePositiveInteger": "The argument {0} only accepts positive integers.",
+		"DidNotMatchAnyOptionsFor": "Input for argument {0} did not autocomplete to or directly match any options accepted by argument {0}.",
+		"SelectedMoreThanOneOptionFor": "Input for argument {0} was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included {1}",
+
+		"searchitems_NoItemNameFound": "No item names match."
+	},
+
+	"CommandWaysideNotifs": {
+		"MatchedMultipleSelectedOne": "Input for argument {0} found a direct match ({1}), skipping other results including {2}"
+	},
+
+	"PredictiveText": {
+		"NoCommandFound": "{0} That's not a command.",
+		"MoreThanOneCommandWithThatName": "{0} If you get this message, please contact a developer. Only one command should have this name.",
+		"NoMatchesForThis": "{0} No matches found for this argument."
+	},
+
+	"InputDescriptions": {
+		"PositiveIntRange": "(Input accepts number in between {0} and {1})",
+		"Text": "(Input accepts a text option)",
+		"PositiveIntRangeOrText": "(Input accepts a text option or number in between {0} and {1})",
+		"CustomText": "(Input accepts any text)"
+	},
+
+	"CustomNames": {
+		"Air": "Air",
+		"Nothing": "Nothing",
+		"ExploitTorch": "torch of loneliness"
 	}
 }
