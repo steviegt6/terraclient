@@ -26,7 +26,7 @@ namespace Terraria.Terraclient.Commands
 					ViewingThisCommandTimer = -1;
 					if (StartTheViewingThisCommandTimer) {
 						StartTheViewingThisCommandTimer = false;
-						ViewingThisCommandTimer = 50;
+						ViewingThisCommandTimer = 80;
 					}
 				}
 				catch (Exception e) {
