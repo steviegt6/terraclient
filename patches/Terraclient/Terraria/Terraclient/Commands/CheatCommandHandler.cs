@@ -369,49 +369,49 @@ namespace Terraria.Terraclient.Commands
 					}
 				}
 
-				if (argumentDetails.Count < finished.Count - 1)
+				if (argumentDetails.Count < finished.Count) {
 					return "";
-				if (message.EndsWith(" ")) {
+				}
+				if (message.EndsWith(" ") && argumentDetails.Count > finished.Count) {
 					string addon;
 					switch (argumentDetails[finished.Count].InputType) {
-						case CommandArgument.ArgInputType.PositiveIntegerRange: {
-								if (finished.Count > 0 && (argumentDetails[finished.Count - 1].InputType
-															   is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
-														   || (argumentDetails[finished.Count - 1].InputType
-																   is CommandArgument.ArgInputType
-																	   .PositiveIntegerRangeOrTextConcatenationUntilNextInt
-															   && new Regex("\\D").IsMatch(finished[^1])))) {
-									List<string> matches = new List<string>();
-									int j = 0;
-									if (argumentDetails[finished.Count - 1].InputType
-										is CommandArgument.ArgInputType
-											.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
-										j = 2;
-									}
-
-									for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
-										if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(
-											finished.Last(), StringComparison.OrdinalIgnoreCase))
-											matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
-									switch (matches.Count) {
-										case 0:
-											return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
-										case > 1: {
-												matches.Sort();
-												string output = message.Trim() + matches[0][finished.Last().Length..] +
-																", " + string.Join(", ",
-																	matches.GetRange(1, matches.Count - 1));
-												return output[..Math.Min(150, output.Length)] +
-													   (output.Length >= 150 ? "..." : "");
-											}
-									}
+						case CommandArgument.ArgInputType.PositiveIntegerRange:
+							if (finished.Count > 0 && (argumentDetails[finished.Count - 1].InputType
+														   is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
+													   || (argumentDetails[finished.Count - 1].InputType
+															   is CommandArgument.ArgInputType
+																   .PositiveIntegerRangeOrTextConcatenationUntilNextInt
+														   && new Regex("\\D").IsMatch(finished[^1])))) {
+								List<string> matches = new List<string>();
+								int j = 0;
+								if (argumentDetails[finished.Count - 1].InputType
+									is CommandArgument.ArgInputType
+										.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
+									j = 2;
 								}
 
-								addon = Language.GetTextValue("InputDescriptions.PositiveIntRange",
-									argumentDetails[finished.Count].ExpectedInputs[0],
-									argumentDetails[finished.Count].ExpectedInputs[1]);
-								break;
+								for (; j < argumentDetails[finished.Count - 1].ExpectedInputs.Count; j++)
+									if (((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]).StartsWith(
+										finished.Last(), StringComparison.OrdinalIgnoreCase))
+										matches.Add((string)argumentDetails[finished.Count - 1].ExpectedInputs[j]);
+								switch (matches.Count) {
+									case 0:
+										return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
+									case > 1: {
+											matches.Sort();
+											string output = message.Trim() + matches[0][finished.Last().Length..] +
+															", " + string.Join(", ",
+																matches.GetRange(1, matches.Count - 1));
+											return output[..Math.Min(150, output.Length)] +
+												   (output.Length >= 150 ? "..." : "");
+										}
+								}
 							}
+
+							addon = Language.GetTextValue("InputDescriptions.PositiveIntRange",
+								argumentDetails[finished.Count].ExpectedInputs[0],
+								argumentDetails[finished.Count].ExpectedInputs[1]);
+							break;
 						case CommandArgument.ArgInputType.Text:
 						case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
 							addon = Language.GetTextValue("InputDescriptions.Text");
