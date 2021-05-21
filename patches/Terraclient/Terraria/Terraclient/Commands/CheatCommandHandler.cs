@@ -9,6 +9,7 @@ namespace Terraria.Terraclient.Commands
 	public static class CheatCommandHandler
 	{
 		private static int _colorTimer;
+
 		private static string _chatOverlayText;
 
 		internal static string LastChatText;
@@ -76,12 +77,9 @@ namespace Terraria.Terraclient.Commands
 				foreach (string text in arguments) {
 					things.Add(text);
 				}
-
 				return things;
 			}
-
 			List<object> polished = new List<object>();
-			//Quotation concatenation is handled before this preprocessing, effectively making this post-preprocessing.
 			for (int i = 0; i < argumentDetails.Count; i++) {
 				if (arguments.Count == 0 && !argumentDetails[i].MayBeSkipped) {
 					if (polished.Count == 0) {
@@ -89,218 +87,89 @@ namespace Terraria.Terraclient.Commands
 					}
 					else {
 						List<string> missingArguments = new List<string>();
-						for (int j = i; j < argumentDetails.Count; j++) {
+						for (int j = i; j < argumentDetails.Count; j++)
 							missingArguments.Add(argumentDetails[j].ArgumentName);
-						}
-
 						CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.CommandRequiresMoreArgs", string.Join(", ", missingArguments)), 1);
 					}
-
 					goto OnError;
 				}
-
 				if (arguments.Count == 0)
 					break;
-
-				//declaring these here because declaring inside switch statements caused variable names to no longer be available
+				if (argumentDetails[i].InputType is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
+						or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
+						or CommandArgument.ArgInputType.PositiveIntegerRange
+						&& !new Regex("\\D").IsMatch(arguments[0])) {
+					string parsingString = arguments[0];
+					while (parsingString.StartsWith("0"))
+						parsingString = parsingString.Remove(0, 1);
+					polished.Add(0);
+					if (parsingString.Length > argumentDetails[i].ExpectedInputs[1].ToString().Length)
+						polished[^1] = argumentDetails[i].ExpectedInputs[1];
+					else if (argumentDetails[i].ExpectedInputs[1].ToString().Length == 10 &&
+							 Convert.ToInt64(parsingString) > 2147483647L)
+						polished[^1] = argumentDetails[i].ExpectedInputs[1];
+					else if (parsingString.Length > 0)
+						polished[^1] = int.Parse(parsingString);
+					arguments.RemoveAt(0);
+					goto CanNowMoveToNextArgument;
+				}
+				if (argumentDetails[i].InputType is CommandArgument.ArgInputType.PositiveIntegerRange
+					&& new Regex("\\D").IsMatch(arguments[0])) {
+					CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.MustBePositiveInteger", argumentDetails[i].ArgumentName), 1);
+					goto OnError;
+				}
+				if (argumentDetails[i].InputType is CommandArgument.ArgInputType.CustomText) {
+					polished.Add(arguments[0]);
+					arguments.RemoveAt(0);
+					goto CanNowMoveToNextArgument;
+				}
+				string query = arguments[0];
+				arguments.RemoveAt(0);
+				if (argumentDetails[i].InputType is CommandArgument.ArgInputType.TextConcatenationUntilNextInt
+					or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt
+					or CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt) {
+					while (arguments.Count > 0 && new Regex("\\D").IsMatch(arguments[0])) {
+						query += " " + arguments[0];
+						arguments.RemoveAt(0);
+					}
+					if (argumentDetails[i].InputType is CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt) {
+						polished.Add(query);
+						goto CanNowMoveToNextArgument;
+					}
+				}
+				int l = 0;
+				if (argumentDetails[i].InputType
+					is CommandArgument.ArgInputType.PositiveIntegerRangeOrText
+					or CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt) {
+					l = 2;
+				}
 				List<string> matches = new List<string>();
-				string query;
-				int indexOfFirstOmitted = arguments.Count;
-
-				switch (argumentDetails[i].InputType) {
-					case CommandArgument.ArgInputType.PositiveIntegerRange:
-						if (new Regex("\\D").IsMatch(arguments[0])) {
-							CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.MustBePositiveInteger", argumentDetails[i].ArgumentName), 1);
-							goto OnError;
-						}
-
-					IAmANumber:
-						string parsingString = arguments[0];
-
-						while (parsingString.StartsWith("0"))
-							parsingString = parsingString.Remove(0, 1);
-
-						polished.Add(0);
-
-						if (parsingString.Length > argumentDetails[i].ExpectedInputs[1].ToString().Length)
-							polished[^1] = argumentDetails[i].ExpectedInputs[1];
-						else if (argumentDetails[i].ExpectedInputs[1].ToString().Length == 10 &&
-								 Convert.ToInt64(parsingString) > 2147483647L)
-							polished[^1] = argumentDetails[i].ExpectedInputs[1];
-						else if (parsingString.Length > 0)
-							polished[^1] = int.Parse(parsingString);
-
-						arguments.RemoveAt(0);
-						break;
-
-					case CommandArgument.ArgInputType.Text:
-						query = arguments[0].ToLower();
-
-						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
-								StringComparison.OrdinalIgnoreCase))
-								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
-
-						switch (matches.Count) {
-							case 0:
-								CheatCommandUtils.Output(true,
-									Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
-								goto OnError;
-
-							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
-									polished.Add(thing);
-									matches.Remove(thing);
-									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
-									arguments.RemoveAt(0);
-									goto CanNowMoveToNextArgument;
-								}
-
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
-								goto OnError;
-						}
-
-						polished.Add(matches[0]);
-						arguments.RemoveAt(0);
-						break;
-
-					case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
-						if (!new Regex("\\D").IsMatch(arguments[0]))
-							goto IAmANumber;
-						query = arguments[0].ToLower();
-
-						for (int j = 2; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
-								StringComparison.OrdinalIgnoreCase))
-								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
-
-						switch (matches.Count) {
-							case 0:
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
-								goto OnError;
-
-							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
-									polished.Add(thing);
-									matches.Remove(thing);
-									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
-									arguments.RemoveAt(0);
-									goto CanNowMoveToNextArgument;
-								}
-
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
-								goto OnError;
-						}
-
-						polished.Add(matches[0]);
-						arguments.RemoveAt(0);
-						break;
-
-					case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
-						for (int j = 1; j < arguments.Count; j++) {
-							if (new Regex("\\D").IsMatch(arguments[j]))
-								continue;
-							indexOfFirstOmitted = j;
-							break;
-						}
-
-						query = string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)).ToLower();
-
-						for (int j = 0; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
-								StringComparison.OrdinalIgnoreCase))
-								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
-
-						switch (matches.Count) {
-							case 0:
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
-								goto OnError;
-
-							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
-									polished.Add(thing);
-									matches.Remove(thing);
-									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
-									arguments.RemoveRange(0, indexOfFirstOmitted);
-									goto CanNowMoveToNextArgument;
-								}
-
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
-								goto OnError;
-						}
-
-						polished.Add(matches[0]);
-						arguments.RemoveRange(0, indexOfFirstOmitted);
-						break;
-
-					case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
-						if (!new Regex("\\D").IsMatch(arguments[0]))
-							goto IAmANumber;
-						for (int j = 1; j < arguments.Count; j++) {
-							if (new Regex("\\D").IsMatch(arguments[j]))
-								continue;
-							indexOfFirstOmitted = j;
-							break;
-						}
-
-						query = string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)).ToLower();
-
-						for (int j = 2; j < argumentDetails[i].ExpectedInputs.Count; j++)
-							if (((string)argumentDetails[i].ExpectedInputs[j]).StartsWith(query,
-								StringComparison.OrdinalIgnoreCase))
-								matches.Add((string)argumentDetails[i].ExpectedInputs[j]);
-
-						switch (matches.Count) {
-							case 0:
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
-								goto OnError;
-
-							case > 1:
-								foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
-									polished.Add(thing);
-									matches.Remove(thing);
-									CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
-									arguments.RemoveRange(0, indexOfFirstOmitted);
-									goto CanNowMoveToNextArgument;
-								}
-
-								CheatCommandUtils.Output(true, Language.GetTextValue("CommandsErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
-								goto OnError;
-						}
-
-						polished.Add(matches[0]);
-						arguments.RemoveRange(0, indexOfFirstOmitted);
-						break;
-
-					case CommandArgument.ArgInputType.CustomText:
-						polished.Add(arguments[0]);
-						arguments.RemoveAt(0);
-						break;
-
-					case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
-						for (int j = 1; j < arguments.Count; j++) {
-							if (new Regex("\\D").IsMatch(arguments[j]))
-								continue;
-
-							indexOfFirstOmitted = j;
-
-							break;
-						}
-
-						polished.Add(string.Join(" ", arguments.GetRange(0, indexOfFirstOmitted)));
-						arguments.RemoveRange(0, indexOfFirstOmitted);
-						break;
-
-					default:
-						throw new ArgumentOutOfRangeException();
+				for (; l < argumentDetails[i].ExpectedInputs.Count; l++) {
+					if (((string)argumentDetails[i].ExpectedInputs[l]).StartsWith(query,
+						StringComparison.OrdinalIgnoreCase)) {
+						matches.Add((string)argumentDetails[i].ExpectedInputs[l]);
+					}
 				}
 
+				switch (matches.Count) {
+					case 0:
+						CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.DidNotMatchAnyOptionsFor", argumentDetails[i].ArgumentName), 3);
+						goto OnError;
+					case > 1:
+						foreach (string thing in matches.Where(thing => thing.Equals(query, StringComparison.OrdinalIgnoreCase))) {
+							polished.Add(thing);
+							matches.Remove(thing);
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandWaysideNotifs.MatchedMultipleSelectedOne", argumentDetails[i].ArgumentName, thing, string.Join(", ", matches)));
+							goto CanNowMoveToNextArgument;
+						}
+						CheatCommandUtils.Output(true, Language.GetTextValue("CommandErrors.SelectedMoreThanOneOptionFor", argumentDetails[i].ArgumentName, string.Join(", ", matches)), 2);
+						goto OnError;
+				}
+				polished.Add(matches[0]);
 			CanNowMoveToNextArgument:
 				;
 			}
-
 			return polished;
-
 		OnError:
 			return new List<object> { false };
 		}
@@ -403,6 +272,7 @@ namespace Terraria.Terraclient.Commands
 								switch (matches.Count) {
 									case 0:
 										return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
+
 									case > 1: {
 											matches.Sort();
 											string output = message.Trim() + matches[0][finished.Last().Length..] +
@@ -418,20 +288,24 @@ namespace Terraria.Terraclient.Commands
 								argumentDetails[finished.Count].ExpectedInputs[0],
 								argumentDetails[finished.Count].ExpectedInputs[1]);
 							break;
+
 						case CommandArgument.ArgInputType.Text:
 						case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
 							addon = Language.GetTextValue("InputDescriptions.Text");
 							break;
+
 						case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
 						case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
 							addon = Language.GetTextValue("InputDescriptions.PositiveIntRangeOrText",
 								argumentDetails[finished.Count].ExpectedInputs[0],
 								argumentDetails[finished.Count].ExpectedInputs[1]);
 							break;
+
 						case CommandArgument.ArgInputType.CustomText:
 						case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
 							addon = Language.GetTextValue("InputDescriptions.CustomText");
 							break;
+
 						default:
 							throw new ArgumentOutOfRangeException();
 					}
@@ -472,8 +346,10 @@ namespace Terraria.Terraclient.Commands
 					switch (matches.Count) {
 						case 0:
 							return Language.GetTextValue("PredictiveText.NoMatchesForThis", message.Trim());
+
 						case 1:
 							return message + matches[0][finished.Last().Length..];
+
 						default:
 							string output = message + matches[0][finished.Last().Length..] + ", " +
 											string.Join(", ", matches.GetRange(1, matches.Count - 1));
@@ -490,9 +366,11 @@ namespace Terraria.Terraclient.Commands
 			switch (commandsThatStartWithThis.Count) {
 				case 0:
 					return Language.GetTextValue("PredictiveText.NoCommandFound", message.Trim());
+
 				case 1:
 					return message + ("." + commandsThatStartWithThis.ElementAt(0).Value.CommandName + " " +
 											commandsThatStartWithThis.ElementAt(0).Value.CommandDescription)[message.Length..];
+
 				default:
 					IDictionary<string, MystagogueCommand> commandNamesThatDirectlyMatch = MystagogueCommand.CommandList.Where(
 						cmd => $".{cmd.CommandName}"
@@ -525,6 +403,7 @@ namespace Terraria.Terraclient.Commands
 			new Regex(@"[\""].+?[\""]|[^ ]+").Matches(message).Select(x => x.Value).ToList();
 
 		internal static int ViewingThisCommandTimer = -1;
+
 		internal static bool StartTheViewingThisCommandTimer;
 	}
 }
