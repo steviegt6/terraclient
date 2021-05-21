@@ -54,16 +54,19 @@ namespace Terraria.Terraclient.Commands
 										arg.ExpectedInputs[0],
 										arg.ExpectedInputs[1]);
 									break;
+
 								case CommandArgument.ArgInputType.Text:
 								case CommandArgument.ArgInputType.TextConcatenationUntilNextInt:
 									argsText += Language.GetTextValue("InputDescriptions.Text");
 									break;
+
 								case CommandArgument.ArgInputType.PositiveIntegerRangeOrText:
 								case CommandArgument.ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt:
 									argsText += Language.GetTextValue("InputDescriptions.PositiveIntRangeOrText",
 										arg.ExpectedInputs[0],
 										arg.ExpectedInputs[1]);
 									break;
+
 								case CommandArgument.ArgInputType.CustomText:
 								case CommandArgument.ArgInputType.CustomTextConcatenationUntilNextInt:
 									argsText += Language.GetTextValue("InputDescriptions.CustomText");
@@ -136,8 +139,7 @@ namespace Terraria.Terraclient.Commands
 					for (int j = 1; j < CheatCommandUtils.ItemNames.Count; j++)
 						if (CheatCommandUtils.ItemNames[j]
 							.Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
-							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + CheatCommandUtils.ItemNames.Values
-								.ToList().IndexOf(CheatCommandUtils.ItemNames[j]) + ")");
+							matches.Add(CheatCommandUtils.ItemNames[j] + " (" + j + ")");
 					if (matches.Count < 1) {
 						CheatCommandUtils.Output(false, Language.GetTextValue("CommandErrors.searchitems_NoItemNameFound"));
 						return;
