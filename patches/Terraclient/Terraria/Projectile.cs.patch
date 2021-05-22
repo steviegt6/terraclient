@@ -14,7 +14,7 @@
  
  		public void StatusPlayer(int i) {
 -			if (Main.player[i].creativeGodMode)
-+			if (Main.player[i].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++			if (Main.player[i].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  				return;
  
  			if (type == 472)
@@ -23,7 +23,7 @@
  							timeToAdd = 960;
  
 -						if (!Main.player[num724].creativeGodMode)
-+						if (!Main.player[num724].creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++						if (!Main.player[num724].creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  							Main.player[num724].AddBuff(145, timeToAdd);
  					}
  				}
@@ -32,7 +32,7 @@
  				if (Main.netMode != 2) {
  					Player player = Main.player[Main.myPlayer];
 -					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode)
-+					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++					if (!player.dead && player.active && (player.Center - base.Center).Length() < 300f && !player.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  						player.AddBuff(197, 900, quiet: false);
  				}
  			}

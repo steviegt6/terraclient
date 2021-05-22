@@ -12,7 +12,7 @@
  
  		private BestiaryEntryUnlockState GetUnlockStateForCritter(string persistentId) {
 -			if (!Main.BestiaryTracker.Sights.GetWasNearbyBefore(persistentId))
-+			if (!Main.BestiaryTracker.Sights.GetWasNearbyBefore(persistentId) && !CheatHandler.GetCheat<BestiaryForceUnlockCheat>().isEnabled)
++			if (!Main.BestiaryTracker.Sights.GetWasNearbyBefore(persistentId) && !CheatHandler.GetCheat<BestiaryForceUnlockCheat>().IsEnabled)
  				return BestiaryEntryUnlockState.NotKnownAtAll_0;
  
  			return BestiaryEntryUnlockState.CanShowDropsWithDropRates_4;

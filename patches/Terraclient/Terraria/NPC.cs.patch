@@ -14,7 +14,7 @@
  						gfxOffY = player8.gfxOffY;
  						base.velocity = Vector2.Zero;
 -						if (!player8.creativeGodMode)
-+						if (!player8.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++						if (!player8.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  							player8.AddBuff(163, 59);
  					}
  				}
@@ -23,7 +23,7 @@
  						}
  
 -						if (((player2.Center.X < base.Center.X && direction < 0 && player2.direction > 0) || (player2.Center.X > base.Center.X && direction > 0 && player2.direction < 0)) && flag3 && (Collision.CanHitLine(base.Center, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center - Vector2.UnitY * 16f, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center + Vector2.UnitY * 8f, 1, 1, player2.Center, 1, 1)) && !player2.creativeGodMode)
-+						if (((player2.Center.X < base.Center.X && direction < 0 && player2.direction > 0) || (player2.Center.X > base.Center.X && direction > 0 && player2.direction < 0)) && flag3 && (Collision.CanHitLine(base.Center, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center - Vector2.UnitY * 16f, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center + Vector2.UnitY * 8f, 1, 1, player2.Center, 1, 1)) && !player2.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++						if (((player2.Center.X < base.Center.X && direction < 0 && player2.direction > 0) || (player2.Center.X > base.Center.X && direction > 0 && player2.direction < 0)) && flag3 && (Collision.CanHitLine(base.Center, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center - Vector2.UnitY * 16f, 1, 1, player2.Center, 1, 1) || Collision.CanHitLine(base.Center + Vector2.UnitY * 8f, 1, 1, player2.Center, 1, 1)) && !player2.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  							player2.AddBuff(156, num23 + (int)ai[2] * -1);
  
  						return;
@@ -32,7 +32,7 @@
  						if (Main.netMode != 2) {
  							Player player = Main.player[Main.myPlayer];
 -							if (!player.dead && player.active && (player.Center - base.Center).Length() < 400f && !player.creativeGodMode)
-+							if (!player.dead && player.active && (player.Center - base.Center).Length() < 400f && !player.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
++							if (!player.dead && player.active && (player.Center - base.Center).Length() < 400f && !player.creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().IsEnabled)
  								player.AddBuff(195, 3, quiet: false);
  						}
  

@@ -47,16 +47,19 @@
  		public static bool SaveSettings() {
  			Configuration.Clear();
 +			foreach (Cheat cheat in CheatHandler.Cheats)
-+				Configuration.Put(cheat.GetType().Name, cheat.isEnabled);
++				Configuration.Put(cheat.GetType().Name, cheat.IsEnabled);
  			Configuration.Put("ResetDefaultUIScale", false);
  			Configuration.Put("SmartCursorToggle", cSmartCursorModeIsToggleAndNotHold);
  			Configuration.Put("MapEnabled", mapEnabled);
-@@ -3174,6 +_,8 @@
+@@ -3174,6 +_,11 @@
  			}
  
  			Configuration.Load();
-+			foreach (Cheat cheat in CheatHandler.Cheats)
-+				Configuration.Get(cheat.GetType().Name, ref cheat.isEnabled);
++			foreach (Cheat cheat in CheatHandler.Cheats) {
++				bool cheatEnabled = cheat.IsEnabled;
++				Configuration.Get(cheat.GetType().Name, ref cheatEnabled);
++				cheat.IsEnabled = cheatEnabled;
++			}
  			int currentValue = 0;
  			Configuration.Get("LastLaunchedVersion", ref currentValue);
  			bool flag = false;
@@ -179,7 +182,7 @@
  			if (netMode != 2) {
  				int num3 = myPlayer;
 -				if (player[num3].creativeGodMode) {
-+				if (player[num3].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().isEnabled) {
++				if (player[num3].creativeGodMode || CheatHandler.GetCheat<GodModeCheat>().IsEnabled) {
  					player[num3].statLife = player[num3].statLifeMax2;
  					player[num3].statMana = player[num3].statManaMax2;
  					player[num3].breath = player[num3].breathMax;
@@ -205,7 +208,7 @@
  			}
  
 -			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && LocalPlayer.difficulty == 3 && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
-+			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && (LocalPlayer.difficulty == 3 || CheatHandler.GetCheat<JourneyModeCheat>().isEnabled) && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
++			if ((item.tooltipContext == 0 || item.tooltipContext == 2 || item.tooltipContext == 1 || item.tooltipContext == 3 || item.tooltipContext == 4 || item.tooltipContext == 15 || item.tooltipContext == 6) && (LocalPlayer.difficulty == 3 || CheatHandler.GetCheat<JourneyModeCheat>().IsEnabled) && CreativeItemSacrificesCatalog.Instance.TryGetSacrificeCountCapToUnlockInfiniteItems(item.type, out int amountNeeded)) {
  				int sacrificeCount = LocalPlayerCreativeTracker.ItemSacrifices.GetSacrificeCount(item.type);
  				if (amountNeeded - sacrificeCount > 0) {
  					toolTipLine[numLines] = Language.GetTextValue("CommonItemTooltip.CreativeSacrificeNeeded", amountNeeded - sacrificeCount);
@@ -328,10 +331,10 @@
  			if (SettingDontScaleMainMenuUp)
  				num = 1f;
  
-+			if (CheatHandler.GetCheat<NoMainMenuUIScalingCheat>().isEnabled)
++			if (CheatHandler.GetCheat<NoMainMenuUIScalingCheat>().IsEnabled)
 +				num = 1f;
 +
-+			if (MenuUI.CurrentState is UIManageCheats uiManageCheats && uiManageCheats.uiScaleOnCtor != num)
++			if (MenuUI.CurrentState is UIManageCheats uiManageCheats && uiManageCheats.UIScaleOnCtor != num)
 +				MenuUI.SetState(new UIManageCheats());
 +
  			screenSizeCache = ScreenSize;
@@ -369,7 +372,7 @@
  				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 +
 +				// Map teleportation cheat
-+				if (CheatHandler.GetCheat<MapTeleportCheat>().isEnabled && PlayerInput.Triggers.JustPressed.MouseRight)
++				if (CheatHandler.GetCheat<MapTeleportCheat>().IsEnabled && PlayerInput.Triggers.JustPressed.MouseRight)
 +					player[myPlayer].Teleport(new Vector2(Math.Min(Math.Max((Main.mapFullscreenPos.X + (float)(Main.mouseX - Main.screenWidth / 2) / Main.mapFullscreenScale) * 16f, 0f), (float)Main.maxTilesX * 16f - 64f), Math.Min(Math.Max((Main.mapFullscreenPos.Y + (float)(Main.mouseY - Main.screenHeight / 2) / Main.mapFullscreenScale) * 16f, 0f), (float)Main.maxTilesY * 16f - 64f)), TeleportationStyleID.DebugTeleport);
 +
  				DrawCursor(DrawThickCursor());

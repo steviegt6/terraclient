@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
@@ -14,8 +13,6 @@ namespace Terraria.Terraclient.GameContent.UI.Elements
 		public int NPC { get; }
 
 		public int OrderInUIList { get; set; }
-
-		private Color _hoverColor = Color.White;
 
 		public UIBestiarySpawnButtonLine(int npc) {
 			NPC = npc;
@@ -53,7 +50,6 @@ namespace Terraria.Terraclient.GameContent.UI.Elements
 		private void MouseOver(UIMouseEvent evt, UIElement listeningElement) {
 			SoundEngine.PlaySound(12);
 			BorderColor = Colors.FancyUIFatButtonMouseOver;
-			_hoverColor = IsMouseHovering ? Color.Goldenrod : Color.White;
 		}
 
 		private void MouseOut(UIMouseEvent evt, UIElement listeningElement) =>

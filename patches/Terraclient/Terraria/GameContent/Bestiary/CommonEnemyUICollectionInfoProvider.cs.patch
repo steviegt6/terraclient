@@ -10,7 +10,7 @@
  		}
  
  		public static BestiaryEntryUnlockState GetUnlockStateByKillCount(int killCount, bool quickUnlock) {
-+			if (CheatHandler.GetCheat<BestiaryForceUnlockCheat>().isEnabled) 
++			if (CheatHandler.GetCheat<BestiaryForceUnlockCheat>().IsEnabled) 
 +				return BestiaryEntryUnlockState.CanShowDropsWithDropRates_4;
 +
  			BestiaryEntryUnlockState bestiaryEntryUnlockState = BestiaryEntryUnlockState.NotKnownAtAll_0;

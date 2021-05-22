@@ -10,7 +10,8 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 {
 	public class TerraclientColorTagHandler : ITagHandler
 	{
-		public class TerraclientNameSnippet : TextSnippet {
+		public class TerraclientNameSnippet : TextSnippet
+		{
 			public bool IsError { get; }
 
 			public TerraclientNameSnippet(bool isError) {
@@ -28,15 +29,16 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 				if (IsError)
 					for (int i = 0; i < terraclientChars.Length; i++)
 						colors[i] = ColorFromHex(CheatCommandUtils.ErrorColors[i]);
-				else 
-					for (int i = 0; i < terraclientChars.Length; i++) 
+				else
+					for (int i = 0; i < terraclientChars.Length; i++)
 						colors[i] = ColorFromHex(CheatCommandUtils.NonErrorColors[i]);
 
 				for (int i = 0; i < terraclientChars.Length; i++) {
 					string singleChar = terraclientChars[i].ToString();
-					
-					if (!justCheckingString && !isShadow) 
-						ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, singleChar, position, colors[i], 0f, Vector2.Zero, Vector2.One);
+
+					if (!justCheckingString && !isShadow)
+						ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, singleChar, position, colors[i],
+							0f, Vector2.Zero, Vector2.One);
 
 					float increase = font.MeasureString(singleChar).X;
 					size.X += increase;
@@ -46,13 +48,15 @@ namespace Terraria.Terraclient.GameContent.UI.Chat
 				return false;
 			}
 
-			private static Color ColorFromHex(string hexCode) => int.TryParse(hexCode, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int hex) 
-				? new Color((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF) 
+			private static Color ColorFromHex(string hexCode) => int.TryParse(hexCode, NumberStyles.AllowHexSpecifier,
+				CultureInfo.InvariantCulture, out int hex)
+				? new Color((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF)
 				: Color.White;
 		}
 
-		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => bool.TryParse(text, out bool value)
-			? new TerraclientNameSnippet(value) 
-			: new TerraclientNameSnippet(false);
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) =>
+			bool.TryParse(text, out bool value)
+				? new TerraclientNameSnippet(value)
+				: new TerraclientNameSnippet(false);
 	}
 }

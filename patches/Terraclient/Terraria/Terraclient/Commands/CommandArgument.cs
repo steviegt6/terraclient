@@ -51,22 +51,20 @@ namespace Terraria.Terraclient.Commands
 			 */
 			ArgumentName = name;
 			ExpectedInputs = inputs;
-			if (!concat && ExpectedInputs.Count == 2 && ExpectedInputs[0] is int && ExpectedInputs[1] is int)
-				InputType = ArgInputType.PositiveIntegerRange;
-			else if (!concat && ExpectedInputs.Count > 0 && !(ExpectedInputs[0] is int))
-				InputType = ArgInputType.Text;
-			else if (!concat && ExpectedInputs.Count > 0 && ExpectedInputs[0] is int)
-				InputType = ArgInputType.PositiveIntegerRangeOrText;
-			else if (concat && ExpectedInputs.Count > 0 && !(ExpectedInputs[0] is int))
-				InputType = ArgInputType.TextConcatenationUntilNextInt;
-			else if (concat && ExpectedInputs.Count > 0 && ExpectedInputs[0] is int)
-				InputType = ArgInputType.PositiveIntegerRangeOrTextConcatenationUntilNextInt;
-			else if (!concat && ExpectedInputs.Count == 0)
-				InputType = ArgInputType.CustomText;
-			else if (concat && ExpectedInputs.Count == 0)
-				InputType = ArgInputType.CustomTextConcatenationUntilNextInt;
-			else
-				InputType = ArgInputType.CustomText;
+			InputType = concat switch {
+				false when ExpectedInputs.Count == 2 && ExpectedInputs[0] is int && ExpectedInputs[1] is int =>
+					ArgInputType.PositiveIntegerRange,
+				false when ExpectedInputs.Count > 0 && ExpectedInputs[0] is not int => ArgInputType.Text,
+				false when ExpectedInputs.Count > 0 && ExpectedInputs[0] is int => ArgInputType
+					.PositiveIntegerRangeOrText,
+				true when ExpectedInputs.Count > 0 && ExpectedInputs[0] is not int => ArgInputType
+					.TextConcatenationUntilNextInt,
+				true when ExpectedInputs.Count > 0 && ExpectedInputs[0] is int => ArgInputType
+					.PositiveIntegerRangeOrTextConcatenationUntilNextInt,
+				false when ExpectedInputs.Count == 0 => ArgInputType.CustomText,
+				true when ExpectedInputs.Count == 0 => ArgInputType.CustomTextConcatenationUntilNextInt,
+				_ => ArgInputType.CustomText
+			};
 			MayBeSkipped = skippable;
 		}
 	}

@@ -14,7 +14,7 @@
  				Initialize();
  
 -			if (Main.LocalPlayer.difficulty != 3) {
-+			if (Main.LocalPlayer.difficulty != 3 && !CheatHandler.GetCheat<JourneyModeCheat>().isEnabled) {
++			if (Main.LocalPlayer.difficulty != 3 && !CheatHandler.GetCheat<JourneyModeCheat>().IsEnabled) {
  				Enabled = false;
  			}
  			else if (!Blocked) {

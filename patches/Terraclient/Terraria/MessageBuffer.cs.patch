@@ -14,11 +14,11 @@
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.EmptyName"));
  						}
 -						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode) {
-+						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
++						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled) {
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsCreativeAndWorldIsNotCreative"));
  						}
 -						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode) {
-+						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
++						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled) {
  							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsNotCreativeAndWorldIsCreative"));
  						}
  						else {

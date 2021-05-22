@@ -9,7 +9,7 @@ namespace Terraria.Terraclient.GameContent.Bestiary
 	{
 		public UIElement ProvideUIElement(BestiaryUICollectionInfo info) {
 			UIElement main =
-				new UIElement { Width = new StyleDimension(0f, 1f), Height = new StyleDimension(24f, 0f) };
+				new UIElement {Width = new StyleDimension(0f, 1f), Height = new StyleDimension(24f, 0f)};
 
 			UIElement sub = new UIText(Language.GetText("Bestiary.ImmuneTo")) {
 				HAlign = 0.5f, VAlign = 0.5f, Top = new StyleDimension(2f, 0f), IgnoresMouseInteraction = true

@@ -12,8 +12,8 @@ namespace Terraria.Terraclient.Cheats
 
 		public virtual CheatCategory Category => CheatCategory.Misc;
 
-		public bool isEnabled;
+		public virtual bool IsEnabled { get; set; }
 
-		public void Toggle() => isEnabled = !isEnabled;
+		public virtual void Toggle() => IsEnabled = !IsEnabled;
 	}
 }

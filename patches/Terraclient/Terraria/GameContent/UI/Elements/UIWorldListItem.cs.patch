@@ -29,7 +29,7 @@
  			bool flag = Main.ActivePlayerFileData.Player.difficulty == 3;
  			bool isJourneyMode = value.IsJourneyMode;
 -			if (flag && !isJourneyMode) {
-+			if (flag && !isJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
++			if (flag && !isJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled) {
  				SoundEngine.PlaySound(10);
  				Main.statusText = Language.GetTextValue("UI.PlayerIsCreativeAndWorldIsNotCreative");
  				Main.menuMode = 1000000;
@@ -37,7 +37,7 @@
  			}
  
 -			if (!flag && isJourneyMode) {
-+			if (!flag && isJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().isEnabled) {
++			if (!flag && isJourneyMode && !CheatHandler.GetCheat<GamemodeUnlockedWorldCheat>().IsEnabled) {
  				SoundEngine.PlaySound(10);
  				Main.statusText = Language.GetTextValue("UI.PlayerIsNotCreativeAndWorldIsCreative");
  				Main.menuMode = 1000000;

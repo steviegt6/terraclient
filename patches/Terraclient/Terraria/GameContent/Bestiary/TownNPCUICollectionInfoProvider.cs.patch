@@ -10,7 +10,7 @@
  		public BestiaryUICollectionInfo GetEntryUICollectionInfo() {
  			BestiaryUICollectionInfo result = default(BestiaryUICollectionInfo);
  			result.UnlockState = (Main.BestiaryTracker.Chats.GetWasChatWith(_persistentIdentifierToCheck) ? BestiaryEntryUnlockState.CanShowDropsWithDropRates_4 : BestiaryEntryUnlockState.NotKnownAtAll_0);
-+			if (CheatHandler.GetCheat<BestiaryForceUnlockCheat>().isEnabled)
++			if (CheatHandler.GetCheat<BestiaryForceUnlockCheat>().IsEnabled)
 +				result.UnlockState = BestiaryEntryUnlockState.CanShowDropsWithDropRates_4;
  			return result;
  		}

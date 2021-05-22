@@ -17,20 +17,19 @@ namespace Terraria.Terraclient.GameContent.UI.States
 {
 	public class UIManageCheats : UIState
 	{
-		public float uiScaleOnCtor;
-
-		private static List<Cheat> _cheatsFullLine = new List<Cheat>();
-
-		private List<UIElement> _bindsKeyboard = new List<UIElement>();
+		public float UIScaleOnCtor;
+		private static readonly List<Cheat> CheatsFullLine = new();
+		private readonly List<UIElement> _bindsKeyboard = new();
 		private UIElement _outerContainer;
 		private UIList _uiList;
 
-		public UIManageCheats() : base() => uiScaleOnCtor = Main.UIScale;
+		public UIManageCheats() {
+			UIScaleOnCtor = Main.UIScale;
+		}
 
 		public override void OnInitialize() {
-			foreach (Cheat cheat in CheatHandler.Cheats)
-				if (cheat.IsImportant)
-					_cheatsFullLine.Add(cheat);
+			foreach (Cheat cheat in CheatHandler.Cheats.Where(cheat => cheat.IsImportant))
+				CheatsFullLine.Add(cheat);
 
 			_outerContainer = new UIElement();
 			_outerContainer.Width.Set(0f, 0.8f);
@@ -65,15 +64,16 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			panel.Append(scrollbar);
 			_uiList.SetScrollbar(scrollbar);
 
-			UITextPanel<LocalizedText> localizedCheatsTextPanel = new UITextPanel<LocalizedText>(Language.GetText("UI.Cheats"), 0.7f, large: true);
-			localizedCheatsTextPanel.HAlign = 0.5f;
+			UITextPanel<LocalizedText> localizedCheatsTextPanel =
+				new UITextPanel<LocalizedText>(Language.GetText("UI.Cheats"), 0.7f, large: true) {HAlign = 0.5f};
 			localizedCheatsTextPanel.Top.Set(-45f, 0f);
 			localizedCheatsTextPanel.Left.Set(-10f, 0f);
 			localizedCheatsTextPanel.SetPadding(15f);
 			localizedCheatsTextPanel.BackgroundColor = new Color(73, 94, 171);
 			_outerContainer.Append(localizedCheatsTextPanel);
 
-			UITextPanel<LocalizedText> localizedBackTextPanel = new UITextPanel<LocalizedText>(Language.GetText("UI.Back"), 0.7f, large: true);
+			UITextPanel<LocalizedText> localizedBackTextPanel =
+				new UITextPanel<LocalizedText>(Language.GetText("UI.Back"), 0.7f, large: true);
 			localizedBackTextPanel.Width.Set(-10f, 0.5f);
 			localizedBackTextPanel.Height.Set(50f, 0f);
 			localizedBackTextPanel.VAlign = 1f;
@@ -93,7 +93,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			List<Cheat> fullbright = new List<Cheat>();
 			List<Cheat> playerESP = new List<Cheat>();
 			List<Cheat> forceUnlocks = new List<Cheat>();
-			List<Cheat> cheats = CheatHandler.Cheats.OrderBy(c => _cheatsFullLine.Contains(c)).ToList();
+			List<Cheat> cheats = CheatHandler.Cheats.OrderBy(c => CheatsFullLine.Contains(c)).ToList();
 
 			foreach (Cheat cheat in cheats)
 				switch (cheat.Category) {
@@ -130,8 +130,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 		}
 
 		private UISortableElement CreateBindingGroup(int elementIndex, List<Cheat> cheats) {
-			UISortableElement sortableElementIndex = new UISortableElement(elementIndex);
-			sortableElementIndex.HAlign = 0.5f;
+			UISortableElement sortableElementIndex = new UISortableElement(elementIndex) {HAlign = 0.5f};
 			sortableElementIndex.Width.Set(0f, 1f);
 			sortableElementIndex.Height.Set(2000f, 0f);
 
@@ -142,47 +141,30 @@ namespace Terraria.Terraclient.GameContent.UI.States
 			panel.BackgroundColor = new Color(33, 43, 79) * 0.8f;
 			sortableElementIndex.Append(panel);
 
-			UIList list = new UIList();
-			list.OverflowHidden = false;
+			UIList list = new UIList {OverflowHidden = false};
 			list.Width.Set(0f, 1f);
 			list.Height.Set(-8f, 1f);
 			list.VAlign = 1f;
 			list.ListPadding = 5f;
 			panel.Append(list);
 
-            panel.BackgroundColor = Color.Lerp(panel.BackgroundColor, new Color(63, 82, 151), 0.18f);
+			panel.BackgroundColor = Color.Lerp(panel.BackgroundColor, new Color(63, 82, 151), 0.18f);
 
 			CreateElementGroup(list, panel.BackgroundColor, cheats);
 
 			panel.BackgroundColor = panel.BackgroundColor.MultiplyRGBA(new Color(111, 111, 111));
 
-			LocalizedText text;
-			switch (elementIndex) {
-				default:
-				case 0:
-					text = Language.GetText("UI.MiscOptions");
-					break;
-
-				case 1:
-					text = Language.GetText("UI.GodModeOptions");
-					break;
-
-				case 2:
-					text = Language.GetText("UI.FullbrightOptions");
-					break;
-
-				case 3:
-					text = Language.GetText("UI.PlayerESPOptions");
-					break;
-
-				case 4:
-					text = Language.GetText("UI.ForceUnlocksOptions");
-					break;
-			}
+			LocalizedText text = elementIndex switch {
+				0 => Language.GetText("UI.MiscOptions"),
+				1 => Language.GetText("UI.GodModeOptions"),
+				2 => Language.GetText("UI.FullbrightOptions"),
+				3 => Language.GetText("UI.PlayerESPOptions"),
+				4 => Language.GetText("UI.ForceUnlocksOptions"),
+				_ => Language.GetText("UI.MiscOptions")
+			};
 
 			UITextPanel<LocalizedText> localizedPanel = new UITextPanel<LocalizedText>(text, 0.7f) {
-				VAlign = 0f,
-				HAlign = 0.5f
+				VAlign = 0f, HAlign = 0.5f
 			};
 
 			sortableElementIndex.Append(localizedPanel);
@@ -201,7 +183,7 @@ namespace Terraria.Terraclient.GameContent.UI.States
 				sortableIndex.HAlign = 0.5f;
 				parent.Add(sortableIndex);
 
-				if (_cheatsFullLine.Contains(cheats[i])) {
+				if (CheatsFullLine.Contains(cheats[i])) {
 					UIElement panel = CreatePanel(color, cheats[i]);
 					panel.Width.Set(0f, 1f);
 					panel.Height.Set(0f, 1f);
@@ -215,18 +197,19 @@ namespace Terraria.Terraclient.GameContent.UI.States
 
 					i++;
 
-					if (i < cheats.Count) {
-						panel = CreatePanel(color, cheats[i]);
-						panel.Width.Set(-5f, 0.5f);
-						panel.Height.Set(0f, 1f);
-						panel.HAlign = 1f;
-						sortableIndex.Append(panel);
-					}
+					if (i >= cheats.Count)
+						continue;
+
+					panel = CreatePanel(color, cheats[i]);
+					panel.Width.Set(-5f, 0.5f);
+					panel.Height.Set(0f, 1f);
+					panel.HAlign = 1f;
+					sortableIndex.Append(panel);
 				}
 			}
 		}
 
-		public UIElement CreatePanel(Color color, Cheat cheat) => new UICheatsListItem(color, cheat);
+		public static UIElement CreatePanel(Color color, Cheat cheat) => new UICheatsListItem(color, cheat);
 
 		public override void OnActivate() {
 			if (Main.gameMenu) {
@@ -249,18 +232,18 @@ namespace Terraria.Terraclient.GameContent.UI.States
 				_uiList.Add(item);
 		}
 
-		private void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement) {
+		private static void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement) {
 			SoundEngine.PlaySound(12);
 			((UIPanel)evt.Target).BackgroundColor = new Color(73, 94, 171);
 			((UIPanel)evt.Target).BorderColor = Colors.FancyUIFatButtonMouseOver;
 		}
 
-		private void FadedMouseOut(UIMouseEvent evt, UIElement listeningElement) {
+		private static void FadedMouseOut(UIMouseEvent evt, UIElement listeningElement) {
 			((UIPanel)evt.Target).BackgroundColor = new Color(63, 82, 151) * 0.7f;
 			((UIPanel)evt.Target).BorderColor = Color.Black;
 		}
 
-		private void GoBackClick(UIMouseEvent evt, UIElement listeningElement) {
+		private static void GoBackClick(UIMouseEvent evt, UIElement listeningElement) {
 			Main.menuMode = 11;
 			Main.SaveSettings();
 			IngameFancyUI.Close();

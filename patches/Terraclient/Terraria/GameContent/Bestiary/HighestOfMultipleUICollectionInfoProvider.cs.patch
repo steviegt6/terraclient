@@ -11,7 +11,7 @@
  			}
  
 -			entryUICollectionInfo.UnlockState = unlockState;
-+			entryUICollectionInfo.UnlockState = CheatHandler.GetCheat<BestiaryForceUnlockCheat>().isEnabled ? BestiaryEntryUnlockState.CanShowDropsWithDropRates_4 : unlockState;
++			entryUICollectionInfo.UnlockState = CheatHandler.GetCheat<BestiaryForceUnlockCheat>().IsEnabled ? BestiaryEntryUnlockState.CanShowDropsWithDropRates_4 : unlockState;
  			return entryUICollectionInfo;
  		}
  

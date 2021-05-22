@@ -13,7 +13,7 @@
  		public bool TryGetSacrificeCountCapToUnlockInfiniteItems(int itemId, out int amountNeeded) => _sacrificeCountNeededByItemId.TryGetValue(itemId, out amountNeeded);
  
  		public void FillListOfItemsThatCanBeObtainedInfinitely(List<int> itemIdsThatCanBeCraftedInfinitely) {
-+			if (CheatHandler.GetCheat<JourneySacrificesCheat>().isEnabled) {
++			if (CheatHandler.GetCheat<JourneySacrificesCheat>().IsEnabled) {
 +				for (int i = ItemID.IronPickaxe; i < ItemID.Count; i++) 
 +					itemIdsThatCanBeCraftedInfinitely.Add(i);
 +
