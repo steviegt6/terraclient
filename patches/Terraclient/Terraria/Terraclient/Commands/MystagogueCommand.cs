@@ -79,7 +79,8 @@ namespace Terraria.Terraclient.Commands
 						CheatCommandUtils.Output(false,
 							Language.GetTextValue("CommandOutputs.help_NoSel",
 								CommandList.Count,
-								string.Join(", ", CommandListNames)));
+								string.Join(", ", CommandListNames),
+								CheatHandler.Version));
 					}
 				})
 				.Build();

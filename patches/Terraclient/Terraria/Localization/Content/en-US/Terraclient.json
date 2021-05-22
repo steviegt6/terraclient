@@ -126,7 +126,7 @@
 		"ToggleSentence": "{0} {1}.",
 		"ToggleOn": "Activated",
 		"ToggleOff": "Deactivated",
-		"help_NoSel": "Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!\nRead about a command's function by executing .help (query).\nThere are {0} commands loaded.\nList of commands: {1}",
+		"help_NoSel": "Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!\nRunning Terraclient v{2}! Updated to Terraria v1.4.2.3.\nCheck it out on GitHub: https://www.github.com/TML-Patcher/Terraclient/ (open-source with patches).\n\nRead about a command's function by executing .help (query).\nThere are {0} commands loaded.\nList of commands: {1}",
 		"help_Sel": "You chose to read about: \"{0}\".\nDescription: {1}\nArguments: {2}",
 		"help_Sel_NoArgs": "There are none.",
 		"i_Succ": "Set cursor item to {0}{1} {2} ({3})",
