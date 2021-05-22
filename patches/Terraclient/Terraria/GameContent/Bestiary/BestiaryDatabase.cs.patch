@@ -10,7 +10,7 @@
  {
 @@ -51,6 +_,23 @@
  		public void Merge(ItemDropDatabase dropsDatabase) {
- 			for (int i = -65; i < 667; i++) {
+ 			for (int i = -65; i < 668; i++) {
  				ExtractDropsForNPC(dropsDatabase, i);
 +
 +				BestiaryEntry entry = FindEntryByNPCID(i);

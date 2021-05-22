@@ -18,16 +18,16 @@
  				return;
  
  			if (type == 472)
-@@ -21425,7 +_,7 @@
+@@ -21430,7 +_,7 @@
  						if (Main.expertMode)
  							timeToAdd = 960;
  
--						if (!Main.player[num723].creativeGodMode)
-+						if (!Main.player[num723].creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
- 							Main.player[num723].AddBuff(145, timeToAdd);
+-						if (!Main.player[num724].creativeGodMode)
++						if (!Main.player[num724].creativeGodMode && !CheatHandler.GetCheat<GodModeCheat>().isEnabled)
+ 							Main.player[num724].AddBuff(145, timeToAdd);
  					}
  				}
-@@ -46459,7 +_,7 @@
+@@ -46464,7 +_,7 @@
  
  				if (Main.netMode != 2) {
  					Player player = Main.player[Main.myPlayer];

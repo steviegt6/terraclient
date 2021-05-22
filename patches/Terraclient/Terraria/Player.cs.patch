@@ -19,7 +19,7 @@
  				return;
  
  			bool flag = false;
-@@ -6491,7 +_,7 @@
+@@ -6513,7 +_,7 @@
  					fireWalk = true;
  					buffImmune[24] = true;
  				}
@@ -28,7 +28,7 @@
  					BuffID.Sets.BuffMountData buffMountData = BuffID.Sets.BasicMountData[buffType[j]];
  					mount.SetMount(buffMountData.mountID, this, buffMountData.faceLeft);
  					buffTime[j] = 10;
-@@ -13119,7 +_,7 @@
+@@ -13144,7 +_,7 @@
  					}
  				}
  			}
@@ -37,7 +37,7 @@
  			mount.CheckMountBuff(this);
  		}
  
-@@ -16164,6 +_,9 @@
+@@ -16189,6 +_,9 @@
  				else
  					Dust.NewDust(new Vector2(position.X + (float)(12 * direction), position.Y + (float)num4 + 4f * gravDir), width - 8, 8, 34, 0f, 0f, 0, default(Color), 1.2f);
  			}
@@ -47,7 +47,7 @@
  		}
  
  		public void CheckCrackedBrickBreak() {
-@@ -18135,7 +_,7 @@
+@@ -18160,7 +_,7 @@
  			maxRunSpeed *= moveSpeed;
  			UpdateJumpHeight();
  			for (int num33 = 0; num33 < 22; num33++) {
@@ -56,7 +56,7 @@
  					DelBuff(num33);
  			}
  
-@@ -20917,6 +_,8 @@
+@@ -20942,6 +_,8 @@
  		}
  
  		private void HandleBeingInChestRange() {
@@ -65,7 +65,7 @@
  			if (chest != -1) {
  				if (chest != -2)
  					flyingPigChest = -1;
-@@ -21187,7 +_,7 @@
+@@ -21212,7 +_,7 @@
  		}
  
  		public void Update_NPCCollision() {
@@ -74,7 +74,7 @@
  				return;
  
  			Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
-@@ -26496,7 +_,7 @@
+@@ -26521,7 +_,7 @@
  				immuneAlpha = 255;
  
  			UpdateGraveyard(now: true);
@@ -83,7 +83,7 @@
  				AutoFinchStaff();
  		}
  
-@@ -26701,7 +_,7 @@
+@@ -26726,7 +_,7 @@
  		}
  
  		public double Hurt(PlayerDeathReason damageSource, int Damage, int hitDirection, bool pvp = false, bool quiet = false, bool Crit = false, int cooldownCounter = -1) {
@@ -92,7 +92,7 @@
  				return 0.0;
  
  			bool flag = !immune;
-@@ -27094,7 +_,7 @@
+@@ -27119,7 +_,7 @@
  		}
  
  		public void KillMe(PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp = false) {
