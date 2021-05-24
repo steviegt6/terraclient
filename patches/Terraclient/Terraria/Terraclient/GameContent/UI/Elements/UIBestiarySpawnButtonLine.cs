@@ -40,9 +40,9 @@ namespace Terraria.Terraclient.GameContent.UI.Elements
 		private void SpawnNPC(UIMouseEvent evt, UIElement listeningElement) {
 			if (Main.netMode == 0)
 				Terraria.NPC.NewNPC((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y - 200, NPC);
-			//else if (Main.netMode == 1)
-			//	NetMessage.SendData(130, -1, -1, null, (int)Math.Floor(Main.LocalPlayer.position.X / 16f), (int)Math.Floor((Main.LocalPlayer.position.Y - 200) / 16f), NPC);
-			//some difficulty here, but this should be the code. Doesn't seem to work on the Terraform server.
+			else if (Main.netMode == 1)
+				NetMessage.SendData(130, -1, -1, null, (int)Math.Floor(Main.LocalPlayer.position.X / 16f), (float)Math.Floor((Main.LocalPlayer.position.Y - 200) / 16f), NPC);
+			//Doesn't work well on TShock. There, it only summons specific NPCs after a short timer once a fishing rod is pulled by the player.
 		}
 
 		private void MouseOver(UIMouseEvent evt, UIElement listeningElement) {
