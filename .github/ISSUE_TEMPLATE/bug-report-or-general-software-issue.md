@@ -27,6 +27,6 @@ A clear and concise description of what you expected to happen.
 ## Comprehensive information (optional)
 Provide extra details such as screenshots or background details, log files, videos, etc. for further context and clarification.
 
-**Hardware & software information**
+## Hardware & software information
  - OS: [WIndows, Linux (and distrib), Mac (and its many versions)]
  - Version [e.g. Terraclient v0.0.1.0-alpha20w22a]
