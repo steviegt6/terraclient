@@ -161,6 +161,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.mouseItem.Refresh();
+					CheatUtils.ResetItemName(Main.mouseItem);
 					CheatUtils.ToolGodBuffMyTools();
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ri_Succ"));
 				})
@@ -170,6 +171,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					Main.player[Main.myPlayer].RefreshItems();
+					CheatUtils.ResetItemNames();
 					CheatUtils.ToolGodBuffMyTools();
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ris_Succ"));
 				})
