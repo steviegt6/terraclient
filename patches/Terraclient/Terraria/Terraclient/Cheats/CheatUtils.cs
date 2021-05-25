@@ -164,7 +164,7 @@ namespace Terraria.Terraclient.Cheats
 			Recipe.FindRecipes();
 		}
 
-		public static void MarkItemAsModified(Item item) => item.SetNameOverride(item.HoverName + "*");
+		public static void MarkItemAsModified(Item item) => item.SetNameOverride(item.AffixName() + "*");
 
 		public static void ResetItemName(Item item) => item.ClearNameOverride();
 	}
