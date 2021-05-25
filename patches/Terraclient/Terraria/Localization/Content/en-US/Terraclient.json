@@ -163,7 +163,8 @@
 		"i_ItemNameOrID": "ItemID/Name",
 		"i_ItemStack": "Amount",
 		"i_ItemPrefix": "Prefix",
-		"searchitems_KeyWordToSearchFor": "Keyword to search for"
+		"searchitems_KeyWordToSearchFor": "Keyword to search for",
+		"reforge_DesiredPrefix": "Desired Prefix"
 	},
 
 	"CommandErrors": {

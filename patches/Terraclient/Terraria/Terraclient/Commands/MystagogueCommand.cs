@@ -406,7 +406,7 @@ namespace Terraria.Terraclient.Commands
 
 			Create("reforge")
 				.AddParameters(new List<CommandArgument> {
-					new(Language.GetTextValue("CommandArguments.i_ItemPrefix"), idsRangePrefixNames, false, true)
+					new(Language.GetTextValue("CommandArguments.reforge_DesiredPrefix"), idsRangePrefixNames, false, true)
 				})
 				.AddAction(args => {
 					if (Main.mouseItem.IsAir) {
