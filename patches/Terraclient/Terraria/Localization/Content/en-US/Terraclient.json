@@ -108,7 +108,7 @@
 		"help": "Gives helpful information, a list of commands, and more. Put in a command as the first argument to read about that command.",
 		"i": "Spawns an item in your cursor slot. The item will be automatically sent to your inventory if your inventory is closed.",
 		"searchitems": "Searches item names by keyword, then returns all matches (case unspecific) with their item IDs.",
-		"ri": "Refreshes the item selected in the hotbar.",
+		"ri": "Refreshes the item in your cursor slot.",
 		"ris": "Refreshes all items in all inventories of the character.",
 		"invclear": "Turns all items that are not favorited in the inventory and all items in the Void inventory into air.",
 		"toolgod": "Toggles the Tool God Cheat in the Cheat Menu.",
@@ -118,7 +118,8 @@
 		"setmaxstackslegit": "Sets the max stack of all items in the inventory and void to their default values.",
 		"favoriteall": "Favorites every item in the inventory.",
 		"refills": "Toggles the Favorited Item Refills Cheat in the Cheat Menu.",
-		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server.",
+		"reforge": "Reforges the item in your cursor slot to match the desired prefix. Using \"Basic\" or no parameter will unforge it.",
+		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
 
@@ -126,19 +127,34 @@
 		"ToggleSentence": "{0} {1}.",
 		"ToggleOn": "Activated",
 		"ToggleOff": "Deactivated",
+
 		"help_NoSel": "Thank you for using Terraclient by convicted tomatophile#0001 and MarauderKnight3#9269!\nRunning Terraclient v{2}! Updated to Terraria v1.4.2.3.\nCheck it out on GitHub: https://www.github.com/TML-Patcher/Terraclient/ (open-source with patches).\n\nRead about a command's function by executing .help (query).\nThere are {0} commands loaded.\nList of commands: {1}",
 		"help_Sel": "You chose to read about: \"{0}\".\nDescription: {1}\nArguments: {2}",
 		"help_Sel_NoArgs": "There are none.",
+
 		"i_Succ": "Set cursor item to {0}{1} {2} ({3})",
+
 		"searchitems_Succ": "Found these items: {0}",
-		"ri_Succ": "Selected item refreshed.",
+		"searchitems_NoItemNameFound": "No item names match.",
+
+		"ri_Succ": "Cursor item refreshed.",
+
 		"ris_Succ": "All inventory items refreshed.",
+
 		"invclear_Succ": "Cleaned all items not favorited in the inventory and all items in the Void inventory.",
+
 		"setstacks2b_Succ": "Stacks overflown.",
+
 		"setstackslegit_Succ": "Stacks regulated.",
+
 		"setmaxstacks2b_Succ": "Max stacks expanded.",
+
 		"setmaxstackslegit_Succ": "Max stacks regulated.",
+
 		"favoriteall_Succ": "All items favorited.",
+
+		"reforge_Succ": "Reforged cursor item to {0}{1} {2} ({3})",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -164,7 +180,7 @@
 		"DidNotMatchAnyOptionsFor": "Input for argument {0} did not autocomplete to or directly match any options accepted by argument {0}.",
 		"SelectedMoreThanOneOptionFor": "Input for argument {0} was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included {1}",
 
-		"searchitems_NoItemNameFound": "No item names match."
+		"reforge_NoItem": "There is no item in the cursor slot to reforge."
 	},
 
 	"CommandWaysideNotifs": {

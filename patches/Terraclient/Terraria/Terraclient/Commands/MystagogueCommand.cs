@@ -144,7 +144,7 @@ namespace Terraria.Terraclient.Commands
 					switch (matches.Count) {
 						case < 1:
 							CheatCommandUtils.Output(false,
-								Language.GetTextValue("CommandErrors.searchitems_NoItemNameFound"));
+								Language.GetTextValue("CommandOutputs.searchitems_NoItemNameFound"));
 							return;
 
 						case > 1:
@@ -160,7 +160,7 @@ namespace Terraria.Terraclient.Commands
 			Create("ri")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
-					Main.player[Main.myPlayer].HeldItem.Refresh();
+					Main.mouseItem.Refresh();
 					CheatUtils.ToolGodBuffMyTools();
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ri_Succ"));
 				})
@@ -250,7 +250,7 @@ namespace Terraria.Terraclient.Commands
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
 					foreach (Item item in Main.player[Main.myPlayer].inventory) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -258,7 +258,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].armor) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -266,7 +266,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].dye) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -274,7 +274,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].miscEquips) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -282,7 +282,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].miscDyes) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -290,7 +290,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].bank.item) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -298,7 +298,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].bank2.item) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -306,7 +306,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].bank3.item) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -314,7 +314,7 @@ namespace Terraria.Terraclient.Commands
 					}
 
 					foreach (Item item in Main.player[Main.myPlayer].bank4.item) {
-						if (item.IsAir || ContentSamples.ItemsByType[item.type].maxStack == 1)
+						if (item.IsAir)
 							continue;
 						item.stack = item.stack > ContentSamples.ItemsByType[item.type].maxStack
 							? ContentSamples.ItemsByType[item.type].maxStack
@@ -399,6 +399,40 @@ namespace Terraria.Terraclient.Commands
 				.AddAction(_ => {
 					CheatHandler.GetCheat<RefillsCheat>().Toggle();
 					CheatCommandUtils.ToggleMessage(CheatHandler.GetCheat<ToolGodCheat>());
+				})
+				.Build();
+
+			Create("reforge")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.i_ItemPrefix"), idsRangePrefixNames, false, true)
+				})
+				.AddAction(args => {
+					if (Main.mouseItem.IsAir) {
+						CheatCommandUtils.Output(true,
+							Language.GetTextValue("CommandErrors.reforge_NoItem"));
+						return;
+					}
+					int prefix = 0;
+					if (args.Count >= 1) {
+						if (args[0] is string)
+							prefix = Array.IndexOf(Prefixes, (string)args[0]);
+						else
+							prefix = (int)args[0];
+						if (prefix is 18 or 75)
+							prefix = !ContentSamples.ItemsByType[Main.mouseItem.type].accessory ? 18 : 75;
+						if (prefix is 20 or 43)
+							prefix = ContentSamples.ItemsByType[Main.mouseItem.type].ranged ? 20 : 43;
+						if (prefix is 42 or 76)
+							prefix = !ContentSamples.ItemsByType[Main.mouseItem.type].accessory ? 42 : 76;
+					}
+					Main.mouseItem.prefix = (byte)prefix;
+					Main.mouseItem.Refresh();
+					CheatCommandUtils.Output(false,
+						Language.GetTextValue("CommandOutputs.reforge_Succ",
+							Main.mouseItem.stack,
+							Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
+							Lang.GetItemNameValue(Main.mouseItem.type),
+							Main.mouseItem.type));
 				})
 				.Build();
 

@@ -16,7 +16,7 @@ namespace Terraria.Terraclient.Cheats
 				return false;
 
 			if (!Main.mouseRight || !Main.mouseRightRelease ||
-			    (!(Main.mouseItem.IsTheSameAs(slot) | Main.mouseItem.IsAir)))
+				(!(Main.mouseItem.IsTheSameAs(slot) | Main.mouseItem.IsAir)))
 				return true;
 
 			Main.mouseItem = new Item();
@@ -36,50 +36,81 @@ namespace Terraria.Terraclient.Cheats
 				return;
 
 			int i;
-			for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
-				if (Main.player[Main.myPlayer].inventory[i].pick <= 0)
-					continue;
-
-				Main.player[Main.myPlayer].inventory[i].pick = ContentSamples.ItemsByType[2786].pick;
-				Main.player[Main.myPlayer].inventory[i].useTime = 0;
-				Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
-				Main.player[Main.myPlayer].inventory[i].tileBoost = 15;
-				break;
+			if (Main.mouseItem.pick < 0) {
+				i = 0;
+				for (; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].pick > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
+				Main.mouseItem.pick = ContentSamples.ItemsByType[ItemID.SolarFlarePickaxe].pick;
+				Main.mouseItem.useTime = 0;
+				Main.mouseItem.useAnimation = 7;
+				Main.mouseItem.tileBoost = 15;
 			}
+			else {
+				for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
+					if (Main.player[Main.myPlayer].inventory[i].pick <= 0)
+						continue;
 
-			for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
-				if (Main.player[Main.myPlayer].inventory[i].pick > 0)
-					Main.player[Main.myPlayer].inventory[i].Refresh();
-
-			for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
-				if (Main.player[Main.myPlayer].inventory[i].axe <= 0)
-					continue;
-
-				Main.player[Main.myPlayer].inventory[i].axe = ContentSamples.ItemsByType[1305].axe;
-				Main.player[Main.myPlayer].inventory[i].useTime = 0;
-				Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
-				Main.player[Main.myPlayer].inventory[i].tileBoost = 15;
-				break;
+					Main.player[Main.myPlayer].inventory[i].pick = ContentSamples.ItemsByType[2786].pick;
+					Main.player[Main.myPlayer].inventory[i].useTime = 0;
+					Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
+					Main.player[Main.myPlayer].inventory[i].tileBoost = 15;
+					break;
+				}
+				for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].pick > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
 			}
-
-			for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
-				if (Main.player[Main.myPlayer].inventory[i].axe > 0)
-					Main.player[Main.myPlayer].inventory[i].Refresh();
-
-			for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
-				if (Main.player[Main.myPlayer].inventory[i].hammer <= 0)
-					continue;
-
-				Main.player[Main.myPlayer].inventory[i].hammer = ContentSamples.ItemsByType[1305].hammer;
-				Main.player[Main.myPlayer].inventory[i].useTime = 0;
-				Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
-				Main.player[Main.myPlayer].inventory[i].tileBoost = 4;
-				break;
+			if (Main.mouseItem.axe < 0) {
+				i = 0;
+				for (; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].axe > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
+				Main.mouseItem.axe = ContentSamples.ItemsByType[ItemID.SolarFlarePickaxe].axe;
+				Main.mouseItem.useTime = 0;
+				Main.mouseItem.useAnimation = 7;
+				Main.mouseItem.tileBoost = 15;
 			}
+			else {
+				for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
+					if (Main.player[Main.myPlayer].inventory[i].axe <= 0)
+						continue;
 
-			for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
-				if (Main.player[Main.myPlayer].inventory[i].hammer > 0)
-					Main.player[Main.myPlayer].inventory[i].Refresh();
+					Main.player[Main.myPlayer].inventory[i].axe = ContentSamples.ItemsByType[2786].axe;
+					Main.player[Main.myPlayer].inventory[i].useTime = 0;
+					Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
+					Main.player[Main.myPlayer].inventory[i].tileBoost = 15;
+					break;
+				}
+				for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].axe > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
+			}
+			if (Main.mouseItem.hammer < 0) {
+				i = 0;
+				for (; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].hammer > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
+				Main.mouseItem.hammer = ContentSamples.ItemsByType[ItemID.SolarFlarePickaxe].hammer;
+				Main.mouseItem.useTime = 0;
+				Main.mouseItem.useAnimation = 7;
+				Main.mouseItem.tileBoost = 15;
+			}
+			else {
+				for (i = 0; i < Main.player[Main.myPlayer].inventory.Length; i++) {
+					if (Main.player[Main.myPlayer].inventory[i].hammer <= 0)
+						continue;
+
+					Main.player[Main.myPlayer].inventory[i].hammer = ContentSamples.ItemsByType[2786].hammer;
+					Main.player[Main.myPlayer].inventory[i].useTime = 0;
+					Main.player[Main.myPlayer].inventory[i].useAnimation = 7;
+					Main.player[Main.myPlayer].inventory[i].tileBoost = 15;
+					break;
+				}
+				for (i++; i < Main.player[Main.myPlayer].inventory.Length; i++)
+					if (Main.player[Main.myPlayer].inventory[i].hammer > 0)
+						Main.player[Main.myPlayer].inventory[i].Refresh();
+			}
 		}
 
 		public static void ResetEffectsMod() {
@@ -133,7 +164,7 @@ namespace Terraria.Terraclient.Cheats
 			Recipe.FindRecipes();
 		}
 
-		public static void MarkItemAsModified(Item item) => item.SetNameOverride(item.HoverName + "*");
+		public static void MarkItemAsModified(Item item) => item.SetNameOverride(item.AffixName() + "*");
 
 		public static void ResetItemName(Item item) => item.ClearNameOverride();
 	}
