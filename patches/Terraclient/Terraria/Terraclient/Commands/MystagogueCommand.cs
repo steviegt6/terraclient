@@ -484,6 +484,32 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("ut")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.ut_DesiredUseTime"), new List<object> {0, 999}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.useTime == reference.useTime) {
+							Main.LocalPlayer.HeldItem.useTime = 0;
+							if (Main.LocalPlayer.HeldItem.type == ItemID.Zenith)
+								Main.LocalPlayer.HeldItem.useTime = 1;
+						}
+						else {
+							Main.LocalPlayer.HeldItem.useTime = reference.useTime;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Reset", Main.LocalPlayer.HeldItem.useTime));
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.useTime = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Succ", Main.LocalPlayer.HeldItem.useTime));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
