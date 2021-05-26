@@ -119,7 +119,8 @@
 		"favoriteall": "Favorites every item in the inventory.",
 		"refills": "Toggles the Favorited Item Refills Cheat in the Cheat Menu.",
 		"reforge": "Reforges the item in your cursor slot to match the desired prefix. Using \"Basic\" or no parameter will unforge it.",
-		"damage": "Changes the base damage of the item in your hotbar selected slot to match the desired value. Using no parameter will reset items that have modified damage, or set normal damage really high.",
+		"damage": "Changes the damage of the item in your hotbar selected slot. Using no parameter will reset items that have modified damage, or set default damage really high.",
+		"crit": "Changes the critical rate of the item in your hotbar selected slot. Using no parameter will reset items that have modified critical rate, or set default rate really high.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
@@ -159,6 +160,9 @@
 		"damage_Succ": "Hotbar selected item damage set to {0}",
 		"damage_Reset": "Hotbar selected item damage reset to {0}",
 
+		"crit_Succ": "Hotbar selected item critical rate set to {0}",
+		"crit_Reset": "Hotbar selected item critical rate reset to {0}",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -169,7 +173,8 @@
 		"i_ItemPrefix": "Prefix",
 		"searchitems_KeyWordToSearchFor": "Keyword to search for",
 		"reforge_DesiredPrefix": "Desired Prefix",
-		"damage_DesiredDamage": "Desired Damage"
+		"damage_DesiredDamage": "Desired Damage",
+		"crit_DesiredCrit": "Desired Critical Rate"
 	},
 
 	"CommandErrors": {

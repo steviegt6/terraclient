@@ -461,6 +461,29 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("crit")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.crit_DesiredCrit"), new List<object> {0, 100}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.crit == reference.crit)
+							Main.LocalPlayer.HeldItem.crit = 100;
+						else {
+							Main.LocalPlayer.HeldItem.crit = reference.crit;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Reset", Main.LocalPlayer.HeldItem.crit));
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.crit = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Succ", Main.LocalPlayer.HeldItem.crit));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
