@@ -451,6 +451,8 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.damage = reference.damage;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Reset", Main.LocalPlayer.HeldItem.damage));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -458,6 +460,7 @@ namespace Terraria.Terraclient.Commands
 						Main.LocalPlayer.HeldItem.damage = (int)args[0];
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 
@@ -474,6 +477,8 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.crit = reference.crit;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Reset", Main.LocalPlayer.HeldItem.crit));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -481,6 +486,7 @@ namespace Terraria.Terraclient.Commands
 						Main.LocalPlayer.HeldItem.crit = (int)args[0];
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Succ", Main.LocalPlayer.HeldItem.crit));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 
@@ -500,6 +506,8 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.useTime = reference.useTime;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Reset", Main.LocalPlayer.HeldItem.useTime));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -507,6 +515,7 @@ namespace Terraria.Terraclient.Commands
 						Main.LocalPlayer.HeldItem.useTime = (int)args[0];
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Succ", Main.LocalPlayer.HeldItem.useTime));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 
@@ -523,6 +532,8 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.useAnimation = reference.useAnimation;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Reset", Main.LocalPlayer.HeldItem.useAnimation));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -530,6 +541,7 @@ namespace Terraria.Terraclient.Commands
 						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 
