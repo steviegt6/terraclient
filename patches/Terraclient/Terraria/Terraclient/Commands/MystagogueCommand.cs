@@ -33,8 +33,8 @@ namespace Terraria.Terraclient.Commands
 		}
 
 		static MystagogueCommand() {
-			List<object> idsRangeItemNames = new List<object> {0, ItemID.Count - 1};
-			List<object> idsRangePrefixNames = new List<object> {0, Prefixes.Length - 1};
+			List<object> idsRangeItemNames = new List<object> { 0, ItemID.Count - 1 };
+			List<object> idsRangePrefixNames = new List<object> { 0, Prefixes.Length - 1 };
 			idsRangeItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
 			idsRangePrefixNames.AddRange(Prefixes);
 
@@ -435,6 +435,29 @@ namespace Terraria.Terraclient.Commands
 							Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
 							Lang.GetItemNameValue(Main.mouseItem.type),
 							Main.mouseItem.type));
+				})
+				.Build();
+
+			Create("damage")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.damage_DesiredDamage"), new List<object> {0, int.MaxValue}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.damage == reference.damage)
+							Main.LocalPlayer.HeldItem.damage = 999999999;
+						else {
+							Main.LocalPlayer.HeldItem.damage = reference.damage;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Reset", Main.LocalPlayer.HeldItem.damage));
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.damage = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
 				})
 				.Build();
 
