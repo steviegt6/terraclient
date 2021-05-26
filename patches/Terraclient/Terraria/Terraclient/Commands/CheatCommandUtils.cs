@@ -43,8 +43,8 @@ namespace Terraria.Terraclient.Commands
 
 				_itemNames[3321] =
 					$"{Lang.GetItemNameValue(ItemID.BrainOfCthulhuBossBag)} ({Lang.GetNPCNameValue(NPCID.BrainofCthulhu)})";
-				_itemNames[3322] =
 
+				_itemNames[3322] =
 					$"{Lang.GetItemNameValue(ItemID.QueenBeeBossBag)} ({Lang.GetNPCNameValue(NPCID.QueenBee)})";
 
 				_itemNames[3323] =
