@@ -122,6 +122,7 @@
 		"damage": "Changes the damage of the item in your hotbar selected slot. Using no parameter will reset items that have modified damage, or set default damage really high.",
 		"crit": "Changes the critical rate of the item in your hotbar selected slot. Using no parameter will reset items that have modified critical rate, or set default rate really high.",
 		"ut": "Changes the use time of the item in your hotbar selected slot. Using no parameter will reset items that have modified use time, or set default use time to 0.",
+		"at": "Changes the animation time of the item in your hotbar selected slot. Using no parameter will reset items that have modified animation time, or set default animation time to 3.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
@@ -167,6 +168,9 @@
 		"ut_Succ": "Hotbar selected item use time set to {0}",
 		"ut_Reset": "Hotbar selected item use time reset to {0}",
 
+		"at_Succ": "Hotbar selected item animation time set to {0}",
+		"at_Reset": "Hotbar selected item animation time reset to {0}",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -179,7 +183,8 @@
 		"reforge_DesiredPrefix": "Desired Prefix",
 		"damage_DesiredDamage": "Desired Damage",
 		"crit_DesiredCrit": "Desired Critical Rate",
-		"ut_DesiredUseTime": "Desired Use Time"
+		"ut_DesiredUseTime": "Desired Use Time",
+		"at_DesiredAnimationTime": "Desired Animation Time"
 	},
 
 	"CommandErrors": {

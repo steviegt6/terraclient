@@ -510,6 +510,29 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("at")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.at_DesiredAnimationTime"), new List<object> {0, 999}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.useAnimation == reference.useAnimation)
+							Main.LocalPlayer.HeldItem.useAnimation = 3;
+						else {
+							Main.LocalPlayer.HeldItem.useAnimation = reference.useAnimation;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Reset", Main.LocalPlayer.HeldItem.useAnimation));
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
