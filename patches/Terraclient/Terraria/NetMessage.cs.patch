@@ -1,0 +1,11 @@
+--- src/Terraria/Terraria/NetMessage.cs
++++ src/Terraclient/Terraria/NetMessage.cs
+@@ -652,7 +_,7 @@
+ 						}
+ 					case 28:
+ 						writer.Write((short)number);
+-						writer.Write((short)number2);
++						writer.Write((short)number2 > short.MaxValue ? short.MaxValue : number2);
+ 						writer.Write(number3);
+ 						writer.Write((byte)(number4 + 1f));
+ 						writer.Write((byte)number5);

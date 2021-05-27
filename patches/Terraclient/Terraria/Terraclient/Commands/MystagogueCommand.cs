@@ -33,8 +33,8 @@ namespace Terraria.Terraclient.Commands
 		}
 
 		static MystagogueCommand() {
-			List<object> idsRangeItemNames = new List<object> {0, ItemID.Count - 1};
-			List<object> idsRangePrefixNames = new List<object> {0, Prefixes.Length - 1};
+			List<object> idsRangeItemNames = new List<object> { 0, ItemID.Count - 1 };
+			List<object> idsRangePrefixNames = new List<object> { 0, Prefixes.Length - 1 };
 			idsRangeItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
 			idsRangePrefixNames.AddRange(Prefixes);
 
@@ -406,7 +406,7 @@ namespace Terraria.Terraclient.Commands
 
 			Create("reforge")
 				.AddParameters(new List<CommandArgument> {
-					new(Language.GetTextValue("CommandArguments.i_ItemPrefix"), idsRangePrefixNames, false, true)
+					new(Language.GetTextValue("CommandArguments.reforge_DesiredPrefix"), idsRangePrefixNames, false, true)
 				})
 				.AddAction(args => {
 					if (Main.mouseItem.IsAir) {
@@ -435,6 +435,113 @@ namespace Terraria.Terraclient.Commands
 							Main.mouseItem.prefix > 0 ? (" " + Prefixes[Main.mouseItem.prefix]) : "",
 							Lang.GetItemNameValue(Main.mouseItem.type),
 							Main.mouseItem.type));
+				})
+				.Build();
+
+			Create("damage")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.damage_DesiredDamage"), new List<object> {0, int.MaxValue}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.damage == reference.damage)
+							Main.LocalPlayer.HeldItem.damage = 999999999;
+						else {
+							Main.LocalPlayer.HeldItem.damage = reference.damage;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Reset", Main.LocalPlayer.HeldItem.damage));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.damage = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("crit")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.crit_DesiredCrit"), new List<object> {0, 100}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.crit == reference.crit)
+							Main.LocalPlayer.HeldItem.crit = 100;
+						else {
+							Main.LocalPlayer.HeldItem.crit = reference.crit;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Reset", Main.LocalPlayer.HeldItem.crit));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.crit = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Succ", Main.LocalPlayer.HeldItem.crit));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("ut")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.ut_DesiredUseTime"), new List<object> {0, 999}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.useTime == reference.useTime) {
+							Main.LocalPlayer.HeldItem.useTime = 0;
+							if (Main.LocalPlayer.HeldItem.type == ItemID.Zenith)
+								Main.LocalPlayer.HeldItem.useTime = 1;
+						}
+						else {
+							Main.LocalPlayer.HeldItem.useTime = reference.useTime;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Reset", Main.LocalPlayer.HeldItem.useTime));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.useTime = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Succ", Main.LocalPlayer.HeldItem.useTime));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("at")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.at_DesiredAnimationTime"), new List<object> {0, 999}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.useAnimation == reference.useAnimation)
+							Main.LocalPlayer.HeldItem.useAnimation = 3;
+						else {
+							Main.LocalPlayer.HeldItem.useAnimation = reference.useAnimation;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Reset", Main.LocalPlayer.HeldItem.useAnimation));
+							if (reference.Equals(Main.LocalPlayer.HeldItem))
+								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
+							return;
+						}
+					}
+					else {
+						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 
