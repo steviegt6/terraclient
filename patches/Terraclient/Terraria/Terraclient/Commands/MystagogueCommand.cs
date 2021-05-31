@@ -617,6 +617,17 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("autoswing")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					Main.LocalPlayer.HeldItem.autoReuse = !Main.LocalPlayer.HeldItem.autoReuse;
+					if (Main.LocalPlayer.HeldItem.autoReuse)
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.autoswing_On"));
+					else
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.autoswing_Off"));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {

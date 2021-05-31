@@ -185,6 +185,9 @@
 		"velocity_Succ": "Hotbar selected item projectile velocity set to {0}",
 		"velocity_Reset": "Hotbar selected item projectile velocity reset to {0}",
 
+		"autoswing_On": "Hotbar selected item autoswing on.",
+		"autoswing_Off": "Hotbar selected item autoswing off.",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
