@@ -634,16 +634,16 @@ namespace Terraria.Terraclient.Commands
 				})
 				.AddAction(args => {
 					if (args.Count == 0) {
-						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						Item reference = Main.mouseItem.Clone();
 						reference.Refresh();
-						Main.LocalPlayer.HeldItem.maxStack = reference.maxStack;
-						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Reset", Main.LocalPlayer.HeldItem.maxStack));
+						Main.mouseItem.maxStack = reference.maxStack;
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Reset", Main.mouseItem.maxStack));
 						return;
 					}
 					else
-						Main.LocalPlayer.HeldItem.maxStack = (int)args[0];
-					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Succ", Main.LocalPlayer.HeldItem.maxStack));
-					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+						Main.mouseItem.maxStack = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Succ", Main.mouseItem.maxStack));
+					CheatUtils.MarkItemAsModified(Main.mouseItem);
 				})
 				.Build();
 
