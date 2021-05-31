@@ -123,6 +123,7 @@
 		"crit": "Changes the critical rate of the item in your hotbar selected slot. Using no parameter will reset items that have modified critical rate, or set default rate really high.",
 		"ut": "Changes the use time of the item in your hotbar selected slot. Using no parameter will reset items that have modified use time, or set default use time to 0.",
 		"at": "Changes the animation time of the item in your hotbar selected slot. Using no parameter will reset items that have modified animation time, or set default animation time to 3.",
+		"shoot": "Changes the projectile type shot by the item in your hotbar selected slot. Using no parameter will reset the projectile type shot by the item in your hotbar selected slot.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
@@ -137,6 +138,7 @@
 		"help_Sel_NoArgs": "There are none.",
 
 		"i_Succ": "Set cursor item to {0}{1} {2} ({3})",
+		"i_TriedToSpawnNothing": "Congratulations, you just tried to spawn air. The places you'll go.",
 
 		"searchitems_Succ": "Found these items: {0}",
 		"searchitems_NoItemNameFound": "No item names match.",
@@ -171,6 +173,10 @@
 		"at_Succ": "Hotbar selected item animation time set to {0}",
 		"at_Reset": "Hotbar selected item animation time reset to {0}",
 
+		"shoot_Succ": "Hotbar selected item projectile type set to {0}",
+		"shoot_Reset": "Hotbar selected item projectile type reset to {0}",
+		"shoot_ICAT": "its corresponding ammo type.",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -184,7 +190,8 @@
 		"damage_DesiredDamage": "Desired Damage",
 		"crit_DesiredCrit": "Desired Critical Rate",
 		"ut_DesiredUseTime": "Desired Use Time",
-		"at_DesiredAnimationTime": "Desired Animation Time"
+		"at_DesiredAnimationTime": "Desired Animation Time",
+		"shoot_DesiredProjectileType": "Desired Projectile Type"
 	},
 
 	"CommandErrors": {

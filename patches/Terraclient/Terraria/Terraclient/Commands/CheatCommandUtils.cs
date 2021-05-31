@@ -142,6 +142,24 @@ namespace Terraria.Terraclient.Commands
 			internal set => _buffNames = value;
 		}
 
+		private static Dictionary<int, string> _projNames;
+
+		public static Dictionary<int, string> ProjNames {
+			get {
+				_projNames ??= new Dictionary<int, string>();
+
+				if (_projNames.Count != 0)
+					return _projNames;
+
+				for (int i = 0; i < BuffID.Count; i++)
+					_projNames.Add(i, Lang.GetProjectileName(i).Value);
+
+				_projNames[0] = "Absence";
+				return _projNames;
+			}
+			internal set => _projNames = value;
+		}
+
 		public static List<string> NonErrorColors = new() {
 			"fc7303",
 			"8aff9e",

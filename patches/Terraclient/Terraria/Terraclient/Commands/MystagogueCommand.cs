@@ -35,8 +35,10 @@ namespace Terraria.Terraclient.Commands
 		static MystagogueCommand() {
 			List<object> idsRangeItemNames = new List<object> { 0, ItemID.Count - 1 };
 			List<object> idsRangePrefixNames = new List<object> { 0, Prefixes.Length - 1 };
+			List<object> idsRangeProjNames = new List<object> { 0, ProjectileID.Count - 1 };
 			idsRangeItemNames.AddRange(CheatCommandUtils.ItemNames.Values);
 			idsRangePrefixNames.AddRange(Prefixes);
+			idsRangeProjNames.AddRange(CheatCommandUtils.ProjNames.Values);
 
 			Create("help")
 				.AddParameters(new List<CommandArgument>()) // adds args later
@@ -100,6 +102,10 @@ namespace Terraria.Terraclient.Commands
 						itemType = CheatCommandUtils.ItemNames.Values.ToList().IndexOf(str);
 					else
 						itemType = (int)args[0];
+					if (itemType == 0) {
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.i_TriedToSpawnNothing"));
+						return;
+					}
 					if (args.Count >= 2)
 						stack = (int)args[1];
 					if (args.Count >= 3) {
@@ -451,8 +457,6 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.damage = reference.damage;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Reset", Main.LocalPlayer.HeldItem.damage));
-							if (reference.Equals(Main.LocalPlayer.HeldItem))
-								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -477,8 +481,6 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.crit = reference.crit;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Reset", Main.LocalPlayer.HeldItem.crit));
-							if (reference.Equals(Main.LocalPlayer.HeldItem))
-								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -506,8 +508,6 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.useTime = reference.useTime;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Reset", Main.LocalPlayer.HeldItem.useTime));
-							if (reference.Equals(Main.LocalPlayer.HeldItem))
-								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -532,8 +532,6 @@ namespace Terraria.Terraclient.Commands
 						else {
 							Main.LocalPlayer.HeldItem.useAnimation = reference.useAnimation;
 							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Reset", Main.LocalPlayer.HeldItem.useAnimation));
-							if (reference.Equals(Main.LocalPlayer.HeldItem))
-								CheatUtils.ResetItemName(Main.LocalPlayer.HeldItem);
 							return;
 						}
 					}
@@ -541,6 +539,34 @@ namespace Terraria.Terraclient.Commands
 						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("shoot")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.shoot_DesiredProjectileType"), idsRangeProjNames, true, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						Main.LocalPlayer.HeldItem.shoot = reference.shoot;
+						Main.LocalPlayer.HeldItem.useAmmo = reference.useAmmo;
+						string str = CheatCommandUtils.ProjNames[Main.LocalPlayer.HeldItem.shoot];
+						if (reference.useAmmo != AmmoID.None)
+							str = Language.GetTextValue("CommandOutputs.shoot_ICAT");
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.shoot_Reset", str));
+						return;
+					}
+					else {
+						if (args[0] is string str)
+							Main.LocalPlayer.HeldItem.shoot = CheatCommandUtils.ProjNames.Values.ToList().IndexOf(str);
+						else
+							Main.LocalPlayer.HeldItem.shoot = (int)args[0];
+						Main.LocalPlayer.HeldItem.useAmmo = AmmoID.None;
+					}
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.shoot_Succ", CheatCommandUtils.ProjNames[Main.LocalPlayer.HeldItem.shoot]));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
