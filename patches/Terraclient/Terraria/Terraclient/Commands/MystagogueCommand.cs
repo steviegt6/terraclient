@@ -564,7 +564,7 @@ namespace Terraria.Terraclient.Commands
 							Main.LocalPlayer.HeldItem.shoot = CheatCommandUtils.ProjNames.Values.ToList().IndexOf(str);
 						else
 							Main.LocalPlayer.HeldItem.shoot = (int)args[0];
-						Main.LocalPlayer.HeldItem.useAmmo = AmmoID;
+						Main.LocalPlayer.HeldItem.useAmmo = AmmoID.None;
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.shoot_Succ", CheatCommandUtils.ProjNames[Main.LocalPlayer.HeldItem.shoot]));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
