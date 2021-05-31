@@ -460,7 +460,7 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else 
+					else
 						Main.LocalPlayer.HeldItem.damage = (int)args[0];
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
