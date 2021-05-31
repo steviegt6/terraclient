@@ -460,9 +460,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else 
 						Main.LocalPlayer.HeldItem.damage = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -484,9 +483,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.crit = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Succ", Main.LocalPlayer.HeldItem.crit));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -511,9 +509,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.useTime = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Succ", Main.LocalPlayer.HeldItem.useTime));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -535,9 +532,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -595,6 +591,29 @@ namespace Terraria.Terraclient.Commands
 
 					CheatCommandUtils.Output(false,
 						Language.GetTextValue("CommandOutputs.searchprojs_Succ", string.Join(", ", matches)));
+				})
+				.Build();
+
+			Create("velocity")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.velocity_DesiredVelocity"), new List<object> {0, 60}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.shootSpeed == reference.shootSpeed)
+							Main.LocalPlayer.HeldItem.shootSpeed = 20;
+						else {
+							Main.LocalPlayer.HeldItem.shootSpeed = reference.shootSpeed;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.velocity_Reset", Main.LocalPlayer.HeldItem.shootSpeed));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.shootSpeed = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.velocity_Succ", Main.LocalPlayer.HeldItem.shootSpeed));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
 				.Build();
 

@@ -125,6 +125,7 @@
 		"at": "Changes the animation time of the item in your hotbar selected slot. Using no parameter will reset items that have modified animation time, or set default animation time to 3.",
 		"shoot": "Changes the projectile type shot by the item in your hotbar selected slot. Using no parameter will reset the projectile type shot by the item in your hotbar selected slot.",
 		"searchprojs": "Searches projectile names by keyword, then returns all matches (case unspecific) with their projectile IDs.",
+		"velocity": "Changes the projectile velocity of the item in your hotbar selected slot. Using no parameter will reset items that have modified projectile velocity, or set default projectile velocity to 20.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
@@ -181,6 +182,9 @@
 		"searchprojs_Succ": "Found these projectiles: {0}",
 		"searchprojs_NoProjNameFound": "No projectile names match.",
 
+		"velocity_Succ": "Hotbar selected item projectile velocity set to {0}",
+		"velocity_Reset": "Hotbar selected item projectile velocity reset to {0}",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -196,7 +200,8 @@
 		"ut_DesiredUseTime": "Desired Use Time",
 		"at_DesiredAnimationTime": "Desired Animation Time",
 		"shoot_DesiredProjectileType": "Desired Projectile Type",
-		"searchprojs_KeyWordToSearchFor": "Keyword to search for"
+		"searchprojs_KeyWordToSearchFor": "Keyword to search for",
+		"velocity_DesiredVelocity": "Desired Projectile Velocity"
 	},
 
 	"CommandErrors": {
