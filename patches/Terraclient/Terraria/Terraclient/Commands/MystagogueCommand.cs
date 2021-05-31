@@ -571,6 +571,33 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("searchprojs")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.searchprojs_KeyWordToSearchFor"), new List<object>(),
+						true)
+				})
+				.AddAction(args => {
+					List<string> matches = new List<string>();
+					for (int j = 1; j < CheatCommandUtils.ProjNames.Count; j++)
+						if (CheatCommandUtils.ProjNames[j]
+							.Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
+							matches.Add(CheatCommandUtils.ProjNames[j] + " (" + j + ")");
+					switch (matches.Count) {
+						case < 1:
+							CheatCommandUtils.Output(false,
+								Language.GetTextValue("CommandOutputs.searchprojs_NoProjNameFound"));
+							return;
+
+						case > 1:
+							matches.Sort();
+							break;
+					}
+
+					CheatCommandUtils.Output(false,
+						Language.GetTextValue("CommandOutputs.searchprojs_Succ", string.Join(", ", matches)));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
