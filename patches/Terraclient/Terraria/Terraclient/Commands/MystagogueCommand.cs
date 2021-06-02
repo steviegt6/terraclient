@@ -460,9 +460,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.damage = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.damage_Succ", Main.LocalPlayer.HeldItem.damage));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -484,9 +483,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.crit = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.crit_Succ", Main.LocalPlayer.HeldItem.crit));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -511,9 +509,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.useTime = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.ut_Succ", Main.LocalPlayer.HeldItem.useTime));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -535,9 +532,8 @@ namespace Terraria.Terraclient.Commands
 							return;
 						}
 					}
-					else {
+					else
 						Main.LocalPlayer.HeldItem.useAnimation = (int)args[0];
-					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.at_Succ", Main.LocalPlayer.HeldItem.useAnimation));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
 				})
@@ -568,6 +564,86 @@ namespace Terraria.Terraclient.Commands
 					}
 					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.shoot_Succ", CheatCommandUtils.ProjNames[Main.LocalPlayer.HeldItem.shoot]));
 					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("searchprojs")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.searchprojs_KeyWordToSearchFor"), new List<object>(),
+						true)
+				})
+				.AddAction(args => {
+					List<string> matches = new List<string>();
+					for (int j = 1; j < CheatCommandUtils.ProjNames.Count; j++)
+						if (CheatCommandUtils.ProjNames[j]
+							.Contains((string)args[0], StringComparison.OrdinalIgnoreCase))
+							matches.Add(CheatCommandUtils.ProjNames[j] + " (" + j + ")");
+					switch (matches.Count) {
+						case < 1:
+							CheatCommandUtils.Output(false,
+								Language.GetTextValue("CommandOutputs.searchprojs_NoProjNameFound"));
+							return;
+
+						case > 1:
+							matches.Sort();
+							break;
+					}
+
+					CheatCommandUtils.Output(false,
+						Language.GetTextValue("CommandOutputs.searchprojs_Succ", string.Join(", ", matches)));
+				})
+				.Build();
+
+			Create("velocity")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.velocity_DesiredVelocity"), new List<object> {0, 60}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.shootSpeed == reference.shootSpeed)
+							Main.LocalPlayer.HeldItem.shootSpeed = 20;
+						else {
+							Main.LocalPlayer.HeldItem.shootSpeed = reference.shootSpeed;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.velocity_Reset", Main.LocalPlayer.HeldItem.shootSpeed));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.shootSpeed = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.velocity_Succ", Main.LocalPlayer.HeldItem.shootSpeed));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("autoswing")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					Main.LocalPlayer.HeldItem.autoReuse = !Main.LocalPlayer.HeldItem.autoReuse;
+					if (Main.LocalPlayer.HeldItem.autoReuse)
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.autoswing_On"));
+					else
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.autoswing_Off"));
+				})
+				.Build();
+
+			Create("maxstack")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.maxstack_DesiredMaxStack"), new List<object> {0, int.MaxValue}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.mouseItem.Clone();
+						reference.Refresh();
+						Main.mouseItem.maxStack = reference.maxStack;
+						CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Reset", Main.mouseItem.maxStack));
+						return;
+					}
+					else
+						Main.mouseItem.maxStack = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxstack_Succ", Main.mouseItem.maxStack));
+					CheatUtils.MarkItemAsModified(Main.mouseItem);
 				})
 				.Build();
 

@@ -151,7 +151,7 @@ namespace Terraria.Terraclient.Commands
 				if (_projNames.Count != 0)
 					return _projNames;
 
-				for (int i = 0; i < BuffID.Count; i++)
+				for (int i = 0; i < ProjectileID.Count; i++)
 					_projNames.Add(i, Lang.GetProjectileName(i).Value);
 
 				_projNames[0] = "Absence";
