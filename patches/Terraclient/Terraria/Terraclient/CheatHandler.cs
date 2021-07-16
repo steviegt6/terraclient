@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Terraria.Terraclient.Cheats;
 using Terraria.Terraclient.Commands;
 
@@ -16,6 +17,11 @@ namespace Terraria.Terraclient
 		internal static List<Cheat> Cheats;
 
 		public static Cheat GetCheat<T>() where T : Cheat => Cheats.First(c => c.GetType() == typeof(T));
+
+		internal static void PreLaunch() {
+			// Register CodePagesEncodingProvider for ZIPs
+			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+		}
 
 		internal static void InitializeCheats() {
 			if (Cheats != null)

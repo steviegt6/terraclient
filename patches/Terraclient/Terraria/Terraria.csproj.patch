@@ -1,0 +1,10 @@
+--- src/Terraria/Terraria/Terraria.csproj
++++ src/Terraclient/Terraria/Terraria.csproj
+@@ -58,6 +_,7 @@
+     <None Remove="Libraries/Windows/**" />
+     <None Remove="Libraries/XNA/**" />
+     <None Remove="Libraries/net40/**" />
++    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+     <None Update="Libraries/Native/**" CopyToOutputDirectory="PreserveNewest" />
+   </ItemGroup>
+   <Target Name="CopyToSteamDir" AfterTargets="Build">

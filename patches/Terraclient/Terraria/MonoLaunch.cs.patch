@@ -1,0 +1,18 @@
+--- src/Terraria/Terraria/MonoLaunch.cs
++++ src/Terraclient/Terraria/MonoLaunch.cs
+@@ -6,6 +_,7 @@
+ using System.Reflection;
+ using System.Runtime.InteropServices;
+ using Terraria;
++using Terraria.Terraclient;
+ 
+ internal static class MonoLaunch
+ {
+@@ -36,6 +_,7 @@
+ 				return assembly;
+ 			}
+ 		};
++		CheatHandler.PreLaunch();
+ 		Environment.SetEnvironmentVariable("FNA_WORKAROUND_WINDOW_RESIZABLE", "1");
+ 		Program.LaunchGame(args, monoArgs: true);
+ 	}
