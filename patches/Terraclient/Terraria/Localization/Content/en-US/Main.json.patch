@@ -1,0 +1,13 @@
+--- src/Terraria/Terraria/Localization/Content/en-US/Main.json
++++ src/Terraclient/Terraria/Localization/Content/en-US/Main.json
+@@ -316,8 +_,8 @@
+ 		"CategoryTitlePublicity": "Visibility",
+ 		"SteamDisclaimer": "By submitting this item, you agree to the Workshop terms of service.",
+ 		"PreviewImagePathTitle": "Image:",
+-		"PreviewImagePathEmpty": "Empty",
++		"PreviewImagePathEmpty": "Disabled",
+-		"PreviewImagePathDescription": "Choose a preview image for this item,\nthis image will be displayed when browsing the workshop (max size 512x512)",
++		"PreviewImagePathDescription": "(Disabled, use Vanilla) Choose a preview image for this item,\nthis image will be displayed when browsing the workshop (max size 512x512)",
+ 		"EnterNewNameForImportedWorld": "Enter World Name:",
+ 		"InfoDescriptionDefault": "Please choose how your item will be published with the options above",
+ 		"SteamDisclaimerDescrpition": "Open the full steam terms of service page\nPlease upload content responsibly",

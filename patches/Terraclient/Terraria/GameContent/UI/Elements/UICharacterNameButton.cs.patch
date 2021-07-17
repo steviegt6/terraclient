@@ -1,0 +1,22 @@
+--- src/Terraria/Terraria/GameContent/UI/Elements/UICharacterNameButton.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UICharacterNameButton.cs
+@@ -20,6 +_,7 @@
+ 		private UIText _title;
+ 		public readonly LocalizedText Description;
+ 		public float DistanceFromTitleToOption = 20f;
++		public Color Color { get; set; } = Color.White;
+ 
+ 		public UICharacterNameButton(LocalizedText titleText, LocalizedText emptyContentText, LocalizedText description = null) {
+ 			Width = StyleDimension.FromPixels(400f);
+@@ -61,9 +_,9 @@
+ 			}
+ 
+ 			CalculatedStyle dimensions = GetDimensions();
+-			Utils.DrawSplicedPanel(spriteBatch, _BasePanelTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color.White * 0.5f);
++			Utils.DrawSplicedPanel(spriteBatch, _BasePanelTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color * 0.5f);
+ 			if (_hovered)
+-				Utils.DrawSplicedPanel(spriteBatch, _hoveredBorderTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color.White);
++				Utils.DrawSplicedPanel(spriteBatch, _hoveredBorderTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color);
+ 		}
+ 
+ 		public void SetContents(string name) {

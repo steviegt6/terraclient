@@ -1,0 +1,16 @@
+--- src/Terraria/Terraria/GameContent/UI/States/AWorkshopPublishInfoState.cs
++++ src/Terraclient/Terraria/GameContent/UI/States/AWorkshopPublishInfoState.cs
+@@ -139,10 +_,11 @@
+ 			_previewImageUIElement = uIImage;
+ 			UICharacterNameButton uICharacterNameButton = new UICharacterNameButton(Language.GetText("Workshop.PreviewImagePathTitle"), Language.GetText("Workshop.PreviewImagePathEmpty"), Language.GetText("Workshop.PreviewImagePathDescription")) {
+ 				Width = StyleDimension.FromPixelsAndPercent(0f - num, 1f),
+-				Height = new StyleDimension(0f, 1f)
++				Height = new StyleDimension(0f, 1f),
++				Color = Color.DarkGray
+ 			};
+ 
+-			uICharacterNameButton.OnMouseDown += Click_SetPreviewImage;
++			// uICharacterNameButton.OnMouseDown += Click_SetPreviewImage;
+ 			uICharacterNameButton.OnMouseOver += ShowOptionDescription;
+ 			uICharacterNameButton.OnMouseOut += ClearOptionDescription;
+ 			uICharacterNameButton.SetSnapPoint(tagGroup, 0);
