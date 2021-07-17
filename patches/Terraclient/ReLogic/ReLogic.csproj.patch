@@ -1,0 +1,12 @@
+--- src/Terraria/ReLogic/ReLogic.csproj
++++ src/Terraclient/ReLogic/ReLogic.csproj
+@@ -7,6 +_,9 @@
+     <Copyright>Copyright © Re-Logic 2017</Copyright>
+     <RootNamespace>ReLogic</RootNamespace>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
++    <PlatformTarget>AnyCPU</PlatformTarget>
++  </PropertyGroup>
+   <ItemGroup>
+     <Reference Include="../Terraria/Libraries/Common/Ionic.Zip.CF.dll" />
+     <Reference Include="../Terraria/Libraries/FNA/FNA.dll" />

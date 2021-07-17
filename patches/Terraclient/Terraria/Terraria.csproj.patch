@@ -1,9 +1,20 @@
 --- src/Terraria/Terraria/Terraria.csproj
 +++ src/Terraclient/Terraria/Terraria.csproj
-@@ -58,6 +_,7 @@
+@@ -20,6 +_,9 @@
+     <OutputName>$(AssemblyName)</OutputName>
+     <ApplicationIcon>Icon.ico</ApplicationIcon>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
++    <PlatformTarget>AnyCPU</PlatformTarget>
++  </PropertyGroup>
+   <ItemGroup>
+     <Reference Include="CsvHelper" />
+     <Reference Include="FNA" />
+@@ -58,6 +_,8 @@
      <None Remove="Libraries/Windows/**" />
      <None Remove="Libraries/XNA/**" />
      <None Remove="Libraries/net40/**" />
++    <PackageReference Include="GtkSharp" Version="3.24.24.34" />
 +    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
      <None Update="Libraries/Native/**" CopyToOutputDirectory="PreserveNewest" />
    </ItemGroup>
