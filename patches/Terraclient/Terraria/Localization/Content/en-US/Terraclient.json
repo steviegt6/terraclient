@@ -118,16 +118,21 @@
 		"setmaxstackslegit": "Sets the max stack of all items in the inventory and void to their default values.",
 		"favoriteall": "Favorites every item in the inventory.",
 		"refills": "Toggles the Favorited Item Refills Cheat in the Cheat Menu.",
-		"reforge": "Reforges the item in your cursor slot to match the desired prefix. Using \"Basic\" or no parameter will unforge it.",
-		"damage": "Changes the damage of the item in your hotbar selected slot. Using no parameter will reset items that have modified damage, or set default damage really high.",
-		"crit": "Changes the critical rate of the item in your hotbar selected slot. Using no parameter will reset items that have modified critical rate, or set default rate really high.",
-		"ut": "Changes the use time of the item in your hotbar selected slot. Using no parameter will reset items that have modified use time, or set default use time to 0.",
-		"at": "Changes the animation time of the item in your hotbar selected slot. Using no parameter will reset items that have modified animation time, or set default animation time to 3.",
+		"reforge": "Reforges the item in your cursor slot to match the desired prefix. Using \"Basic\" or no parameter will remove prefixes.",
+		"damage": "Changes the damage of the item in your hotbar selected slot. Using no parameter will reset items that have modified damage, or set unmodified damage really high.",
+		"crit": "Changes the critical rate of the item in your hotbar selected slot. Using no parameter will reset items that have modified critical rate, or set unmodified rate really high.",
+		"ut": "Changes the use time of the item in your hotbar selected slot. Using no parameter will reset items that have modified use time, or set unmodified use time to 0.",
+		"at": "Changes the animation time of the item in your hotbar selected slot. Using no parameter will reset items that have modified animation time, or set unmodified animation time to 3.",
 		"shoot": "Changes the projectile type shot by the item in your hotbar selected slot. Using no parameter will reset the projectile type shot by the item in your hotbar selected slot.",
 		"searchprojs": "Searches projectile names by keyword, then returns all matches (case unspecific) with their projectile IDs.",
-		"velocity": "Changes the projectile velocity of the item in your hotbar selected slot. Using no parameter will reset items that have modified projectile velocity, or set default projectile velocity to 20.",
+		"velocity": "Changes the projectile velocity of the item in your hotbar selected slot. Using no parameter will reset items that have modified projectile velocity, or set unmodified projectile velocity to 20.",
 		"autoswing": "Toggles auto reuse for the item in your hotbar selected slot.",
 		"maxstack": "Changes the max stack of the item in your cursor slot. Using no parameter will reset the max stack to what's normal for that item.",
+		"tileboost": "Changes the tile boost of the item in your hotbar selected slot. Using no parameter will reset items that have modified tile boost, or set unmodified tile boost to 55.",
+		"pick": "Changes the pickaxe power of the item in your hotbar selected slot. Using no parameter will reset items that have modified pickaxe power, or set unmodified pickaxe power to 1000.",
+		"axe": "Changes the axe power of the item in your hotbar selected slot. Using no parameter will reset items that have modified axe power, or set unmodified axe power to 500.",
+		"hammer": "Changes the hammer power of the item in your hotbar selected slot. Using no parameter will reset items that have modified hammer power, or set unmodified hammer power to 1000.",
+		"god": "Toggles the God Cheat in the Cheat Menu.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
@@ -193,6 +198,18 @@
 		"maxstack_Succ": "Cursor item max stack set to {0}",
 		"maxstack_Reset": "Cursor item max stack reset to {0}",
 
+		"tileboost_Succ": "Hotbar selected item tile boost set to {0}",
+		"tileboost_Reset": "Hotbar selected item tile boost reset to {0}",
+
+		"pick_Succ": "Hotbar selected item pickaxe power set to {0}",
+		"pick_Reset": "Hotbar selected item pickaxe power reset to {0}",
+
+		"axe_Succ": "Hotbar selected item axe power set to {0}. Please note that axe power comes in multiples of 5, as that is how the game was programmed.",
+		"axe_Reset": "Hotbar selected item axe power reset to {0}",
+
+		"hammer_Succ": "Hotbar selected item hammer power set to {0}",
+		"hammer_Reset": "Hotbar selected item hammer power reset to {0}",
+
 		"torch_Succ": "Have fun being alone."
 	},
 
@@ -210,7 +227,11 @@
 		"shoot_DesiredProjectileType": "Desired Projectile Type",
 		"searchprojs_KeyWordToSearchFor": "Keyword to search for",
 		"velocity_DesiredVelocity": "Desired Projectile Velocity",
-		"maxstack_DesiredMaxStack": "Desired Max Stack"
+		"maxstack_DesiredMaxStack": "Desired Max Stack",
+		"tileboost_DesiredTileBoost": "Desired Tile Boost",
+		"pick_DesiredPickPower": "Desired Pickaxe Power",
+		"axe_DesiredAxePower": "Desired Axe Power",
+		"hammer_DesiredHammerPower": "Desired Hammer Power"
 	},
 
 	"CommandErrors": {

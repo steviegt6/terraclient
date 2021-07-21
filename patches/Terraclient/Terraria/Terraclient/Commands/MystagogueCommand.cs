@@ -647,6 +647,106 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("tileboost")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.tileboost_DesiredTileBoost"), new List<object> {0, 55}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.tileBoost == reference.tileBoost)
+							Main.LocalPlayer.HeldItem.tileBoost = 55;
+						else {
+							Main.LocalPlayer.HeldItem.tileBoost = reference.tileBoost;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.tileboost_Reset", Main.LocalPlayer.HeldItem.tileBoost));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.tileBoost = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.tileboost_Succ", Main.LocalPlayer.HeldItem.tileBoost));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("pick")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.pick_DesiredPickPower"), new List<object> {0, 1000}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.pick == reference.pick)
+							Main.LocalPlayer.HeldItem.pick = 1000;
+						else {
+							Main.LocalPlayer.HeldItem.pick = reference.pick;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.pick_Reset", Main.LocalPlayer.HeldItem.pick));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.pick = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.pick_Succ", Main.LocalPlayer.HeldItem.pick));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("axe")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.axe_DesiredAxePower"), new List<object> {0, 500}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.axe == reference.axe)
+							Main.LocalPlayer.HeldItem.axe = 100;
+						else {
+							Main.LocalPlayer.HeldItem.axe = reference.axe;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.axe_Reset", Main.LocalPlayer.HeldItem.axe));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.axe = Math.Clamp((int)Math.Round((int)args[0] / 5.0), 0, 100);
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.axe_Succ", Main.LocalPlayer.HeldItem.axe));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("hammer")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.hammer_DesiredHammerPower"), new List<object> {0, 1000}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.hammer == reference.hammer)
+							Main.LocalPlayer.HeldItem.hammer = 1000;
+						else {
+							Main.LocalPlayer.HeldItem.hammer = reference.hammer;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.hammer_Reset", Main.LocalPlayer.HeldItem.hammer));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.hammer = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.hammer_Succ", Main.LocalPlayer.HeldItem.hammer));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
+			Create("god")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					CheatHandler.GetCheat<GodModeCheat>().Toggle();
+					CheatCommandUtils.ToggleMessage(CheatHandler.GetCheat<GodModeCheat>());
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
