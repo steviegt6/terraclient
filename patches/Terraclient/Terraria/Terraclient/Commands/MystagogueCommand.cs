@@ -739,6 +739,14 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("god")
+				.AddParameters(new List<CommandArgument>())
+				.AddAction(_ => {
+					CheatHandler.GetCheat<GodModeCheat>().Toggle();
+					CheatCommandUtils.ToggleMessage(CheatHandler.GetCheat<GodModeCheat>());
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
