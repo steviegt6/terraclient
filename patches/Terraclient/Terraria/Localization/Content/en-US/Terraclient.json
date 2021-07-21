@@ -131,8 +131,8 @@
 		"tileboost": "Changes the tile boost of the item in your hotbar selected slot. Using no parameter will reset items that have modified tile boost, or set unmodified tile boost to 55.",
 		"pick": "Changes the pickaxe power of the item in your hotbar selected slot. Using no parameter will reset items that have modified pickaxe power, or set unmodified pickaxe power to 1000.",
 		"axe": "Changes the axe power of the item in your hotbar selected slot. Using no parameter will reset items that have modified axe power, or set unmodified axe power to 500.",
-		"god": "Toggles the God Cheat in the Cheat Menu.",
 		"hammer": "Changes the hammer power of the item in your hotbar selected slot. Using no parameter will reset items that have modified hammer power, or set unmodified hammer power to 1000.",
+		"god": "Toggles the God Cheat in the Cheat Menu.",
 		"torch": "Gives the player a torch with an invalid torch ID, which can cause crashes on other clients and the server."
 		//"unbreakable": "Gives the player a stack of unbreakable dirt blocks that, when placed, are not rendered on any client." // WIP
 	},
