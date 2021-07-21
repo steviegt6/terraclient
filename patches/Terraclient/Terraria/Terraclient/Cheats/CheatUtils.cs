@@ -52,7 +52,7 @@ namespace Terraria.Terraclient.Cheats
 				continue;
 			foundPick:
 				foundPick = true;
-				item.pick = 500;
+				item.pick = 1000;
 				if (!foundAxe && item.axe > 0)
 					goto foundAxe;
 				if (!foundHammer && item.hammer > 0)
@@ -74,7 +74,7 @@ namespace Terraria.Terraclient.Cheats
 				continue;
 			foundHammer:
 				foundHammer = true;
-				item.hammer = 100;
+				item.hammer = 1000;
 				item.useTime = 0;
 				item.useAnimation = 7;
 				item.tileBoost = 15;
