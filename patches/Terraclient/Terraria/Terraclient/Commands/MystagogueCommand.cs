@@ -647,6 +647,29 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("tileboost")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.tileboost_DesiredTileBoost"), new List<object> {0, 55}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						Item reference = Main.LocalPlayer.HeldItem.Clone();
+						reference.Refresh();
+						if (Main.LocalPlayer.HeldItem.tileBoost == reference.tileBoost)
+							Main.LocalPlayer.HeldItem.tileBoost = 55;
+						else {
+							Main.LocalPlayer.HeldItem.tileBoost = reference.tileBoost;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.tileboost_Reset", Main.LocalPlayer.HeldItem.tileBoost));
+							return;
+						}
+					}
+					else
+						Main.LocalPlayer.HeldItem.tileBoost = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.tileboost_Succ", Main.LocalPlayer.HeldItem.tileBoost));
+					CheatUtils.MarkItemAsModified(Main.LocalPlayer.HeldItem);
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
