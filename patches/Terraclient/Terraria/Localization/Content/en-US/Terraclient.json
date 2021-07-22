@@ -248,7 +248,7 @@
 		"DidNotMatchAnyOptionsFor": "Input for argument {0} did not autocomplete to or directly match any options accepted by argument {0}.",
 		"SelectedMoreThanOneOptionFor": "Input for argument {0} was too unspecific; There was more than one selection. Make your query longer so it more closely matches the desired selection. Results included {1}",
 
-		"reforge_NoItem": "There is no item in the cursor slot to reforge."
+		"reforge_NoItem": "The reforge command changes the prefix of the item held by the mouse cursor. Pick up an item in the inventory to select it for reforging."
 	},
 
 	"CommandWaysideNotifs": {
