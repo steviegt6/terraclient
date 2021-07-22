@@ -109,14 +109,16 @@ namespace Terraria.Terraclient.Cheats
 					break;
 			}
 
+			Main.LocalPlayer.maxMinions = CheatHandler.TerraclientMaxMinionsOverride;
+
 			if (!CheatHandler.GetCheat<RefillsCheat>().IsEnabled)
 				return;
 
-			foreach (Item item in Main.player[Main.myPlayer].inventory)
+			foreach (Item item in Main.LocalPlayer.inventory)
 				if (!item.IsAir && item.favorited && item.stack < item.maxStack)
 					item.stack = item.maxStack;
 
-			foreach (Item item in Main.player[Main.myPlayer].miscEquips)
+			foreach (Item item in Main.LocalPlayer.miscEquips)
 				if (!item.IsAir && item.favorited && item.stack < item.maxStack)
 					item.stack = item.maxStack;
 		}
