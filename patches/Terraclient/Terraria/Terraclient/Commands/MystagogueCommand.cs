@@ -747,6 +747,26 @@ namespace Terraria.Terraclient.Commands
 				})
 				.Build();
 
+			Create("maxminions")
+				.AddParameters(new List<CommandArgument> {
+					new(Language.GetTextValue("CommandArguments.maxminions_DesiredMaxMinions"), new List<object> {0, 1000}, false, true)
+				})
+				.AddAction(args => {
+					if (args.Count == 0) {
+						if (CheatHandler.TerraclientMaxMinionsOverride == 1)
+							CheatHandler.TerraclientMaxMinionsOverride = 50;
+						else {
+							CheatHandler.TerraclientMaxMinionsOverride = 1;
+							CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxminions_Reset", CheatHandler.TerraclientMaxMinionsOverride));
+							return;
+						}
+					}
+					else
+						CheatHandler.TerraclientMaxMinionsOverride = (int)args[0];
+					CheatCommandUtils.Output(false, Language.GetTextValue("CommandOutputs.maxminions_Succ", CheatHandler.TerraclientMaxMinionsOverride));
+				})
+				.Build();
+
 			Create("torch")
 				.AddParameters(new List<CommandArgument>())
 				.AddAction(_ => {
