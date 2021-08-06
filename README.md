@@ -15,7 +15,7 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
 
 (Note that this list is ever-expanding and not always complete)
 - Godmode.
-- Journey character access bypassing (does not work in some server, especially the ones with multiple worlds linked together)
+- Journey character access bypassing (does not work in some server, especially the ones with multiple worlds linked together).
 - Fullbright.
   - \+ options for slightly better fullbright performance.
 - Map teleportation.
@@ -25,11 +25,11 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
   - Extra info option as well.
     - Displays yourself as well.
 - Forced wide-screen scaling removal and forced main-menu UI scaling removal.
-- Forced PvP/team-switching cooldown removal.\*
+- Forced PvP/team-switching cooldown removal (does not work in TShock servers).
 - The ability to switch between actual player difficulties (saves the file as well).
 - The ability to unlock all Journey mode items in the item spawning UI (requires rejoining the world/server).
 - The ability to unlock all bestiary entries (requires re-opening the UI).
-  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary./*
+  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary. (does not work in TShock servers).
     - There is also a list of all buff immunities.
 - The ability to regenerate your UUID from the main menu.
 - Chat command system (W.I.P.).
@@ -44,22 +44,22 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
 
 - Modular command support
 - Infinite flight
-- Freelook/Fly camera (Being able to unhook and move the camera view without moving the player)
-- Direct player stat modifications (through commands, preferably.)
+- Freelook/Fly camera (Being able to unhook and move the camera view without moving the player).
+- Direct player stat modifications (through commands, preferably).
   - Such as: Directly modifying HP, mana, defense, speed, etc.
   - As well as buffs, potentially.
-- Modification of downed bools (Bosses, events etc.) and other important fields. (Through commands.)
-- The incorporation of some cheat commands from ModHelpers (thanks Hamstar!)
-  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20 (Will be the part of the command system.
+- Modification of downed bools (Bosses, events etc.) and other important fields (Through commands).
+- The incorporation of some cheat commands from ModHelpers (thanks Hamstar!).
+  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20 (Will be the part of the command system).
 - InventoryPeek.
 - Blink/Checkpoint
   - Basically not sending movement packets to the server, causing your player to teleport once the hack is again disabled.
 - Butcher.
 - [Tome of Greater Manipulation](https://terrariamods.fandom.com/wiki/Joostmod/Tome_of_Greater_Manipulation)-esque.
-- Auto Armor. (equips the best armor in the inventory.)
+- Auto Armor (equips the best armor in the inventory).
 - Infinite build reach and speed.
 - Change respawn time / No respawn timer.
-- Demi-God (Constantly healing, or cannot die even when reaching 0 HP)
+- Demi-God (Constantly healing, or cannot die even when reaching 0 HP).
 - No Collide / Ghost.
   - Potential no-clipping instead of flight and ghost being separate.
   - The ability to only no collide platforms
