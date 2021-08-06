@@ -15,24 +15,22 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
 
 (Note that this list is ever-expanding and not always complete)
 - Godmode.
-- Journey character access bypassing (does not work in some server, especially the ones with multiple worlds linked together).
+- Journey character access bypassing (does not work in some servers, namely ones with multiple worlds linked together).
 - Fullbright.
-  - \+ options for slightly better fullbright performance.
+  - Plus options for slightly better fullbright performance.
 - Map teleportation.
 - Journey Mode spoofing.
-  - (Gives your character access to all Journey mode features like research, even on servers. This does not make the server register you has a Journey mode character, though.)
+  - Gives your character access to all Journey Mode features like research, even on servers. This does not make the server register that you have a Journey Mode character, though.
 - Player ESP using multiplayer nameplates.
   - Extra info option as well.
-    - Displays yourself as well.
 - Forced wide-screen scaling removal and forced main-menu UI scaling removal.
 - Forced PvP/team-switching cooldown removal (does not work in TShock servers).
 - The ability to switch between actual player difficulties (saves the file as well).
-- The ability to unlock all Journey mode items in the item spawning UI (requires rejoining the world/server).
+- The ability to unlock all Journey Mode items in the item spawning UI (requires rejoining the world/server).
 - The ability to unlock all bestiary entries (requires re-opening the UI).
-  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary. (does not work in TShock servers).
-    - There is also a list of all buff immunities.
+  - Furthermore, added a "Spawn" button to spawn any NPC on the bestiary (does not work on TShock servers).
 - The ability to regenerate your UUID from the main menu.
-- Chat command system (W.I.P.).
+- Chat command system (W.I.P., functions).
 - Infinite chest reach cheat.
 - Player bank (i.e. piggy, safe, etc.) cycling from the inventory. Requires the aforementioned infinite chest reach cheat to work.
 - Deprecated item support.
@@ -42,50 +40,50 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
 
 ## Planned Features
 
-- Modular command support
-- Infinite flight
-- Freelook/Fly camera (Being able to unhook and move the camera view without moving the player).
-- Direct player stat modifications (through commands, preferably).
+- Modular command support.
+- Infinite flight.
+- Freelook (being able to unhook and move the camera view without moving the player).
+- Direct player stat modifications.
   - Such as: Directly modifying HP, mana, defense, speed, etc.
-  - As well as buffs, potentially.
-- Modification of downed bools (Bosses, events etc.) and other important fields (Through commands).
+- Modification of downed bools (Bosses, events etc.) and other important fields (through commands).
 - The incorporation of some cheat commands from ModHelpers (thanks Hamstar!).
-  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20 (Will be the part of the command system).
+  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20 (will be the part of the command system).
 - InventoryPeek.
 - Blink/Checkpoint
   - Basically not sending movement packets to the server, causing your player to teleport once the hack is again disabled.
 - Butcher.
-- [Tome of Greater Manipulation](https://terrariamods.fandom.com/wiki/Joostmod/Tome_of_Greater_Manipulation)-esque.
-- Auto Armor (equips the best armor in the inventory).
+- [Tome of Greater Manipulation](https://terrariamods.fandom.com/wiki/Joostmod/Tome_of_Greater_Manipulation)-esque capabilities.
+- Auto-Armor (equips the best armor in the inventory).
 - Infinite build reach and speed.
-- Change respawn time / No respawn timer.
+- Change respawn time / no respawn timer.
 - Demi-God (Constantly healing, or cannot die even when reaching 0 HP).
 - No Collide / Ghost.
   - Potential no-clipping instead of flight and ghost being separate.
-  - The ability to only no collide platforms
+  - The ability to not collide with platforms.
 - Forced spawn rate changer.
 - Forced Time changer.
-- Magnet, suck all dropped items in the world.
+- Magnetz: suck up all dropped items in the world.
 - Reveal map.
 - Command to give the player the required items for the stage of the game.
 - Keybind that swaps the hotbar with the bottom / top row of the inventory.
-- Right click a debuff to cancel it.
-- "Favorite" a debuff to make it infinite.
-- A cheat that cycles through any selection of dyes to apply to the player render on the client and send in the netmessage that concerns vanity when on multiplayer. Kind of like skin blinking on Minecraft, just a way to make your vanity more dynamic. If not this, it would be super cool to have other visual things to look flashy with.
+- Right-click debuffs to cancel them.
+- "Favorite" a buff to make it infinite.
+- A cheat that cycles through any selection of dyes to apply to the player render on the client and send in the netmessage that concerns vanity when on multiplayer. 
+  - Kind of like skin blinking on Minecraft, just a way to make your vanity more dynamic. If not this, it would be super cool to have other visual things to look flashy with.
 - A way to paint with particles in multiplayer.
 - A nickname tool to allow the player to change their visible player name on servers.
 - Remove camera zoom limit.
 - The ability to detect players who are invisible.
-- Teleport function with map off, might add a hotkey to replicate the RoD's function. And also, settings for teleportation:
-  1. Raw relocation
-  2. Use teleportation packet
-  3. Raw relocation, but teleports for every frame you hold down the button
-  4. Teleportation packet, but teleports for every frame you hold down the button
+- Teleport function with map off, might add a hotkey to replicate the RoD's function. Also, settings for teleportation:
+  1. Raw relocation.
+  2. Use teleportation packet.
+  3. Raw relocation, but teleports for every frame you hold down the button.
+  4. Teleportation packet, but teleports for every frame you hold down the button.
 - Something like Tool God, but it makes weapons that are favorited OP.
 - No knockback.
 - Command that causes damage to other player.
 - Antisocial-like feature.
-- Lock-on Targeting even without a controller for aimbot-like feature that even works on players.
+- Lock-on Targeting even without a controller for an aimbot-like system that even works on players.
 
 ## Contributing
 Anyone is free to contribute. You can view the compilation process and more specific details in the `CONTRIBUTING.md` file (TODO).
