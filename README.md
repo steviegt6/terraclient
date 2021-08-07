@@ -47,7 +47,7 @@ Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, 
   - Such as: Directly modifying HP, mana, defense, speed, etc.
 - Modification of downed bools (Bosses, events etc.) and other important fields (through commands).
 - The incorporation of some cheat commands from ModHelpers (thanks Hamstar!).
-  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20 (will be the part of the command system).
+  - See: https://github.com/hamstar0/tml-hamstarhelpers-mod/tree/master/HamstarHelpers/Commands/Cheats, https://github.com/hamstar0/tml-hamstarhelpers-mod/blob/master/HamstarHelpers/Commands/Cheats/CheatToggleCommand.cs#L20.
 - InventoryPeek.
 - Blink/Checkpoint
   - Basically not sending movement packets to the server, causing your player to teleport once the hack is again disabled.
