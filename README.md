@@ -9,7 +9,7 @@ Terraclient
 
 ----
 
-Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, it is a heavy work-in-progress and not ready for public distribution; however, anyone is capable of building it themselves.
+Terraclient is a new-age Terraria client built for Terraria 1.4.2.3. As of now, it is a heavy work-in-progress and public distribution is not consistent; however, anyone is capable of building it themselves.
 
 ## Features
 
