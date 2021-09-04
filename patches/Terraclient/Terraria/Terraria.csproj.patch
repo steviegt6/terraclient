@@ -1,0 +1,14 @@
+--- src/tModLoader/Terraria/Terraria.csproj
++++ src/Terraclient/Terraria/Terraria.csproj
+@@ -7,10 +_,9 @@
+     <Company>Re-Logic</Company>
+     <Copyright>Copyright © 2021 Re-Logic</Copyright>
+     <RootNamespace>Terraria</RootNamespace>
+-    <AssemblyName>tModLoader</AssemblyName>
++    <AssemblyName>Terraclient</AssemblyName>
+     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+     <UseAppHost>false</UseAppHost>
+-    <TargetFramework>net5.0</TargetFramework>
+   </PropertyGroup>
+   <PropertyGroup>
+     <tMLVersion>0.12</tMLVersion>

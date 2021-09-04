@@ -128,6 +128,14 @@ Internally formats the Terraria sources before diffing
 
 </value>
   </data>
+  <data name="buttonDiffTerraclient.ToolTip" xml:space="preserve">
+    <value>Recalculates the Terraclient patches
+Diffs the src/tModLoader and src/Terraclient directories
+Use this after making changes then commit the patches directory to the git
+Internally formats the Terraria sources before diffing
+
+</value>
+  </data>
   <metadata name="mainMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>149, 17</value>
   </metadata>

@@ -166,7 +166,7 @@ namespace Terraria.ModLoader.Setup
 			if (Directory.Exists(TMLDevSteamDir))
 				return;
 			
-			Settings.Default.TMLDevSteamDir = Path.GetFullPath(Path.Combine(Settings.Default.SteamDir, "..", "tModLoaderDev"));
+			Settings.Default.TMLDevSteamDir = Path.GetFullPath(Path.Combine(Settings.Default.SteamDir, "..", "TerraclientDev"));
 			Settings.Default.Save();
 
 			try {

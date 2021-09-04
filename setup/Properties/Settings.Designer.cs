@@ -59,9 +59,21 @@ namespace Terraria.ModLoader.Properties {
             }
         }
         
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2020-01-01")]
+        public global::System.DateTime TerraclientDiffCutoff {
+            get {
+                return ((global::System.DateTime)(this["TerraclientDiffCutoff"]));
+            }
+            set {
+                this["TerraclientDiffCutoff"] = value;
+            }
+        }
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.4.2.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.4.2.3")]
         public string ClientVersion {
             get {
                 return ((string)(this["ClientVersion"]));
@@ -70,7 +82,7 @@ namespace Terraria.ModLoader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.4.2.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.4.2.3")]
         public string ServerVersion {
             get {
                 return ((string)(this["ServerVersion"]));
@@ -103,7 +115,7 @@ namespace Terraria.ModLoader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00d7f0d6590efadeed6393d00e59f777")]
+        [global::System.Configuration.DefaultSettingValueAttribute("a198ff662df47b20ef1d1436c5d80f67")]
         public string GoGClientWinMD5 {
             get {
                 return ((string)(this["GoGClientWinMD5"]));
@@ -124,7 +136,7 @@ namespace Terraria.ModLoader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("acfd53772989dbbd7231f98d38669651")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3f1fb331d23db8d6cb9584afa4e5e1a9")]
         public string SteamClientWinMD5 {
             get {
                 return ((string)(this["SteamClientWinMD5"]));
