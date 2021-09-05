@@ -241,15 +241,54 @@
  			string name = DisplayNameClean;
  			string othername = item.DisplayNameClean;
  			switch (Interface.modsMenu.sortMode) {
-@@ -364,6 +_,8 @@
- 		}
+@@ -365,21 +_,26 @@
  
  		public bool PassFilters(UIModsFilterResults filterResults) {
-+			if (_dummy)
-+				return true;
  			if (Interface.modsMenu.filter.Length > 0) {
- 				if (Interface.modsMenu.searchFilterMode == SearchFilter.Author) {
+-				if (Interface.modsMenu.searchFilterMode == SearchFilter.Author) {
++				if (!_dummy && Interface.modsMenu.searchFilterMode == SearchFilter.Author) {
  					if (_mod.properties.author.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1) {
+ 						filterResults.filteredBySearch++;
+ 						return false;
+ 					}
+ 				}
+ 				else {
+-					if (DisplayNameClean.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1 && ModName.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1) {
++					if (!_dummy && DisplayNameClean.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1 && ModName.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1) {
++						filterResults.filteredBySearch++;
++						return false;
++					}
++					if (_dummy && ModName.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1) {
+ 						filterResults.filteredBySearch++;
+ 						return false;
+ 					}
+ 				}
+ 			}
+ 			if (Interface.modsMenu.modSideFilterMode != ModSideFilter.All) {
++				ModSide side = _dummy ? ModSide.NoSync : _mod.properties.side;
+-				if ((int)_mod.properties.side != (int)Interface.modsMenu.modSideFilterMode - 1) {
++				if ((int)side != (int)Interface.modsMenu.modSideFilterMode - 1) {
+ 					filterResults.filteredByModSide++;
+ 					return false;
+ 				}
+@@ -389,13 +_,13 @@
+ 				case EnabledFilter.All:
+ 					return true;
+ 				case EnabledFilter.EnabledOnly:
+-					if (!_mod.Enabled)
++					if (!_dummy && !_mod.Enabled)
+ 						filterResults.filteredByEnabled++;
+-					return _mod.Enabled;
++					return _dummy || _mod.Enabled;
+ 				case EnabledFilter.DisabledOnly:
+-					if (_mod.Enabled)
++					if (_dummy || _mod.Enabled)
+ 						filterResults.filteredByEnabled++;
+-					return !_mod.Enabled;
++					return !_mod.Enabled && !_dummy;
+ 			}
+ 		}
+ 
 @@ -464,6 +_,8 @@
  		}
  
