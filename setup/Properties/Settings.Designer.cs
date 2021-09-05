@@ -61,7 +61,7 @@ namespace Terraria.ModLoader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2020-01-01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2015-01-01")]
         public global::System.DateTime TerraclientDiffCutoff {
             get {
                 return ((global::System.DateTime)(this["TerraclientDiffCutoff"]));
