@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/MessageBuffer.cs
++++ src/Terraclient/Terraria/MessageBuffer.cs
+@@ -141,7 +_,7 @@
+ 
+ 						string clientVersion = reader.ReadString();
+ 						ModNet.isModdedClient[whoAmI] = clientVersion == BuildInfo.versionedName;
+-						if (ModNet.isModdedClient[whoAmI] || clientVersion == "Terraria" + Main.curRelease && ModNet.AllowVanillaClients) {
++						if (ModNet.isModdedClient[whoAmI] || true /*clientVersion == "Terraria" + Main.curRelease && ModNet.AllowVanillaClients*/) {
+ 							if (string.IsNullOrEmpty(Netplay.ServerPassword)) {
+ 								Netplay.Clients[whoAmI].State = 1;
+ 								if (ModNet.isModdedClient[whoAmI]) {

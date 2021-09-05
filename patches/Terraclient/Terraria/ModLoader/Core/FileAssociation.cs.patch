@@ -1,0 +1,18 @@
+--- src/tModLoader/Terraria/ModLoader/Core/FileAssociation.cs
++++ src/Terraclient/Terraria/ModLoader/Core/FileAssociation.cs
+@@ -52,12 +_,12 @@
+ 		private const int SHCNF_FLUSH = 0x1000;
+ 
+ 		private static void EnsureAssociationsSet() {
+-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "tModLoader.dll");
++			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Terraclient.dll");
+ 			EnsureAssociationsSet(
+ 				new FileAssociation {
+ 					Extension = ".tmod",
+-					ProgId = "tModLoader_Mod_File",
++					ProgId = "tModLoader/Terraclient_Mod_File",
+-					FileTypeDescription = "tModLoader Mod",
++					FileTypeDescription = "tModLoader/Terraclient Mod",
+ 					ExecutableFilePath = filePath
+ 				});
+ 		}

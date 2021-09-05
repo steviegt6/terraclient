@@ -1,0 +1,20 @@
+--- src/tModLoader/Terraria/ModLoader/Logging.cs
++++ src/Terraclient/Terraria/ModLoader/Logging.cs
+@@ -49,7 +_,7 @@
+ 
+ 			ConfigureAppenders(dedServ);
+ 
+-			tML.InfoFormat("Starting tModLoader {0} {1}", dedServ ? "server" : "client", BuildInfo.BuildIdentifier);
++			tML.InfoFormat("Starting Terraclient {0} {1}", dedServ ? "server" : "client", BuildInfo.BuildIdentifier);
+ 			tML.InfoFormat("Log date: {0}", DateTime.Now.ToString("d"));
+ 			tML.InfoFormat("Running on {0} {1} {2} {3}", ReLogic.OS.Platform.Current.Type, System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture, FrameworkVersion.Framework, FrameworkVersion.Version);
+ 			tML.InfoFormat("Executable: {0}", Assembly.GetEntryAssembly().Location);
+@@ -333,7 +_,7 @@
+ 				if (AssemblyManager.GetAssemblyOwner(assembly, out var modName))
+ 					trim = modName;
+ 				else if (assembly == TerrariaAssembly)
+-					trim = "tModLoader";
++					trim = "Terraclient";
+ 				else
+ 					continue;
+ 

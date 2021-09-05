@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/Social/Steam/WorkshopHelper.cs
++++ src/Terraclient/Terraria/Social/Steam/WorkshopHelper.cs
+@@ -14,7 +_,7 @@
+ 	public partial class WorkshopHelper
+ 	{
+ 		private const string TmlModNamePrefix = "[1.4 Alpha] ";
+-		private const string TmlModDescriptionPrefix = "Built for 1.4 Alpha version of tModLoader. \n";
++		private const string TmlModDescriptionPrefix = "Built for 1.4 Alpha version of tModLoader. Compiled with Terraclient, may not work on tModLoader clients. \n";
+ 
+ 		public class UGCBased
+ 		{

@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/GameContent/UI/States/UIWorkshopHub.cs
++++ src/Terraclient/Terraria/GameContent/UI/States/UIWorkshopHub.cs
+@@ -208,7 +_,7 @@
+ 				localizedText = Language.GetText("tModLoader.MenuDownloadModsDescription");
+ 
+ 			if (listeningElement == _buttonTBD)
+-				localizedText = Language.GetText("Not Implemented in tModLoader 1.4");
++				localizedText = Language.GetText("Not implemented 1.4, blame tML");
+ 
+ 			if (listeningElement == _buttonUseResourcePacks)
+ 				localizedText = Language.GetText("Workshop.HubDescriptionUseResourcePacks");

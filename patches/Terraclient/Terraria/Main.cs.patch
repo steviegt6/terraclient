@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/Main.cs
++++ src/Terraclient/Terraria/Main.cs
+@@ -36965,7 +_,7 @@
+ 					Netplay.ServerPassword = "";
+ 				}
+ 				else if (selectedMenu == 2 || inputTextEnter || autoPass) {
+-					string str = "tModLoader.dll -server " + "-autoshutdown -password \"" + ConvertToSafeArgument(Netplay.ServerPassword) + "\" -lang " + Language.ActiveCulture.LegacyId;
++					string str = "Terraclient.dll -server " + "-autoshutdown -password \"" + ConvertToSafeArgument(Netplay.ServerPassword) + "\" -lang " + Language.ActiveCulture.LegacyId;
+ #if LINUX
+ 					str += IntPtr.Size == 8 ? " -x64": " -x86";
+ #endif

@@ -1,0 +1,7 @@
+--- src/tModLoader/ReLogic/Properties/AssemblyProperties.cs
++++ src/Terraclient/ReLogic/Properties/AssemblyProperties.cs
+@@ -1,3 +_,3 @@
+ using System.Runtime.CompilerServices;
+ 
+-[assembly: InternalsVisibleTo("tModLoader")]
++[assembly: InternalsVisibleTo("Terraclient")]

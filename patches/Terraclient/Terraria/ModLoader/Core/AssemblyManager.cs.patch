@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/ModLoader/Core/AssemblyManager.cs
++++ src/Terraclient/Terraria/ModLoader/Core/AssemblyManager.cs
+@@ -122,7 +_,7 @@
+ 			//Legacy: With FNA and .Net5 changes, had aimed to eliminate the variants of tmodloader (tmodloaderdebug, tmodloaderserver) and Terraria as assembly names.
+ 			// However, due to uncertainty in that elimination, in particular for Terraria, have opted to retain the original check. - Solxan			
+ 			var name = new AssemblyName(args.Name).Name;
+-			if (name.Contains("tModLoader") || name == "Terraria")
++			if (name.Contains("tModLoader") || name.Contains("Terraclient") || name == "Terraria")
+ 				return Assembly.GetExecutingAssembly();
+ 
+ 			return null;

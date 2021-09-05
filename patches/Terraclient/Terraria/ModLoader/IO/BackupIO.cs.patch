@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/ModLoader/IO/BackupIO.cs
++++ src/Terraclient/Terraria/ModLoader/IO/BackupIO.cs
+@@ -51,7 +_,7 @@
+ 		private static void AddZipEntry(this ZipFile zip, string path, bool isCloud = false) {
+ 			zip.CompressionMethod = CompressionMethod.Deflate;
+ 			zip.CompressionLevel = CompressionLevel.BestCompression;
+-			zip.Comment = $"Archived on ${DateTime.Now} by tModLoader";
++			zip.Comment = $"Archived on ${DateTime.Now} by Terraclient";
+ 
+ 			if (!isCloud && (File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory) {
+ 				zip.AddFiles(Directory.GetFiles(path), false, Path.GetFileNameWithoutExtension(path));

@@ -1,0 +1,20 @@
+--- src/tModLoader/Terraria/ModLoader/BuildInfo.cs
++++ src/Terraclient/Terraria/ModLoader/BuildInfo.cs
+@@ -58,7 +_,7 @@
+ 			}
+ 
+ 
+-			versionedName = $"tModLoader v{tMLVersion}";
++			versionedName = $"Terraclient v{tMLVersion}";
+ 
+ 			if (!string.IsNullOrEmpty(BranchName) && BranchName != "master" && BranchName != "unknown")
+ 				versionedName += $" {BranchName}";
+@@ -66,7 +_,7 @@
+ 			if (Purpose != BuildPurpose.Release)
+ 				versionedName += $" {Purpose}";
+ 
+-			versionTag = versionedName.Substring("tModLoader ".Length).Replace(' ', '-').ToLower();
++			versionTag = versionedName.Substring("Terraclient ".Length).Replace(' ', '-').ToLower();
+ 
+ 			versionedNameDevFriendly = versionedName;
+ 

@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/ModLoader/Core/ModCompile.cs
++++ src/Terraclient/Terraria/ModLoader/Core/ModCompile.cs
+@@ -84,7 +_,7 @@
+ 	<PropertyGroup>
+ 		<TerrariaSteamPath>{SecurityElement.Escape(tMLDir)}</TerrariaSteamPath>
+ 		<tMLLibraryPath>$(TerrariaSteamPath)/Libraries</tMLLibraryPath>
+-		<tMLName>tModLoader</tMLName>
++		<tMLName>Terraclient</tMLName>
+ 		<tMLPath>$(tMLName).dll</tMLPath>
+ 		<tMLServerPath>tModLoader.dll -server</tMLServerPath>
+ 	</PropertyGroup>
