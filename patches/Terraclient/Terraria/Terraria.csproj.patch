@@ -1,6 +1,6 @@
 --- src/tModLoader/Terraria/Terraria.csproj
 +++ src/Terraclient/Terraria/Terraria.csproj
-@@ -7,7 +_,7 @@
+@@ -7,18 +_,19 @@
      <Company>Re-Logic</Company>
      <Copyright>Copyright © 2021 Re-Logic</Copyright>
      <RootNamespace>Terraria</RootNamespace>
@@ -9,3 +9,26 @@
      <GenerateDocumentationFile>true</GenerateDocumentationFile>
      <UseAppHost>false</UseAppHost>
    </PropertyGroup>
+   <PropertyGroup>
++    <TerraclientVersion>0.1</TerraclientVersion>
+     <tMLVersion>0.12</tMLVersion>
+     <BuildPurpose Condition="'$(BuildPurpose)' == ''">dev</BuildPurpose>
+     <BranchName Condition="'$(BranchName)' == ''">unknown</BranchName>
+   <BranchName>$(BranchName.Replace("-",""))</BranchName>
+     <CommitSHA Condition="'$(CommitSHA)' == ''">unknown</CommitSHA>
+     <BuildDate>$([System.DateTime]::UtcNow.ToBinary())</BuildDate>
+-    <SourceRevisionId>$(tMLVersion)-$(BranchName)-$(BuildPurpose)-$(CommitSHA)-$(BuildDate)</SourceRevisionId>
++    <SourceRevisionId>$(TerraclientVersion)-$(tMLVersion)-$(BranchName)-$(BuildPurpose)-$(CommitSHA)-$(BuildDate)</SourceRevisionId>
+   </PropertyGroup>
+   <PropertyGroup>
+     <OutputName>$(AssemblyName)</OutputName>
+@@ -55,6 +_,9 @@
+     <None Remove="Libraries/XNA/**" />
+     <None Remove="Libraries/net40/**" />
+     <Content Include="Libraries/Native/**" CopyToOutputDirectory="PreserveNewest" />
++  </ItemGroup>
++  <ItemGroup>
++    <None Remove="Localization\Content\en-US\Terraclient.json" />
+   </ItemGroup>
+   <ItemGroup>
+     <PackageReference Include="MonoMod.RuntimeDetour" Version="21.4.21.3" />

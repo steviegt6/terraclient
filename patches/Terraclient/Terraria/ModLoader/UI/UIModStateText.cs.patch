@@ -1,0 +1,37 @@
+--- src/tModLoader/Terraria/ModLoader/UI/UIModStateText.cs
++++ src/Terraclient/Terraria/ModLoader/UI/UIModStateText.cs
+@@ -8,17 +_,17 @@
+ {
+ 	internal class UIModStateText : UIElement
+ 	{
+-		private bool _enabled;
++		private bool? _enabled;
+ 
+ 		private string DisplayText
+-			=> _enabled
+-				? Language.GetTextValue("GameUI.Enabled")
+-				: Language.GetTextValue("GameUI.Disabled");
++			=> _enabled.HasValue ? (
++				_enabled.Value ? Language.GetTextValue("GameUI.Enabled")
++				: Language.GetTextValue("GameUI.Disabled")) : Language.GetTextValue("Terraclient.DefaultMod");
+ 
+ 		private Color DisplayColor
+-			=> _enabled ? Color.Green : Color.Red;
++			=> _enabled.HasValue ? (_enabled.Value ? Color.Green : Color.Red) : Color.Gray;
+ 
+-		public UIModStateText(bool enabled = true) {
++		public UIModStateText(bool? enabled = true) {
+ 			_enabled = enabled;
+ 			PaddingLeft = PaddingRight = 5f;
+ 			PaddingBottom = PaddingTop = 10f;
+@@ -26,7 +_,9 @@
+ 
+ 		public override void OnInitialize() {
+ 			OnClick += (evt, el) => {
++				if (!_enabled.HasValue)
++					return;
+-				if (_enabled) SetDisabled();
++				if (_enabled.Value) SetDisabled();
+ 				else SetEnabled();
+ 			};
+ 		}

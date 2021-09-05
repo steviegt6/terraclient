@@ -1,0 +1,261 @@
+--- src/tModLoader/Terraria/ModLoader/UI/UIModItem.cs
++++ src/Terraclient/Terraria/ModLoader/UI/UIModItem.cs
+@@ -45,9 +_,13 @@
+ 		private string[] _modReferences;
+ 		public readonly string DisplayNameClean; // No chat tags: for search and sort functionality.
+ 
+-		private string ToggleModStateText => _mod.Enabled ? Language.GetTextValue("tModLoader.ModsDisable") : Language.GetTextValue("tModLoader.ModsEnable");
++		private string ToggleModStateText => _dummy ? Language.GetTextValue("Terraclient.DefaultMod") : _mod.Enabled ? Language.GetTextValue("tModLoader.ModsDisable") : Language.GetTextValue("tModLoader.ModsEnable");
+ 
+-		public string ModName => _mod.Name;
++		public string ModName => _dummy ? _clientName : _mod.Name;
++
++		private string _clientName;
++		private bool _dummy;
++		private Version _clientVersion;
+ 
+ 		public UIModItem(LocalMod mod) {
+ 			_mod = mod;
+@@ -58,15 +_,26 @@
+ 			DisplayNameClean = string.Join("", ChatManager.ParseMessage(_mod.DisplayName, Color.White).Where(x => x.GetType() == typeof(TextSnippet)).Select(x => x.Text));
+ 		}
+ 
++		internal UIModItem(string name, Version version) {
++			_clientName = name;
++			_dummy = true;
++			_clientVersion = version;
++			BorderColor = new Color(89, 116, 213) * 0.7f;
++			Height.Pixels = 90;
++			Width.Percent = 1f;
++			SetPadding(6f);
++			DisplayNameClean = _clientName;
++		}
++
+ 		public override void OnInitialize() {
+ 			base.OnInitialize();
+ 
+-			string text = _mod.DisplayName + " v" + _mod.modFile.Version;
+-			if (_mod.tModLoaderVersion < new Version(0, 10)) {
++			string text = (_dummy ? _clientName : _mod.DisplayName) + " v" + (_dummy ? _clientVersion : _mod.modFile.Version);
++			if (!_dummy && _mod.tModLoaderVersion < new Version(0, 10)) {
+ 				text += $" [c/FF0000:({Language.GetTextValue("tModLoader.ModOldWarning")})]";
+ 			}
+ 
+-			if (_mod.modFile.HasFile("icon.png")) {
++			if (!_dummy && _mod.modFile.HasFile("icon.png")) {
+ 				try {
+ 					using (_mod.modFile.Open())
+ 					using (var s = _mod.modFile.GetStream("icon.png")) {
+@@ -93,20 +_,31 @@
+ 			};
+ 			Append(_modName);
+ 
+-			_uiModStateText = new UIModStateText(_mod.Enabled) {
++			_uiModStateText = new UIModStateText(_dummy ? null : _mod.Enabled) {
+ 				Top = { Pixels = 40 },
+ 				Left = { Pixels = _modIconAdjust }
+ 			};
+ 			_uiModStateText.OnClick += ToggleEnabled;
+ 			Append(_uiModStateText);
+ 
++			if (_dummy) {
++				_moreInfoButton = new UIImage(UICommon.ButtonModInfoTexture) {
++					Width = { Pixels = 0 },
++					Height = { Pixels = 0 },
++					Left = { Pixels = 0, Precent = 1 },
++					Top = { Pixels = 0 },
++					ScaleToFit = true
++				};
++			}
++			else {
+-			_moreInfoButton = new UIImage(UICommon.ButtonModInfoTexture) {
++				_moreInfoButton = new UIImage(UICommon.ButtonModInfoTexture) {
+-				Width = { Pixels = 36 },
++					Width = { Pixels = 36 },
+-				Height = { Pixels = 36 },
++					Height = { Pixels = 36 },
+-				Left = { Pixels = -36, Precent = 1 },
++					Left = { Pixels = -36, Precent = 1 },
+-				Top = { Pixels = 40 }
++					Top = { Pixels = 40 }
+-			};
++				};
+-			_moreInfoButton.OnClick += ShowMoreInfo;
++				_moreInfoButton.OnClick += ShowMoreInfo;
++			}
+ 			Append(_moreInfoButton);
+ 
+ 			if (ModLoader.TryGetMod(ModName, out var loadedMod) && ConfigManager.Configs.ContainsKey(loadedMod)) {
+@@ -123,9 +_,9 @@
+ 				}
+ 			}
+ 
+-			_modReferences = _mod.properties.modReferences.Select(x => x.mod).ToArray();
++			_modReferences = !_dummy ? _mod.properties.modReferences.Select(x => x.mod).ToArray() : Array.Empty<string>();
+ 
+-			if (_modReferences.Length > 0 && !_mod.Enabled) {
++			if (!_dummy && _modReferences.Length > 0 && !_mod.Enabled) {
+ 				string refs = string.Join(", ", _mod.properties.modReferences);
+ 				var icon = UICommon.ButtonExclamationTexture;
+ 				_modReferenceIcon = new UIHoverImage(icon, Language.GetTextValue("tModLoader.ModDependencyClickTooltip", refs)) {
+@@ -137,7 +_,7 @@
+ 				Append(_modReferenceIcon);
+ 			}
+ 
+-			if (_mod.modFile.ValidModBrowserSignature) {
++			if (!_dummy && _mod.modFile.ValidModBrowserSignature) {
+ 				_keyImage = new UIHoverImage(Main.Assets.Request<Texture2D>(TextureAssets.Item[ItemID.GoldenKey].Name), Language.GetTextValue("tModLoader.ModsOriginatedFromModBrowser")) {
+ 					Left = { Pixels = -20, Percent = 1f }
+ 				};
+@@ -145,7 +_,7 @@
+ 				Append(_keyImage);
+ 			}
+ 
+-			if (ModCompile.DeveloperMode && ModLoader.IsUnloadedModStillAlive(ModName)) {
++			if (!_dummy && ModCompile.DeveloperMode && ModLoader.IsUnloadedModStillAlive(ModName)) {
+ 				_keyImage = new UIHoverImage(UICommon.ButtonErrorTexture, Language.GetTextValue("tModLoader.ModDidNotFullyUnloadWarning")) {
+ 					Left = { Pixels = _modIconAdjust + PADDING },
+ 					Top = { Pixels = 3 }
+@@ -156,7 +_,7 @@
+ 				_modName.Left.Pixels += _keyImage.Width.Pixels + PADDING * 2f;
+ 			}
+ 
+-			if (_mod.properties.beta) {
++			if (!_dummy && _mod.properties.beta) {
+ 				_keyImage = new UIHoverImage(Main.Assets.Request<Texture2D>(TextureAssets.Item[ItemID.ShadowKey].Name), Language.GetTextValue("tModLoader.BetaModCantPublish")) {
+ 					Left = { Pixels = -10, Percent = 1f }
+ 				};
+@@ -164,7 +_,7 @@
+ 				Append(_keyImage);
+ 			}
+ 
+-			if (loadedMod != null) {
++			if (!_dummy && loadedMod != null) {
+ 				_loaded = true;
+ 				// TODO: refactor and add nicer icons (and maybe not iterate 6 times)
+ 				int[] values = { loadedMod.GetContent<ModItem>().Count(), loadedMod.GetContent<ModNPC>().Count(), loadedMod.GetContent<ModTile>().Count(), loadedMod.GetContent<ModWall>().Count(), loadedMod.GetContent<ModBuff>().Count(), loadedMod.GetContent<ModMount>().Count() };
+@@ -190,14 +_,26 @@
+ 			};
+ 
+ 			if (!_loaded) {
++				if (_dummy) {
++					_deleteModButton = new UIImage(TextureAssets.Trash) {
++						Width = { Pixels = 0 },
++						Height = { Pixels = 0 },
++						Left = { Pixels = 0, Precent = 1 },
++						Top = { Pixels = 0 },
++						ScaleToFit = true
++					};
++					Append(_deleteModButton);
++				}
++				else {
+-				_deleteModButton = new UIImage(TextureAssets.Trash) {
++					_deleteModButton = new UIImage(TextureAssets.Trash) {
+-					Width = { Pixels = 36 },
++						Width = { Pixels = 36 },
+-					Height = { Pixels = 36 },
++						Height = { Pixels = 36 },
+-					Left = { Pixels = _moreInfoButton.Left.Pixels - 36 - PADDING, Precent = 1 },
++						Left = { Pixels = _moreInfoButton.Left.Pixels - 36 - PADDING, Precent = 1 },
+-					Top = { Pixels = 42.5f }
++						Top = { Pixels = 42.5f }
+-				};
++					};
+-				_deleteModButton.OnClick += QuickModDelete;
++					_deleteModButton.OnClick += QuickModDelete;
+-				Append(_deleteModButton);
++					Append(_deleteModButton);
++				}
+ 			}
+ 		}
+ 
+@@ -239,7 +_,7 @@
+ 			drawPos = new Vector2(innerDimensions.X + 10f + _modIconAdjust, innerDimensions.Y + 45f);
+ 
+ 			// TODO: These should just be UITexts
+-			if (_mod.properties.side != ModSide.Server && (_mod.Enabled != _loaded || _configChangesRequireReload)) {
++			if (!_dummy && _mod.properties.side != ModSide.Server && (_mod.Enabled != _loaded || _configChangesRequireReload)) {
+ 				if (_modReferenceIcon != null) {
+ 					drawPos += new Vector2(_uiModStateText.Width.Pixels + _modReferenceIcon.Width.Pixels + PADDING, 0f);
+ 				}
+@@ -248,7 +_,7 @@
+ 				}
+ 				Utils.DrawBorderString(spriteBatch, _configChangesRequireReload ? Language.GetTextValue("tModLoader.ModReloadForced") : Language.GetTextValue("tModLoader.ModReloadRequired"), drawPos, Color.White, 1f, 0f, 0f, -1);
+ 			}
+-			if (_mod.properties.side == ModSide.Server) {
++			if (!_dummy && _mod.properties.side == ModSide.Server) {
+ 				drawPos += new Vector2(90f, -2f);
+ 				spriteBatch.Draw(UICommon.ModBrowserIconsTexture.Value, drawPos, new Rectangle(5 * 34, 3 * 34, 32, 32), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+ 				if (new Rectangle((int)drawPos.X, (int)drawPos.Y, 32, 32).Contains(Main.MouseScreen.ToPoint()))
+@@ -261,7 +_,7 @@
+ 			else if (_deleteModButton?.IsMouseHovering == true) {
+ 				_tooltip = Language.GetTextValue("UI.Delete");
+ 			}
+-			else if (_modName?.IsMouseHovering == true && _mod?.properties.author.Length > 0) {
++			else if (!_dummy && _modName?.IsMouseHovering == true && _mod?.properties.author.Length > 0) {
+ 				_tooltip = Language.GetTextValue("tModLoader.ModsByline", _mod.properties.author);
+ 			}
+ 			else if (_uiModStateText?.IsMouseHovering == true) {
+@@ -285,11 +_,15 @@
+ 		}
+ 
+ 		private void ToggleEnabled(UIMouseEvent evt, UIElement listeningElement) {
++			if (_dummy)
++				return;
+ 			SoundEngine.PlaySound(SoundID.MenuTick);
+ 			_mod.Enabled = !_mod.Enabled;
+ 		}
+ 
+ 		internal void Enable() {
++			if (_dummy)
++				return;
+ 			if(_mod.Enabled){return;}
+ 			SoundEngine.PlaySound(SoundID.MenuTick);
+ 			_mod.Enabled = true;
+@@ -297,6 +_,8 @@
+ 		}
+ 
+ 		internal void Disable() {
++			if (_dummy)
++				return;
+ 			if(!_mod.Enabled){return;}
+ 			SoundEngine.PlaySound(SoundID.MenuTick);
+ 			_mod.Enabled = false;
+@@ -335,6 +_,8 @@
+ 		}
+ 
+ 		internal void ShowMoreInfo(UIMouseEvent evt, UIElement listeningElement) {
++			if (_dummy)
++				return;
+ 			SoundEngine.PlaySound(SoundID.MenuOpen);
+ 			Interface.modInfo.Show(ModName, _mod.DisplayName, Interface.modsMenuID, _mod, _mod.properties.description, _mod.properties.homepage);
+ 		}
+@@ -349,6 +_,10 @@
+ 			var item = obj as UIModItem;
+ 			if (item == null)
+ 				return 1;
++			if (_dummy)
++				return int.MaxValue;
++			if (item._dummy)
++				return int.MinValue;
+ 			string name = DisplayNameClean;
+ 			string othername = item.DisplayNameClean;
+ 			switch (Interface.modsMenu.sortMode) {
+@@ -364,6 +_,8 @@
+ 		}
+ 
+ 		public bool PassFilters(UIModsFilterResults filterResults) {
++			if (_dummy)
++				return true;
+ 			if (Interface.modsMenu.filter.Length > 0) {
+ 				if (Interface.modsMenu.searchFilterMode == SearchFilter.Author) {
+ 					if (_mod.properties.author.IndexOf(Interface.modsMenu.filter, StringComparison.OrdinalIgnoreCase) == -1) {
+@@ -464,6 +_,8 @@
+ 		}
+ 
+ 		private void DeleteMod(UIMouseEvent evt, UIElement listeningElement) {
++			if (_dummy)
++				return;
+ 			string tmodPath = _mod.modFile.path;
+ 
+ 			if (tmodPath.Contains(Path.Combine("steamapps", "workshop"))) {

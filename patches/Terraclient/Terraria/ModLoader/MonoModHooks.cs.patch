@@ -1,0 +1,19 @@
+--- src/tModLoader/Terraria/ModLoader/MonoModHooks.cs
++++ src/Terraclient/Terraria/ModLoader/MonoModHooks.cs
+@@ -9,6 +_,7 @@
+ using System.Reflection.Emit;
+ using Terraria.ModLoader.Core;
+ using Terraria.ModLoader.Default;
++using Terraria.Terraclient;
+ 
+ namespace Terraria.ModLoader
+ {
+@@ -120,7 +_,7 @@
+ 		}
+ 
+ 		internal static void RemoveAll(Mod mod) {
+-			if (mod is ModLoaderMod)
++			if (mod is ModLoaderMod or ClientMod)
+ 				return;
+ 
+ 			int hooks = 0, detours = 0, ndetours = 0;

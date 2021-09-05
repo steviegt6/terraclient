@@ -1,0 +1,30 @@
+--- src/tModLoader/Terraria/ModLoader/UI/UIMods.cs
++++ src/Terraclient/Terraria/ModLoader/UI/UIMods.cs
+@@ -14,6 +_,8 @@
+ using Terraria.ModLoader.UI.ModBrowser;
+ using Terraria.ModLoader.Core;
+ using Terraria.Audio;
++using Terraria.ModLoader.Default;
++using Terraria.Terraclient;
+ 
+ namespace Terraria.ModLoader.UI
+ {
+@@ -368,6 +_,18 @@
+ 		}
+ 
+ 		internal void Populate() {
++			ModLoaderMod dummyModeOne = new();
++			ClientMod dummyModeTwo = new();
++
++			UIModItem dummyOne = new UIModItem(dummyModeOne.Name, dummyModeOne.Version);
++			UIModItem dummyTwo = new UIModItem(dummyModeTwo.Name, dummyModeTwo.Version);
++
++			dummyOne.Activate();
++			dummyTwo.Activate();
++
++			items.Add(dummyOne);
++			items.Add(dummyTwo);
++
+ 			Task.Factory
+ 				.StartNew(ModOrganizer.FindMods, _cts.Token)
+ 				.ContinueWith(task => {

@@ -1,11 +1,46 @@
 --- src/tModLoader/Terraria/ModLoader/BuildInfo.cs
 +++ src/Terraclient/Terraria/ModLoader/BuildInfo.cs
-@@ -58,7 +_,7 @@
+@@ -17,6 +_,7 @@
+ 
+ 		public static readonly string BuildIdentifier = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+ 
++		public static readonly Version TerraclientVersion;
+ 		public static readonly Version tMLVersion;
+ 		public static readonly BuildPurpose Purpose;
+ 		public static readonly string BranchName;
+@@ -37,28 +_,29 @@
+ 
+ 		static BuildInfo() {
+ 			var parts = BuildIdentifier.Substring(BuildIdentifier.IndexOf('+')+1).Split('-');
+-			tMLVersion = new Version(parts[0]);
++			TerraclientVersion = new Version(parts[0]);
++			tMLVersion = new Version(parts[1]);
+ 			if (parts.Length>=2) {
+-				BranchName = parts[1];
++				BranchName = parts[2];
+ 			}
+ 			else {
+ 				BranchName = "unknown";
+ 			}
+ 			if (parts.Length>=3) {
+-				Enum.TryParse(parts[2], true, out Purpose);
++				Enum.TryParse(parts[3], true, out Purpose);
+ 			}
+ 			if (parts.Length>=4) {
+-				CommitSHA = parts[3];
++				CommitSHA = parts[4];
+ 			}
+ 			else {
+ 				CommitSHA = "unknown";
+ 			}
+ 			if (parts.Length>=5) {
+-				BuildDate = DateTime.FromBinary(long.Parse(parts[4])).ToLocalTime();
++				BuildDate = DateTime.FromBinary(long.Parse(parts[5])).ToLocalTime();
  			}
  
  
 -			versionedName = $"tModLoader v{tMLVersion}";
-+			versionedName = $"Terraclient v{tMLVersion}";
++			versionedName = $"Terraclient v{TerraclientVersion}, tModLoader v{tMLVersion}";
  
  			if (!string.IsNullOrEmpty(BranchName) && BranchName != "master" && BranchName != "unknown")
  				versionedName += $" {BranchName}";

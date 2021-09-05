@@ -1,0 +1,18 @@
+--- src/tModLoader/Terraria/ModLoader/ModLoader.cs
++++ src/Terraclient/Terraria/ModLoader/ModLoader.cs
+@@ -24,6 +_,7 @@
+ using ReLogic.Graphics;
+ using System.Runtime.CompilerServices;
+ using System.Runtime.InteropServices;
++using Terraria.Terraclient;
+ #if NETCORE
+ using System.Runtime.Loader;
+ #endif
+@@ -123,6 +_,7 @@
+ 
+ 				weakModReferences.AddRange(modInstances.Select(x => new WeakReference<Mod>(x)));
+ 				modInstances.Insert(0, new ModLoaderMod());
++				modInstances.Insert(1, new ClientMod());
+ 				Mods = modInstances.ToArray();
+ 				foreach (var mod in Mods)
+ 					modsByName[mod.Name] = mod;
