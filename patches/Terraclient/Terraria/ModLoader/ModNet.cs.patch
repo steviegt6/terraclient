@@ -19,6 +19,15 @@
  		public static bool AllowVanillaClients { get; internal set; }
  		internal static bool downloadModsFromServers = true;
  		internal static bool onlyDownloadSignedMods = false;
+@@ -65,7 +_,7 @@
+ 		public static Mod GetMod(int netID) =>
+ 			netID >= 0 && netID < netMods.Length ? netMods[netID] : null;
+ 
+-		public static int NetModCount => netMods.Length;
++		public static int NetModCount => netMods?.Length ?? 0;
+ 
+ 		private static Queue<ModHeader> downloadQueue = new Queue<ModHeader>();
+ 		internal static List<NetConfig> pendingConfigs = new List<NetConfig>();
 @@ -81,8 +_,8 @@
  
  		internal static void Unload() {
