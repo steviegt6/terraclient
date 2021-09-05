@@ -1,5 +1,49 @@
 --- src/tModLoader/Terraria/Main.cs
 +++ src/Terraclient/Terraria/Main.cs
+@@ -81,6 +_,7 @@
+ using Terraria.ObjectData;
+ using Terraria.Social;
+ using Terraria.Social.Steam;
++using Terraria.Terraclient;
+ using Terraria.UI;
+ using Terraria.UI.Chat;
+ using Terraria.UI.Gamepad;
+@@ -3175,10 +_,15 @@
+ 			Configuration.Put("WaterfallDrawLimit", instance.waterfallManager.maxWaterfallCount);
+ 			Configuration.Put("DisableIntenseVisualEffects", DisableIntenseVisualEffects);
+ 			ModLoader.ModLoader.SaveConfiguration();
++			Client.SaveConfiguration();
++
++			bool playerInputSuccessful = false;
+ 			if (Configuration.Save())
++				playerInputSuccessful = PlayerInput.Save();
++
+-				return PlayerInput.Save();
++			Client.PostSaveConfiguration();
+ 
+-			return false;
++			return playerInputSuccessful;
+ 		}
+ 
+ 		protected void CheckBunny() {
+@@ -3259,7 +_,8 @@
+ 			}
+ 
+ 			if (Main.dedServ) {
+-				ModLoader.ModLoader.LoadConfiguration();
++				ModLoader.ModLoader.LoadConfiguration(); 
++				Client.LoadConfiguration();
+ 				return;
+ 			}
+ 
+@@ -3548,6 +_,7 @@
+ 			}
+ 
+ 			ModLoader.ModLoader.LoadConfiguration();
++			Client.LoadConfiguration();
+ 			PlayerInput.Load();
+ 			if (currentValue < 165) {
+ 				try {
 @@ -36965,7 +_,7 @@
  					Netplay.ServerPassword = "";
  				}
@@ -9,3 +53,25 @@
  #if LINUX
  					str += IntPtr.Size == 8 ? " -x64": " -x86";
  #endif
+@@ -37875,6 +_,7 @@
+ 					num4 = 37;
+ 					num5 = 8;
+ 					num5++; // Room for tModLoader settings option.
++					num5++; // Room for Terraclient settings option.
+ 					array4[num5 - 1] = 8;
+ 					for (int num19 = 0; num19 < num5; num19++) {
+ 						array7[num19] = 0.75f;
+@@ -37934,6 +_,13 @@
+ 					if (selectedMenu == num20) {
+ 						SoundEngine.PlaySound(SoundID.MenuOpen);
+ 						menuMode = Interface.tModLoaderSettingsID;
++					}
++
++					num20++;
++					array9[num20] = Language.GetTextValue("Terraclient.TerraclientSettings");
++					if (selectedMenu == num20) {
++						SoundEngine.PlaySound(SoundID.MenuOpen);
++						menuMode = Interface.TerraclientSettingsID;
+ 					}
+ 
+ 					num20++;

@@ -1,0 +1,14 @@
+--- src/tModLoader/Terraria/Player.cs
++++ src/Terraclient/Terraria/Player.cs
+@@ -39208,7 +_,10 @@
+ 
+ 		private static void LoadPlayer_LastMinuteFixes(Player newPlayer, PlayerFileData playerFileData) {
+ 			newPlayer.skinVariant = (int)MathHelper.Clamp(newPlayer.skinVariant, 0f, 11f);
++
++			if (!ModNet.AllowVanillaClients) 
+-			PlayerIO.Load(newPlayer, playerFileData.Path, playerFileData.IsCloudSave);
++				PlayerIO.Load(newPlayer, playerFileData.Path, playerFileData.IsCloudSave);
++
+ 			for (int i = 3; i < 10; i++) {
+ 				int type = newPlayer.armor[i].type;
+ 				if (type == 908 || type == 4874 || type == 5000)

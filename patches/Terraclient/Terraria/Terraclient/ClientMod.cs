@@ -11,7 +11,7 @@ using Terraria.ModLoader.Assets;
 
 namespace Terraria.Terraclient
 {
-	internal class ClientMod : Mod
+	internal class ClientMod : TerraclientMod
 	{
 		public override string Name => "Terraclient";
 

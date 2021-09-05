@@ -1,0 +1,25 @@
+--- src/tModLoader/Terraria/ModLoader/Default/ModLoaderMod.cs
++++ src/Terraclient/Terraria/ModLoader/Default/ModLoaderMod.cs
+@@ -25,6 +_,12 @@
+ 			Side = ModSide.NoSync;
+ 			DisplayName = "tModLoader";
+ 			Code = Assembly.GetExecutingAssembly();
++
++			BackgroundAutoloadingEnabled
++				= ContentAutoloadingEnabled
++					= GoreAutoloadingEnabled
++						= MusicAutoloadingEnabled
++							= SoundAutoloadingEnabled = !ModNet.AllowVanillaClients;
+ 		}
+ 
+ 		public override IContentSource CreateDefaultContentSource() => new AssemblyResourcesContentSource(Assembly.GetExecutingAssembly(), "Terraria.ModLoader.Default.");
+@@ -40,6 +_,9 @@
+ 		}
+ 
+ 		internal static bool TryGettingPatreonOrDevArmor(Player player) {
++			if (ModNet.AllowVanillaClients)
++				return false;
++
+ 			if (Main.rand.NextBool(ChanceToGetPatreonArmor)) {
+ 				int randomIndex = Main.rand.Next(PatronSets.Length);
+ 

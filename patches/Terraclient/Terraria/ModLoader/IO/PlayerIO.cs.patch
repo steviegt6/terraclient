@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/ModLoader/IO/PlayerIO.cs
++++ src/Terraclient/Terraria/ModLoader/IO/PlayerIO.cs
+@@ -95,6 +_,8 @@
+ 		}
+ 
+ 		public static void LoadInventory(Item[] inv, IList<TagCompound> list) {
++			if (ModNet.AllowVanillaClients)
++				return;
+ 			foreach (var tag in list)
+ 				inv[tag.GetShort("slot")] = ItemIO.Load(tag);
+ 		}

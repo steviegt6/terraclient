@@ -1,0 +1,21 @@
+--- src/tModLoader/Terraria/ModLoader/ModNet.cs
++++ src/Terraclient/Terraria/ModLoader/ModNet.cs
+@@ -13,6 +_,7 @@
+ using Terraria.ModLoader.UI.DownloadManager;
+ using Terraria.ModLoader.UI;
+ using Terraria.GameContent;
++using Terraria.Terraclient;
+ using Terraria.UI;
+ 
+ namespace Terraria.ModLoader
+@@ -81,8 +_,8 @@
+ 
+ 		internal static void Unload() {
+ 			netMods = null;
+-			if (!Main.dedServ && Main.netMode != 1) //disable vanilla client compatibility restrictions when reloading on a client
++			if (!Main.dedServ && Main.netMode != 1) // disable vanilla client compatibility restrictions when reloading on a client
+-				AllowVanillaClients = false;
++				AllowVanillaClients = Client.ConnectToVanillaServers;
+ 		}
+ 
+ 		internal static void SyncMods(int clientIndex) {

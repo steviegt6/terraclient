@@ -1,5 +1,8 @@
 ﻿{
- "Terraclient": {
-		"DefaultMod": "Default" 
- } 
+	"Terraclient": {
+		"DefaultMod": "Default",
+		"TerraclientSettings": "Terraclient Settings",
+		"AllowVanillaClients": "Vanilla Server Connection: Enabled",
+		"DisallowVanillaClients": "Vanilla Server Connection: Disabled"
+	} 
 }

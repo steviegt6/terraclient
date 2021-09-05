@@ -1,0 +1,14 @@
+--- src/tModLoader/Terraria/ModLoader/IO/ItemIO.cs
++++ src/Terraclient/Terraria/ModLoader/IO/ItemIO.cs
+@@ -203,7 +_,10 @@
+ 			}
+ 			catch (IOException e) {
+ 				Logging.tML.Error(e.ToString());
++				if (item.ModItem is null)
++					Logging.tML.Error($"Above IOException error caused by item {ItemID.FromNetId((short) item.type)}.");
++				else 
+-				Logging.tML.Error($"Above IOException error caused by {item.ModItem.Name} from the {item.ModItem.Mod.Name} mod.");
++					Logging.tML.Error($"Above IOException error caused by {item.ModItem.Name} from the {item.ModItem.Mod.Name} mod.");
+ 			}
+ 
+ 			foreach (var netGlobal in ItemLoader.NetGlobals) {
