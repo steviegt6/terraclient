@@ -1,5 +1,33 @@
 --- src/tModLoader/Terraria/Player.cs
 +++ src/Terraclient/Terraria/Player.cs
+@@ -6696,7 +_,7 @@
+ 					fireWalk = true;
+ 					buffImmune[24] = true;
+ 				}
+-				else if (BuffID.Sets.BasicMountData[buffType[j]] != null) {
++				else if (ModNet.AllowVanillaClients ? (buffType[j] < BuffID.Sets.BasicMountData.Length && BuffID.Sets.BasicMountData[buffType[j]] != null) : (BuffID.Sets.BasicMountData[buffType[j]] != null)) {
+ 					BuffID.Sets.BuffMountData buffMountData = BuffID.Sets.BasicMountData[buffType[j]];
+ 					mount.SetMount(buffMountData.mountID, this, buffMountData.faceLeft);
+ 					buffTime[j] = 10;
+@@ -8253,7 +_,7 @@
+ 				else if (buffType[j] == 79) {
+ 					meleeEnchant = 8;
+ 				}
+-				if (j == originalIndex)
++				if (j == originalIndex && !ModNet.AllowVanillaClients)
+ 					BuffLoader.Update(buffType[j], this, ref j);
+ 			}
+ 
+@@ -18637,7 +_,8 @@
+ 			maxRunSpeed *= moveSpeed;
+ 			UpdateJumpHeight();
+ 			for (int num33 = 0; num33 < MaxBuffs; num33++) {
+-				if (buffType[num33] > 0 && buffTime[num33] > 0 && buffImmune[buffType[num33]])
++				if (buffType[num33] > 0 && buffTime[num33] > 0)
++					if (ModNet.AllowVanillaClients ? (buffType[num33] < buffImmune.Length && buffImmune[buffType[num33]]) : (buffImmune[buffType[num33]]))
+ 					DelBuff(num33);
+ 			}
+ 
 @@ -39208,7 +_,10 @@
  
  		private static void LoadPlayer_LastMinuteFixes(Player newPlayer, PlayerFileData playerFileData) {
