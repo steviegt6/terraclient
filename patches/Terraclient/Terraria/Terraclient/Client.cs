@@ -17,13 +17,16 @@ namespace Terraria.Terraclient
 		public static Version TerraclientVersion => BuildInfo.TerraclientVersion;
 
 		public static bool ConnectToVanillaServers;
+		public static bool PoseAsVanilla;
 
 		internal static void SaveConfiguration() {
 			Main.Configuration.Put(nameof(ConnectToVanillaServers), ConnectToVanillaServers);
+			Main.Configuration.Put(nameof(PoseAsVanilla), PoseAsVanilla);
 		}
 
 		internal static void LoadConfiguration() {
 			Main.Configuration.Get(nameof(ConnectToVanillaServers), ref ConnectToVanillaServers);
+			Main.Configuration.Get(nameof(PoseAsVanilla), ref PoseAsVanilla);
 
 			ModNet.AllowVanillaClients = ConnectToVanillaServers;
 		}

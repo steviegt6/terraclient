@@ -1,11 +1,107 @@
 --- src/tModLoader/Terraria/MessageBuffer.cs
 +++ src/Terraclient/Terraria/MessageBuffer.cs
-@@ -141,7 +_,7 @@
+@@ -86,8 +_,16 @@
+ 			int num = 0;
+ 			num = start + 1;
+ 			b = (byte)(messageType = readBuffer[start]);
++			if (!ModNet.AllowVanillaClients) {
+-			if (b < LegacyNetDiagnosticsUI.maxMsg)
++				if (b < LegacyNetDiagnosticsUI.maxMsg)
++					Main.ActiveNetDiagnosticsUI.CountReadMessage(b, length);
++			}
++			else {
++				if (b >= 14)
++					return;
++
+ 				Main.ActiveNetDiagnosticsUI.CountReadMessage(b, length);
++			}
+ 			if (Main.netMode == 1 && Netplay.Connection.StatusMax > 0)
+ 				Netplay.Connection.StatusCount++;
+ 
+@@ -140,11 +_,12 @@
+ 							break;
  
  						string clientVersion = reader.ReadString();
- 						ModNet.isModdedClient[whoAmI] = clientVersion == BuildInfo.versionedName;
+-						ModNet.isModdedClient[whoAmI] = clientVersion == BuildInfo.versionedName;
 -						if (ModNet.isModdedClient[whoAmI] || clientVersion == "Terraria" + Main.curRelease && ModNet.AllowVanillaClients) {
-+						if (ModNet.isModdedClient[whoAmI] || true /*clientVersion == "Terraria" + Main.curRelease && ModNet.AllowVanillaClients*/) {
++						ModNet.isModdedClient[whoAmI] = BuildInfo.versionedName.Contains("tModLoader") || BuildInfo.versionedName.Contains("Terraclient");
++						bool vanillaPermissive = clientVersion.StartsWith("Terraria") && ModNet.AllowVanillaClients;
++						if (ModNet.isModdedClient[whoAmI] || vanillaPermissive) {
  							if (string.IsNullOrEmpty(Netplay.ServerPassword)) {
  								Netplay.Clients[whoAmI].State = 1;
- 								if (ModNet.isModdedClient[whoAmI]) {
+-								if (ModNet.isModdedClient[whoAmI]) {
++								if (ModNet.isModdedClient[whoAmI] && !ModNet.AllowVanillaClients) {
+ 									ModNet.SyncMods(whoAmI);
+ 									return;
+ 								}
+@@ -156,7 +_,7 @@
+ 							}
+ 						}
+ 						else {
+-							if (clientVersion.StartsWith("tModLoader"))
++							if (clientVersion.StartsWith("tModLoader") || clientVersion.StartsWith("Terraclient"))
+ 								NetMessage.SendData(2, whoAmI, -1, NetworkText.FromLiteral(Lang.mp[4].Value + $"\n(You are on {clientVersion}, server is on {BuildInfo.versionedName})"));
+ 							else
+ 								NetMessage.SendData(2, whoAmI, -1, NetworkText.FromLiteral(Lang.mp[4].Value + "\n(You cannot connect to a tModLoader Server with an unmodded client.)"));
+@@ -227,7 +_,8 @@
+ 							NetMessage.TrySendData(5, -1, -1, null, num44, 220 + num53, (int)player5.bank4.item[num53].prefix);
+ 						}
+ 
++						if (!ModNet.AllowVanillaClients) 
+-						PlayerLoader.SyncPlayer(player5, -1, -1, true);
++							PlayerLoader.SyncPlayer(player5, -1, -1, true);
+ 						NetMessage.TrySendData(6);
+ 						if (Netplay.Connection.State == 2)
+ 							Netplay.Connection.State = 3;
+@@ -737,8 +_,9 @@
+ 							NetMessage.TrySendData(83, whoAmI, -1, null, num176);
+ 						}
+ 
++						if (!ModNet.AllowVanillaClients) 
+-						for (int type = NPCID.Count; type < NPCLoader.NPCCount; type++)
++							for (int type = NPCID.Count; type < NPCLoader.NPCCount; type++) 
+-							NetMessage.SendData(83, whoAmI, -1, null, type, 0f, 0f, 0f, 0, 0, 0);
++								NetMessage.SendData(83, whoAmI, -1, null, type, 0f, 0f, 0f, 0, 0, 0);
+ 
+ 						NetMessage.TrySendData(49, whoAmI);
+ 						NetMessage.TrySendData(57, whoAmI);
+@@ -1203,7 +_,8 @@
+ 							item2.position = position3;
+ 							item2.velocity = velocity5;
+ 							item2.active = true;
++							if (!ModNet.AllowVanillaClients)
+-							ItemIO.ReceiveModData(item2, reader);
++								ItemIO.ReceiveModData(item2, reader);
+ 							if (b == 90) {
+ 								item2.instanced = true;
+ 								item2.playerIndexTheItemIsReservedFor = Main.myPlayer;
+@@ -1243,7 +_,8 @@
+ 							obj5.position = position3;
+ 							obj5.velocity = velocity5;
+ 							obj5.active = true;
++							if (!ModNet.AllowVanillaClients)
+-							ItemIO.ReceiveModData(obj5, reader);
++								ItemIO.ReceiveModData(obj5, reader);
+ 							obj5.playerIndexTheItemIsReservedFor = Main.myPlayer;
+ 							if (flag8) {
+ 								NetMessage.TrySendData(21, -1, -1, null, num177);
+@@ -1684,8 +_,9 @@
+ 							num19 = 0;
+ 
+ 
++						// TODO: Investigate if this needs to be canned for vanilla compatibility. It shouldn't... but maybe?
+ 						ushort modType = 0;
+-						if (b3 >= 100)
++						if (!ModNet.AllowVanillaClients && b3 >= 100)
+ 							modType = reader.ReadUInt16();
+ 
+ 						if (Main.netMode == 2) {
+@@ -1879,7 +_,7 @@
+ 					if (Main.netMode == 2) {
+ 						if (reader.ReadString() == Netplay.ServerPassword) {
+ 							Netplay.Clients[whoAmI].State = 1;
+-							if (ModNet.isModdedClient[whoAmI]) {
++							if (!ModNet.AllowVanillaClients && ModNet.isModdedClient[whoAmI]) {
+ 								ModNet.SyncMods(whoAmI);
+ 								return;
+ 							}

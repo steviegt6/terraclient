@@ -1,0 +1,35 @@
+--- src/tModLoader/Terraria/Netplay.cs
++++ src/Terraclient/Terraria/Netplay.cs
+@@ -81,6 +_,7 @@
+ 
+ 		private static void ResetNetDiag() {
+ 			Main.ActiveNetDiagnosticsUI.Reset();
++			// TODO: Modded-only?
+ 			ModNet.ResetNetDiag();
+ 		}
+ 
+@@ -124,12 +_,15 @@
+ 		private static readonly ConcurrentQueue<Task> mainThreadTasks = new ConcurrentQueue<Task>();
+ 
+ 		internal static void OnUpdate() {
++			// TODO: Vanilla client check?
+ 			while (mainThreadTasks.TryDequeue(out Task t))
+ 				t.RunSynchronously();
+ 		}
+ 
+ 		//tML: Made internal.
+ 		internal static void InvokeOnMainThread(Action action) {
++			if (ModNet.AllowVanillaClients)
++				return; // NEVER EVEN CALLED BRUH
+ 			var t = new Task(action);
+ 			mainThreadTasks.Enqueue(t);
+ 			t.Wait();
+@@ -467,7 +_,7 @@
+ 
+ 			Disconnect = false;
+ 			Connection = new RemoteServer();
+-			Connection.ReadBuffer = new byte[ushort.MaxValue];
++			Connection.ReadBuffer = new byte[ModNet.AllowVanillaClients ? 1024 : ushort.MaxValue];
+ 		}
+ 
+ 

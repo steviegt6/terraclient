@@ -1,0 +1,11 @@
+--- src/tModLoader/Terraria/ModLoader/UI/UIMemoryBar.cs
++++ src/Terraclient/Terraria/ModLoader/UI/UIMemoryBar.cs
+@@ -121,7 +_,7 @@
+ 			foreach (var entry in MemoryTracking.modMemoryUsageEstimates.OrderBy(v => -v.Value.total)) {
+ 				var modName = entry.Key;
+ 				var usage = entry.Value;
+-				if (usage.total <= 0 || modName == "tModLoader")
++				if (usage.total <= 0 || modName is "tModLoader" or "Terraclient")
+ 					continue;
+ 
+ 				totalModMemory += usage.total;

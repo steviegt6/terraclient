@@ -3,6 +3,8 @@
 		"DefaultMod": "Default",
 		"TerraclientSettings": "Terraclient Settings",
 		"AllowVanillaClients": "Vanilla Server Connection: Enabled",
-		"DisallowVanillaClients": "Vanilla Server Connection: Disabled"
+		"DisallowVanillaClients": "Vanilla Server Connection: Disabled",
+		"PoseAsVanilla": "Pose as a vanilla client to servers. Disable when connecting to modded.",
+		"DoNotPoseAsVanilla": "Don't pose as a vanilla client. Enable when connecting to vanilla." 
 	} 
 }

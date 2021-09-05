@@ -8,6 +8,17 @@
  using Terraria.UI;
  
  namespace Terraria.ModLoader
+@@ -52,6 +_,10 @@
+ 			}
+ 		}
+ 
++		/// <summary>
++		///		In tModLoader, this is essentially non-functional. There are some implementations, but it goes unused. <br />
++		///		In Terraclient, we use it and expand upon it for vanilla server compatibility. In Terraclient, this disables all modded networking.
++		/// </summary>
+ 		public static bool AllowVanillaClients { get; internal set; }
+ 		internal static bool downloadModsFromServers = true;
+ 		internal static bool onlyDownloadSignedMods = false;
 @@ -81,8 +_,8 @@
  
  		internal static void Unload() {
