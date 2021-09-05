@@ -1,23 +1,5 @@
 --- src/tModLoader/Terraria/MessageBuffer.cs
 +++ src/Terraclient/Terraria/MessageBuffer.cs
-@@ -86,8 +_,16 @@
- 			int num = 0;
- 			num = start + 1;
- 			b = (byte)(messageType = readBuffer[start]);
-+			if (!ModNet.AllowVanillaClients) {
--			if (b < LegacyNetDiagnosticsUI.maxMsg)
-+				if (b < LegacyNetDiagnosticsUI.maxMsg)
-+					Main.ActiveNetDiagnosticsUI.CountReadMessage(b, length);
-+			}
-+			else {
-+				if (b >= 14)
-+					return;
-+
- 				Main.ActiveNetDiagnosticsUI.CountReadMessage(b, length);
-+			}
- 			if (Main.netMode == 1 && Netplay.Connection.StatusMax > 0)
- 				Netplay.Connection.StatusCount++;
- 
 @@ -140,11 +_,12 @@
  							break;
  
