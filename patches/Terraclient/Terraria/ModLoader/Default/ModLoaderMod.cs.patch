@@ -13,6 +13,24 @@
  		}
  
  		public override IContentSource CreateDefaultContentSource() => new AssemblyResourcesContentSource(Assembly.GetExecutingAssembly(), "Terraria.ModLoader.Default.");
+@@ -32,6 +_,17 @@
+ 		public override void Load() {			
+ 			PatronSets = GetContent<PatreonItem>().GroupBy(t => t.InternalSetName).Select(set => set.ToArray()).ToArray();
+ 			DeveloperSets = GetContent<DeveloperItem>().GroupBy(t => t.InternalSetName).Select(set => set.ToArray()).ToArray();
++
++			if (ModNet.AllowVanillaClients) {
++				// Manually added safe unloaded handlers.
++				AddContent(new DefaultBossBarStyle());
++				AddContent(new HelpCommand());
++				AddContent(new LegacyUnloadedTilesSystem());
++				AddContent(new ModlistCommand());
++				AddContent(new UnloadedGlobalItem());
++				AddContent(new UnloadedPlayer());
++				AddContent(new UnloadedSystem());
++			}
+ 		}
+ 
+ 		public override void Unload() {
 @@ -40,6 +_,9 @@
  		}
  
