@@ -5,6 +5,12 @@
 		"AllowVanillaClients": "Vanilla Server Connection: Enabled",
 		"DisallowVanillaClients": "Vanilla Server Connection: Disabled",
 		"PoseAsVanilla": "Pose as a vanilla client to servers. Disable when connecting to modded.",
-		"DoNotPoseAsVanilla": "Don't pose as a vanilla client. Enable when connecting to vanilla." 
+		"DoNotPoseAsVanilla": "Don't pose as a vanilla client. Enable when connecting to vanilla.",
+		"BestiaryImmuneTo": "Immune to:",
+		"BestiarySpawnButton": "Spawn NPC",
+		"UICheatEnabled": "Enabled!",
+		"UICheatDisabled": "Disabled.",
+		"CheatSettings": "Manage Cheats",
+		"UICheats": "Cheat Management" 
 	} 
 }

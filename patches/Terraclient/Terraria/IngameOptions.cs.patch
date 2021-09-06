@@ -1,0 +1,39 @@
+--- src/tModLoader/Terraria/IngameOptions.cs
++++ src/Terraclient/Terraria/IngameOptions.cs
+@@ -33,6 +_,7 @@
+ 			0.7f,
+ 			0.7f,
+ 			0.7f,
++			0.7f,
+ 			0.7f
+ 		};
+ 		public static float[] rightScale = new float[16] {
+@@ -179,9 +_,9 @@
+ 			noSound = false;
+ 			bool flag5 = SocialAPI.Network != null && SocialAPI.Network.CanInvite();
+ 			int num7 = flag5 ? 1 : 0;
+-			int num8 = 5 + num7 + 2 + 1; // Add 1 for ModConfig menu
++			int num8 = 5 + num7 + 2 + 1 + 1; // Add 1 for ModConfig menu, and another for Cheats menu
+ 			Vector2 vector = new Vector2(value3.X + value2.X / 4f, value3.Y + (float)(num3 * 5 / 2));
+-			Vector2 vector2 = new Vector2(0f, value2.Y - (float)(num3 * 5)) / (num8 + 1);
++			Vector2 vector2 = new Vector2(0f, value2.Y - (float)(num3 * 5.1f)) / (num8 + 1);
+ 			if (flag)
+ 				vector.X -= 55f;
+ 
+@@ -247,6 +_,16 @@
+ 				if (flag4) {
+ 					Close();
+ 					IngameFancyUI.OpenKeybinds();
++				}
++			}
++
++			num10++;
++			if (DrawLeftSide(sb, Language.GetTextValue("Terraclient.UICheats"), num10, vector, vector2, leftScale)) {
++				leftHover = num10;
++
++				if (flag4) {
++					Close();
++					IngameFancyUI.OpenCheats();
+ 				}
+ 			}
+ 

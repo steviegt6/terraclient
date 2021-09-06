@@ -1,0 +1,20 @@
+--- src/tModLoader/Terraria/Achievements/Achievement.cs
++++ src/Terraclient/Terraria/Achievements/Achievement.cs
+@@ -7,7 +_,7 @@
+ namespace Terraria.Achievements
+ {
+ 	[JsonObject(MemberSerialization.OptIn)]
+-	public class Achievement
++	public partial class Achievement
+ 	{
+ 		public delegate void AchievementCompleted(Achievement achievement);
+ 
+@@ -19,7 +_,7 @@
+ 		private AchievementCategory _category;
+ 		private IAchievementTracker _tracker;
+ 		[JsonProperty("Conditions")]
+-		private Dictionary<string, AchievementCondition> _conditions = new Dictionary<string, AchievementCondition>();
++		internal Dictionary<string, AchievementCondition> _conditions = new Dictionary<string, AchievementCondition>();
+ 		private int _completedCount;
+ 
+ 		public AchievementCategory Category => _category;

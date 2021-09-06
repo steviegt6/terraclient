@@ -1,0 +1,30 @@
+--- src/tModLoader/Terraria/ModLoader/Mod.Internals.cs
++++ src/Terraclient/Terraria/ModLoader/Mod.Internals.cs
+@@ -6,11 +_,13 @@
+ using System.Collections.Generic;
+ using System.IO;
+ using System.Linq;
++using System.Reflection;
+ using System.Threading.Tasks;
+ using Terraria.Audio;
+ using Terraria.Localization;
+ using Terraria.ModLoader.Exceptions;
+ using Terraria.ModLoader.UI;
++using Terraria.Terraclient.Loading;
+ 
+ namespace Terraria.ModLoader
+ {
+@@ -59,6 +_,13 @@
+ 
+ 			Type modType = GetType();
+ 			foreach (Type type in Code.GetTypes().OrderBy(type => type.FullName, StringComparer.InvariantCulture)) {
++				if (Code == typeof(Mod).Assembly) {
++					if (type.GetCustomAttribute<TerraclientAssociatedAttribute>() is not null && Name != "Terraclient")
++						continue;
++
++					if (type.GetCustomAttribute<TerraclientAssociatedAttribute>() is null && Name == "Terraclient") 
++						continue;
++				}
+ 				if (type == modType) continue;
+ 				if (type.IsAbstract) continue;
+ 				if (type.ContainsGenericParameters) continue;
