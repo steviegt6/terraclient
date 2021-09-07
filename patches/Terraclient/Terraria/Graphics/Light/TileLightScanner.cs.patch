@@ -18,7 +18,7 @@
 +
 +			if (ModContent.GetCheatWithFallback<FullBrightCheat>().IsEnabled) {
 +				float lightLevel = ModContent.GetCheatWithFallback<FullBrightDimOptionCheat>().IsEnabled ? 0.5f : 1f;
-+				bool shouldAddLight = ModContent.GetCheatWithFallback<FullBrightLightQualityOptionCheat>().IsEnabled || (x % 2 == 0 && y % 2 == 0);
++				bool shouldAddLight = !ModContent.GetCheatWithFallback<FullBrightLightQualityOptionCheat>().IsEnabled || (x % 2 == 0 && y % 2 == 0);
 +
 +				if (shouldAddLight)
 +					num = num2 = num3 = lightLevel;

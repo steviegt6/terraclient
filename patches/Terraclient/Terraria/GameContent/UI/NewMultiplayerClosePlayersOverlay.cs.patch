@@ -27,7 +27,7 @@
 -				if (player.statLife != player.statLifeMax2)
 +				if (player.statLife != player.statLifeMax2 || ModContent.GetCheatWithFallback<PlayerESPCheat>().IsEnabled)
  					Main.instance.DrawHealthBar(vector.X, vector.Y, player.statLife, player.statLifeMax2, 1f, 1.25f, noFlip: true);
-+				if (!ModContent.GetCheatWithFallback<PlayerESPCheat>().IsEnabled)
++				if (!ModContent.GetCheatWithFallback<PlayerESPExtraInfoOptionCheat>().IsEnabled)
 +					return;
 +
 +				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, $"{player.statLife}/{player.statLifeMax2} hp", namePlatePos + new Vector2(0f, 24f * 1f - 6f), Colors.RarityRed, 0f, Vector2.Zero, Vector2.One);
