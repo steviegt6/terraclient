@@ -1,0 +1,20 @@
+--- src/tModLoader/Terraria/GameContent/UI/States/UIWorldSelect.cs
++++ src/Terraclient/Terraria/GameContent/UI/States/UIWorldSelect.cs
+@@ -11,6 +_,8 @@
+ using Terraria.ID;
+ using Terraria.IO;
+ using Terraria.Localization;
++using Terraria.ModLoader;
++using Terraria.Terraclient.Implementation.Defaults;
+ using Terraria.UI;
+ using Terraria.UI.Gamepad;
+ 
+@@ -184,7 +_,7 @@
+ 		private bool CanWorldBePlayed(WorldFileData file) {
+ 			bool num = Main.ActivePlayerFileData.Player.difficulty == 3;
+ 			bool flag = file.GameMode == 3;
+-			return num == flag;
++			return num == flag || ModContent.GetCheatWithFallback<GameModeUnlockedWorldCheat>().IsEnabled;
+ 		}
+ 
+ 		public override void Draw(SpriteBatch spriteBatch) {

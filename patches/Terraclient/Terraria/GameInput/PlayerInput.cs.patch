@@ -1,0 +1,49 @@
+--- src/tModLoader/Terraria/GameInput/PlayerInput.cs
++++ src/Terraclient/Terraria/GameInput/PlayerInput.cs
+@@ -79,7 +_,9 @@
+ 			"LockOn",
+ 			"ViewZoomIn",
+ 			"ViewZoomOut",
+-			"ToggleCreativeMenu"
++			"ToggleCreativeMenu",
++			UIManageControls.CycleUpKeybind,
++			UIManageControls.CycleDownKeybind
+ 		};
+ 		private static bool _canReleaseRebindingLock = true;
+ 		private static int _memoOfLastPoint = -1;
+@@ -1483,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus[UIManageControls.CycleUpKeybind].Add("PageUp");
++							c.KeyStatus[UIManageControls.CycleDownKeybind].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1597,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus[UIManageControls.CycleUpKeybind].Add("PageUp");
++							c.KeyStatus[UIManageControls.CycleDownKeybind].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1710,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus[UIManageControls.CycleUpKeybind].Add("PageUp");
++							c.KeyStatus[UIManageControls.CycleDownKeybind].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");
+@@ -1823,6 +_,8 @@
+ 							c.KeyStatus["ViewZoomOut"].Add("OemMinus");
+ 							c.KeyStatus["ViewZoomIn"].Add("OemPlus");
+ 							c.KeyStatus["ToggleCreativeMenu"].Add("C");
++							c.KeyStatus[UIManageControls.CycleUpKeybind].Add("PageUp");
++							c.KeyStatus[UIManageControls.CycleDownKeybind].Add("PageDown");
+ 							break;
+ 						case InputMode.KeyboardUI:
+ 							c.KeyStatus["MouseLeft"].Add("Mouse1");

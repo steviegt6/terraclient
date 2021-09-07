@@ -1,0 +1,25 @@
+--- src/tModLoader/Terraria/GameContent/Creative/CreativeItemSacrificesCatalog.cs
++++ src/Terraclient/Terraria/GameContent/Creative/CreativeItemSacrificesCatalog.cs
+@@ -2,6 +_,8 @@
+ using System.Collections.Generic;
+ using System.Text.RegularExpressions;
+ using Terraria.ID;
++using Terraria.ModLoader;
++using Terraria.Terraclient.Implementation.Defaults;
+ 
+ namespace Terraria.GameContent.Creative
+ {
+@@ -84,6 +_,13 @@
+ 		public bool TryGetSacrificeCountCapToUnlockInfiniteItems(int itemId, out int amountNeeded) => _sacrificeCountNeededByItemId.TryGetValue(itemId, out amountNeeded);
+ 
+ 		public void FillListOfItemsThatCanBeObtainedInfinitely(List<int> itemIdsThatCanBeCraftedInfinitely) {
++			if (ModContent.GetCheatWithFallback<JourneySacrificesCheat>().IsEnabled) {
++				for (int i = ItemID.IronPickaxe; i < ItemLoader.ItemCount; i++)
++					itemIdsThatCanBeCraftedInfinitely.Add(i);
++
++				return;
++			}
++
+ 			foreach (KeyValuePair<int, int> item in Main.LocalPlayerCreativeTracker.ItemSacrifices.SacrificesCountByItemIdCache) {
+ 				if (_sacrificeCountNeededByItemId.TryGetValue(item.Key, out int value) && item.Value >= value)
+ 					itemIdsThatCanBeCraftedInfinitely.Add(item.Key);

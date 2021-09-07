@@ -1,0 +1,36 @@
+--- src/tModLoader/Terraria/ModLoader/ModContent.cs
++++ src/Terraclient/Terraria/ModLoader/ModContent.cs
+@@ -23,6 +_,8 @@
+ using Terraria.UI;
+ using Terraria.ModLoader.Utilities;
+ using Terraria.Initializers;
++using Terraria.Terraclient.Cheats;
++using Terraria.Terraclient.Implementation.Defaults;
+ 
+ namespace Terraria.ModLoader
+ {
+@@ -32,6 +_,24 @@
+ 	/// </summary>
+ 	public static class ModContent
+ 	{
++		/// <summary>
++		///		Retrieves a generic <see cref="ModCheat"/> in a similar manner, but will return a <see cref="AlwaysDisabledCheat"/> if the <see cref="ModCheat"/> has not yet been registered. <br />
++		///		Generally, you should never have to use this (instead, use <see cref="GetInstance{T}"/>), but it's here if it's required. <br />
++		///		Terraclient only uses it for hard-coded cheats that are at risk of not yet being loaded.
++		/// </summary>
++		/// <typeparam name="T"></typeparam>
++		/// <returns></returns>
++		public static ModCheat GetCheatWithFallback<T>() where T : ModCheat {
++			if (ContentInstance<T>.Instance is not null) 
++				return ContentInstance<T>.Instance;
++
++			if (ContentInstance<AlwaysDisabledCheat>.Instance is null)
++				ContentInstance.Register(new AlwaysDisabledCheat());
++
++			return ContentInstance<AlwaysDisabledCheat>.Instance;
++		}
++
++
+ 		/// <summary> Returns the base instance of the provided content type. </summary>
+ 		public static T GetInstance<T>() where T : class
+ 			=> ContentInstance<T>.Instance;

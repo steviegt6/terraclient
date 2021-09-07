@@ -1,5 +1,13 @@
 --- src/tModLoader/Terraria/MessageBuffer.cs
 +++ src/Terraclient/Terraria/MessageBuffer.cs
+@@ -22,6 +_,7 @@
+ using Terraria.ModLoader;
+ using Terraria.ModLoader.Exceptions;
+ using Terraria.ModLoader.IO;
++using Terraria.Terraclient.Implementation.Defaults;
+ 
+ namespace Terraria
+ {
 @@ -140,11 +_,12 @@
  							break;
  
@@ -35,6 +43,19 @@
  						NetMessage.TrySendData(6);
  						if (Netplay.Connection.State == 2)
  							Netplay.Connection.State = 3;
+@@ -308,10 +_,10 @@
+ 						else if (player4.name == "") {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.EmptyName"));
+ 						}
+-						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode) {
++						else if (player4.difficulty == 3 && !Main.GameModeInfo.IsJourneyMode && !ModContent.GetCheatWithFallback<GameModeUnlockedWorldCheat>().IsEnabled) {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsCreativeAndWorldIsNotCreative"));
+ 						}
+-						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode) {
++						else if (player4.difficulty != 3 && Main.GameModeInfo.IsJourneyMode && !ModContent.GetCheatWithFallback<GameModeUnlockedWorldCheat>().IsEnabled) {
+ 							NetMessage.TrySendData(2, whoAmI, -1, NetworkText.FromKey("Net.PlayerIsNotCreativeAndWorldIsCreative"));
+ 						}
+ 						else {
 @@ -737,8 +_,9 @@
  							NetMessage.TrySendData(83, whoAmI, -1, null, num176);
  						}

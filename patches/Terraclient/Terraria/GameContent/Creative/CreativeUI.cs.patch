@@ -1,0 +1,21 @@
+--- src/tModLoader/Terraria/GameContent/Creative/CreativeUI.cs
++++ src/Terraclient/Terraria/GameContent/Creative/CreativeUI.cs
+@@ -8,7 +_,9 @@
+ using Terraria.GameContent.UI.Elements;
+ using Terraria.GameContent.UI.States;
+ using Terraria.Localization;
++using Terraria.ModLoader;
+ using Terraria.Net;
++using Terraria.Terraclient.Implementation.Defaults;
+ using Terraria.UI;
+ using Terraria.UI.Gamepad;
+ 
+@@ -73,7 +_,7 @@
+ 			if (!_initialized)
+ 				Initialize();
+ 
+-			if (Main.LocalPlayer.difficulty != 3) {
++			if (Main.LocalPlayer.difficulty != 3 && !ModContent.GetCheatWithFallback<JourneyModeCheat>().IsEnabled) {
+ 				Enabled = false;
+ 			}
+ 			else if (!Blocked) {

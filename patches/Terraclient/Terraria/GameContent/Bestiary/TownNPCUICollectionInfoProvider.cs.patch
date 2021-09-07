@@ -1,0 +1,17 @@
+--- src/tModLoader/Terraria/GameContent/Bestiary/TownNPCUICollectionInfoProvider.cs
++++ src/Terraclient/Terraria/GameContent/Bestiary/TownNPCUICollectionInfoProvider.cs
+@@ -1,3 +_,5 @@
++using Terraria.ModLoader;
++using Terraria.Terraclient.Implementation.Defaults;
+ using Terraria.UI;
+ 
+ namespace Terraria.GameContent.Bestiary
+@@ -13,6 +_,8 @@
+ 		public BestiaryUICollectionInfo GetEntryUICollectionInfo() {
+ 			BestiaryUICollectionInfo result = default(BestiaryUICollectionInfo);
+ 			result.UnlockState = (Main.BestiaryTracker.Chats.GetWasChatWith(_persistentIdentifierToCheck) ? BestiaryEntryUnlockState.CanShowDropsWithDropRates_4 : BestiaryEntryUnlockState.NotKnownAtAll_0);
++			if (ModContent.GetCheatWithFallback<BestiaryForceUnlockCheat>().IsEnabled)
++				result.UnlockState = BestiaryEntryUnlockState.CanShowDropsWithDropRates_4;
+ 			return result;
+ 		}
+ 

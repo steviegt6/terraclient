@@ -1,0 +1,31 @@
+--- src/tModLoader/Terraria/GameContent/UI/Elements/UIWorldListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UIWorldListItem.cs
+@@ -8,9 +_,11 @@
+ using Terraria.GameContent.UI.States;
+ using Terraria.IO;
+ using Terraria.Localization;
++using Terraria.ModLoader;
+ using Terraria.Utilities;
+ using Terraria.ModLoader.Config;
+ using Terraria.Social;
++using Terraria.Terraclient.Implementation.Defaults;
+ using Terraria.UI;
+ 
+ namespace Terraria.GameContent.UI.Elements
+@@ -320,14 +_,14 @@
+ 
+ 			bool flag = Main.ActivePlayerFileData.Player.difficulty == 3;
+ 			bool isJourneyMode = value.IsJourneyMode;
+-			if (flag && !isJourneyMode) {
++			if (flag && !isJourneyMode && !ModContent.GetCheatWithFallback<GameModeUnlockedWorldCheat>().IsEnabled) {
+ 				SoundEngine.PlaySound(10);
+ 				Main.statusText = Language.GetTextValue("UI.PlayerIsCreativeAndWorldIsNotCreative");
+ 				Main.menuMode = 1000000;
+ 				return true;
+ 			}
+ 
+-			if (!flag && isJourneyMode) {
++			if (!flag && isJourneyMode && !ModContent.GetCheatWithFallback<GameModeUnlockedWorldCheat>().IsEnabled) {
+ 				SoundEngine.PlaySound(10);
+ 				Main.statusText = Language.GetTextValue("UI.PlayerIsNotCreativeAndWorldIsCreative");
+ 				Main.menuMode = 1000000;

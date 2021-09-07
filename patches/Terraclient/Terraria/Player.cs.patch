@@ -1,5 +1,22 @@
 --- src/tModLoader/Terraria/Player.cs
 +++ src/Terraclient/Terraria/Player.cs
+@@ -39,6 +_,7 @@
+ using Terraria.ModLoader.IO;
+ using Terraria.ModLoader.UI;
+ using System.Linq;
++using Terraria.Terraclient.Implementation.Defaults;
+ 
+ namespace Terraria
+ {
+@@ -2383,7 +_,7 @@
+ 		}
+ 
+ 		public void ToggleCreativeMenu() {
+-			if (dead || difficulty != 3)
++			if (dead || (difficulty != 3 && !ModContent.GetCheatWithFallback<JourneyModeCheat>().IsEnabled))
+ 				return;
+ 
+ 			bool flag = false;
 @@ -6696,7 +_,7 @@
  					fireWalk = true;
  					buffImmune[24] = true;
@@ -28,6 +45,23 @@
  					DelBuff(num33);
  			}
  
+@@ -21432,6 +_,8 @@
+ 		}
+ 
+ 		private void HandleBeingInChestRange() {
++			if (ModContent.GetCheatWithFallback<InfiniteChestReachCheat>().IsEnabled)
++				return;
+ 			if (chest != -1) {
+ 				if (chest != -2)
+ 					flyingPigChest = -1;
+@@ -27118,6 +_,7 @@
+ 				immuneAlpha = 255;
+ 
+ 			UpdateGraveyard(now: true);
++			// in legacy versions of terraclient, this was a thing you could do with the journey mode cheat (but it's useless so no)
+ 			if (whoAmI == Main.myPlayer && context == PlayerSpawnContext.ReviveFromDeath && difficulty == 3)
+ 				AutoFinchStaff();
+ 		}
 @@ -39208,7 +_,10 @@
  
  		private static void LoadPlayer_LastMinuteFixes(Player newPlayer, PlayerFileData playerFileData) {

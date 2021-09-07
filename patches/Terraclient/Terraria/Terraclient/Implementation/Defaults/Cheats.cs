@@ -4,6 +4,14 @@ using Terraria.Terraclient.Loading;
 
 namespace Terraria.Terraclient.Implementation.Defaults
 {
+	[Autoload(false)]
+	internal class AlwaysDisabledCheat : ModCheat
+	{
+		public override bool IsEnabled => false;
+
+		public override ModCheatCategory Category => ModContent.GetInstance<GeneralCategory>();
+	}
+
 	[TerraclientAssociated]
 	public abstract class BaseGeneralCheat : ModCheat
 	{

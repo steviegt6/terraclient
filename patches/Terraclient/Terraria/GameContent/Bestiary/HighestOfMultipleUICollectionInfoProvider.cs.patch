@@ -1,0 +1,17 @@
+--- src/tModLoader/Terraria/GameContent/Bestiary/HighestOfMultipleUICollectionInfoProvider.cs
++++ src/Terraclient/Terraria/GameContent/Bestiary/HighestOfMultipleUICollectionInfoProvider.cs
+@@ -1,3 +_,5 @@
++using Terraria.ModLoader;
++using Terraria.Terraclient.Implementation.Defaults;
+ using Terraria.UI;
+ 
+ namespace Terraria.GameContent.Bestiary
+@@ -22,6 +_,8 @@
+ 			}
+ 
+ 			entryUICollectionInfo.UnlockState = unlockState;
++			if (ModContent.GetCheatWithFallback<BestiaryForceUnlockCheat>().IsEnabled)
++				entryUICollectionInfo.UnlockState = BestiaryEntryUnlockState.CanShowDropsWithDropRates_4;
+ 			return entryUICollectionInfo;
+ 		}
+ 

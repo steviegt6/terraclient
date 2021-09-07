@@ -1,0 +1,25 @@
+--- src/tModLoader/Terraria/GameInput/PlayerInputProfile.cs
++++ src/Terraclient/Terraria/GameInput/PlayerInputProfile.cs
+@@ -4,6 +_,7 @@
+ using System;
+ using System.Collections.Generic;
+ using System.Linq;
++using Terraria.GameContent.UI.States;
+ using Terraria.ModLoader;
+ 
+ namespace Terraria.GameInput
+@@ -79,6 +_,14 @@
+ 				string item = "Mouse1";
+ 				if (!list.Contains(item))
+ 					list.Add(item);
++			}
++
++			if (!InputModes[InputMode.Keyboard].KeyStatus.ContainsKey("CycleBankUp")) {
++				InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleUpKeybind] = new List<string>();
++				InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleDownKeybind] = new List<string>();
++
++				InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleUpKeybind].AddRange(PlayerInput.OriginalProfiles["Redigit's Pick"].InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleUpKeybind]);
++				InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleDownKeybind].AddRange(PlayerInput.OriginalProfiles["Redigit's Pick"].InputModes[InputMode.Keyboard].KeyStatus[UIManageControls.CycleDownKeybind]);
+ 			}
+ 
+ 			if (dict.TryGetValue("Settings", out value)) {

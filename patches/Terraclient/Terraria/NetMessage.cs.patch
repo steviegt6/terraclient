@@ -43,6 +43,15 @@
  							break;
  						}
  					case 22:
+@@ -693,7 +_,7 @@
+ 					case 28:
+ 						writer.Write((short)number);
+ 						if (ModNet.AllowVanillaClients)
+-							writer.Write((short)number2);
++							writer.Write((short)(number2 > short.MaxValue ? short.MaxValue : number2));
+ 						else
+ 							writer.Write((int)number2);
+ 						writer.Write(number3);
 @@ -722,6 +_,7 @@
  								value2 = 0;
  							*/

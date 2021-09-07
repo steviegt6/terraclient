@@ -1,0 +1,26 @@
+--- src/tModLoader/Terraria/GameContent/UI/Elements/UICharacterListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UICharacterListItem.cs
+@@ -15,7 +_,7 @@
+ 
+ namespace Terraria.GameContent.UI.Elements
+ {
+-	public class UICharacterListItem : UIPanel
++	public partial class UICharacterListItem : UIPanel
+ 	{
+ 		private PlayerFileData _data;
+ 		private Asset<Texture2D> _dividerTexture;
+@@ -95,6 +_,14 @@
+ 			uIImageButton4.Left.Set(num, 0f);
+ 			uIImageButton4.OnClick += RenameButtonClick;
+ 			uIImageButton4.OnMouseOver += RenameMouseOver;
++			uIImageButton4.OnMouseOut += ButtonMouseOut;
++			Append(uIImageButton4);
++			num += 24f;
++			uIImageButton4 = new UIImageButton(_buttonRenameTexture);
++			uIImageButton4.VAlign = 1f;
++			uIImageButton4.Left.Set(num, 0f);
++			uIImageButton4.OnClick += CycleDifficulty;
++			uIImageButton4.OnMouseOver += CycleMouseOver;
+ 			uIImageButton4.OnMouseOut += ButtonMouseOut;
+ 			Append(uIImageButton4);
+ 			num += 24f;

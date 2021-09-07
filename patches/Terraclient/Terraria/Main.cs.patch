@@ -1,11 +1,12 @@
 --- src/tModLoader/Terraria/Main.cs
 +++ src/Terraclient/Terraria/Main.cs
-@@ -81,6 +_,8 @@
+@@ -81,6 +_,9 @@
  using Terraria.ObjectData;
  using Terraria.Social;
  using Terraria.Social.Steam;
 +using Terraria.Terraclient;
 +using Terraria.Terraclient.GameContent.UI.States;
++using Terraria.Terraclient.Implementation.Defaults;
  using Terraria.UI;
  using Terraria.UI.Chat;
  using Terraria.UI.Gamepad;
@@ -67,13 +68,10 @@
  					array4[num5 - 1] = 8;
  					for (int num19 = 0; num19 < num5; num19++) {
  						array7[num19] = 0.75f;
-@@ -37934,6 +_,21 @@
- 					if (selectedMenu == num20) {
- 						SoundEngine.PlaySound(SoundID.MenuOpen);
- 						menuMode = Interface.tModLoaderSettingsID;
-+					}
-+
-+					num20++;
+@@ -37937,6 +_,21 @@
+ 					}
+ 
+ 					num20++;
 +					array9[num20] = Language.GetTextValue("Terraclient.TerraclientSettings");
 +					if (selectedMenu == num20) {
 +						SoundEngine.PlaySound(SoundID.MenuOpen);
@@ -86,6 +84,37 @@
 +						SoundEngine.PlaySound(SoundID.MenuOpen);
 +						MenuUI.SetState(new UIManageCheats());
 +						menuMode = 888;
- 					}
++					}
++
++					num20++;
+ 					array9[num20] = Lang.menu[5].Value;
+ 					if (selectedMenu == num20 || flag5) {
+ 						flag5 = false;
+@@ -39939,12 +_,14 @@
+ 		private void PreDrawMenu(out Microsoft.Xna.Framework.Point screenSizeCache, out Microsoft.Xna.Framework.Point screenSizeCacheAfterScaling) {
+ 			float uiScaleWanted = _uiScaleWanted;
+ 			float num = (float)screenHeight / 900f;
++			float preScale = num;
+ 			if (num < 1f)
+ 				num = 1f;
  
- 					num20++;
+-			if (SettingDontScaleMainMenuUp)
++			if (SettingDontScaleMainMenuUp || ModContent.GetCheatWithFallback<NoMainMenuUIScalingCheat>().IsEnabled)
+ 				num = 1f;
+-
++			if (MenuUI.CurrentState is UIManageCheats cheats && cheats.UIScaleOnCtor != num)
++				MenuUI.SetState(new UIManageCheats());
+ 			screenSizeCache = ScreenSize;
+ 			UIScale = num;
+ 			PlayerInput.SetZoom_UI();
+@@ -43587,6 +_,10 @@
+ 
+ 				spriteBatch.Draw(TextureAssets.MapIcon[num138].Value, new Vector2(num136, num137), new Microsoft.Xna.Framework.Rectangle(0, 0, TextureAssets.MapIcon[num138].Width(), TextureAssets.MapIcon[num138].Height()), new Microsoft.Xna.Framework.Color(num139, num139, num139, num139), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+ 				SystemLoader.PostDrawFullscreenMap(ref text);
++
++				if (ModContent.GetCheatWithFallback<MapTeleportCheat>().IsEnabled && Main.mouseRight && Main.mouseRightRelease)
++					player[myPlayer].Teleport(new Vector2(Math.Min(Math.Max((Main.mapFullscreenPos.X + (float)(Main.mouseX - Main.screenWidth / 2) / Main.mapFullscreenScale) * 16f, 0f), (float)Main.maxTilesX * 16f - 64f), Math.Min(Math.Max((Main.mapFullscreenPos.Y + (float)(Main.mouseY - Main.screenHeight / 2) / Main.mapFullscreenScale) * 16f, 0f), (float)Main.maxTilesY * 16f - 64f)), TeleportationStyleID.DebugTeleport);
++
+ 				DrawCursor(DrawThickCursor());
+ 			}
+ 

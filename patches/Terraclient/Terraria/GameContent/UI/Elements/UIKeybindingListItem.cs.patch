@@ -1,0 +1,21 @@
+--- src/tModLoader/Terraria/GameContent/UI/Elements/UIKeybindingListItem.cs
++++ src/Terraclient/Terraria/GameContent/UI/Elements/UIKeybindingListItem.cs
+@@ -2,6 +_,7 @@
+ using Microsoft.Xna.Framework.Graphics;
+ using System.Collections.Generic;
+ using Terraria.GameContent.UI.Chat;
++using Terraria.GameContent.UI.States;
+ using Terraria.GameInput;
+ using Terraria.Localization;
+ using Terraria.UI;
+@@ -202,6 +_,10 @@
+ 					return Language.GetTextValue("UI.ZoomOut");
+ 				case "ToggleCreativeMenu":
+ 					return Language.GetTextValue("UI.ToggleCreativeMenu");
++				case UIManageControls.CycleUpKeybind:
++					return Language.GetTextValue("Terraclient.UICycleBankUp");
++				case UIManageControls.CycleDownKeybind:
++					return Language.GetTextValue("Terraclient.UICycleBankDown");
+ 			}
+ 		}
+ 	}

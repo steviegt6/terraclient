@@ -1,0 +1,40 @@
+--- src/tModLoader/Terraria/GameContent/UI/States/UIManageControls.cs
++++ src/Terraclient/Terraria/GameContent/UI/States/UIManageControls.cs
+@@ -23,8 +_,13 @@
+ 		private const string ResetModKeybinds = "ResetModKeybinds";
+ 		private const string ClearModKeybinds = "ClearModKeybinds";
+ 
++		// Added by Terraclient.
++		public const string CycleUpKeybind = "CycleBankUp";
++		public const string CycleDownKeybind = "CycleBankDown";
++
+ 		public static int ForceMoveTo = -1;
+ 		private const float PanelTextureHeight = 30f;
++		// patch context 1
+ 		private static List<string> _BindingsFullLine = new List<string> {
+ 			"Throw",
+ 			"Inventory",
+@@ -32,6 +_,8 @@
+ 			"RadialQuickbar",
+ 			"LockOn",
+ 			"ToggleCreativeMenu",
++			CycleUpKeybind,
++			CycleDownKeybind,
+ 			"sp3",
+ 			"sp4",
+ 			"sp5",
+@@ -237,11 +_,13 @@
+ 				"Throw",
+ 				"Inventory",
+ 				"ToggleCreativeMenu",
++				CycleUpKeybind,
++				CycleDownKeybind,
+ 				"ViewZoomIn",
+ 				"ViewZoomOut",
+ 				"sp9"
+ 			};
+-
++			// patch context 2
+ 			List<string> bindings2 = new List<string> {
+ 				"MouseLeft",
+ 				"MouseRight",

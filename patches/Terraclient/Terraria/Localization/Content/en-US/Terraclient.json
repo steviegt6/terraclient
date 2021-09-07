@@ -11,6 +11,10 @@
 		"UICheatEnabled": "Enabled!",
 		"UICheatDisabled": "Disabled.",
 		"CheatSettings": "Manage Cheats",
-		"UICheats": "Cheat Management" 
+		"UICheats": "Cheat Management",
+		"ClickToUnlock": "Click to unlock!",
+		"UICyclePlayerDifficulty": "Cycle player difficulty",
+		"UICycleBankUp": "Cycle Bank (up)",
+		"UICycleBankDown": "Cycle Bank (down)"
 	} 
 }
