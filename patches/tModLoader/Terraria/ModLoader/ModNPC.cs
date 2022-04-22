@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -34,24 +36,21 @@ namespace Terraria.ModLoader
 
 		/// <summary> Determines which type of vanilla NPC this ModNPC will copy the behavior (AI) of. Leave as 0 to not copy any behavior. Defaults to 0. </summary>
 		public int AIType { get; set; }
-		
+
 		/// <summary> Determines which type of vanilla NPC this ModNPC will copy the animation (FindFrame) of. Leave as 0 to not copy any animation. Defaults to 0. </summary>
 		public int AnimationType { get; set; }
-
-		/// <summary> The item type of the boss bag that is dropped when DropBossBags is called for this NPC. </summary>
-		public int BossBag { get; set; } = -1;
 
 		/// <summary> The ID of the music that plays when this NPC is on or near the screen. Defaults to -1, which means music plays normally. </summary>
 		/// Will be superceded by ModSceneEffect. Kept for legacy.
 		public int Music { get; set; } = -1;
-		
+
 		/// <summary> The priority of the music that plays when this NPC is on or near the screen. </summary>
 		/// Will be superceded by ModSceneEffect. Kept for legacy.
 		public SceneEffectPriority SceneEffectPriority { get; set; } = SceneEffectPriority.BossLow;
-		
+
 		/// <summary> The vertical offset used for drawing this NPC. Defaults to 0. </summary>
 		public float DrawOffsetY { get; set; }
-		
+
 		/// <summary> The type of NPC that this NPC will be considered as when determining banner drops and banner bonuses. By default this will be 0, which means this NPC is not associated with any banner. To give your NPC its own banner, set this field to the NPC's type. </summary>
 		public int Banner { get; set; }
 
@@ -93,58 +92,26 @@ namespace Terraria.ModLoader
 			NPCID.Search.Add(FullName, Type);
 		}
 
-		internal void SetupNPC(NPC npc) {
-			ModNPC newNPC = (ModNPC)(CloneNewInstances ? MemberwiseClone() : Activator.CreateInstance(GetType()));
-			newNPC.NPC = npc;
-			npc.ModNPC = newNPC;
-			newNPC.Mod = Mod;
-			newNPC.SetDefaults();
-		}
-
-		/// <summary>
-		/// Whether instances of this ModNPC are created through a memberwise clone or its constructor. Defaults to false.
-		/// </summary>
-		public virtual bool CloneNewInstances => false;
-
 		/// <summary>
 		/// Returns a clone of this ModNPC. 
 		/// Allows you to decide which fields of your ModNPC class are copied over when a new NPC is created. 
 		/// By default this will return a memberwise clone; you will want to override this if your ModNPC contains object references. 
-		/// Only called if CloneNewInstances is set to true.
 		/// </summary>
-		public virtual ModNPC Clone() => (ModNPC)MemberwiseClone();
-
-		/// <summary>
-		/// Create a new instance of this ModNPC for an NPC instance. 
-		/// Called at the end of NPC.SetDefaults.
-		/// If CloneNewInstances is true, just calls Clone()
-		/// Otherwise calls the default constructor and copies fields
-		/// </summary>
-		public virtual ModNPC NewInstance(NPC npcClone) {
-			if (CloneNewInstances) {
-				ModNPC clone = Clone();
-				clone.NPC = npcClone;
-				return clone;
-			}
-
-			ModNPC copy = (ModNPC)Activator.CreateInstance(GetType());
-			copy.NPC = npcClone;
-			copy.Mod = Mod;
-			copy.AIType = AIType;
-			copy.AnimationType = AnimationType;
-			copy.BossBag = BossBag;
-			copy.Music = Music;
-			copy.DrawOffsetY = DrawOffsetY;
-			copy.Banner = Banner;
-			copy.BannerItem = BannerItem;
-			return copy;
+		public virtual ModNPC Clone(NPC npc) {
+			ModNPC clone = (ModNPC)MemberwiseClone();
+			clone.NPC = npc;
+			return clone;
 		}
 
 		/// <summary>
 		/// Allows you to set all your NPC's properties, such as width, damage, aiStyle, lifeMax, etc.
 		/// </summary>
-		public virtual void SetDefaults() {
-		}
+		public virtual void SetDefaults() { }
+
+		/// <summary>
+		/// Gets called when your NPC spawns in world
+		/// </summary>
+		public virtual void OnSpawn(IEntitySource source) { }
 
 		/// <summary>
 		/// Automatically sets certain static defaults. Override this if you do not want the properties to be set for you.
@@ -187,6 +154,13 @@ namespace Terraria.ModLoader
 		/// <param name="database"></param>
 		/// <param name="bestiaryEntry"></param>
 		public virtual void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+		}
+
+		/// <summary>
+		/// Allows you to set the town NPC profile that this NPC uses.
+		/// </summary>
+		/// <param name="database">The list of town NPC profiles that currently exist.</param>
+		public virtual void SetTownNPCProfile(Dictionary<int, ITownNPCProfile> database) {
 		}
 
 		/// <summary>
@@ -235,10 +209,9 @@ namespace Terraria.ModLoader
 		}
 
 		/// <summary>
-		/// Allows you to make things happen whenever this NPC is hit, such as creating dust or gores. This hook is client side. Usually when something happens when an npc dies such as item spawning, you use NPCLoot, but you can use HitEffect paired with a check for `if (npc.life <= 0)` to do client-side death effects, such as spawning dust, gore, or death sounds.
+		/// Allows you to make things happen whenever this NPC is hit, such as creating dust or gores.
+		/// <br/> This hook is client side. Usually when something happens when an npc dies such as item spawning, you use NPCLoot, but you can use HitEffect paired with a check for `if (npc.life &lt;= 0)` to do client-side death effects, such as spawning dust, gore, or death sounds.
 		/// </summary>
-		/// <param name="hitDirection"></param>
-		/// <param name="damage"></param>
 		public virtual void HitEffect(int hitDirection, double damage) {
 		}
 
@@ -287,16 +260,25 @@ namespace Terraria.ModLoader
 		public virtual void OnKill() {
 		}
 
-        /// <summary>
-        /// Allows you to make things happen when this NPC is caught. Ran Serverside
-        /// </summary>
-        /// <param name="player">The player catching this NPC</param>
-        /// <param name="item">The item that will be spawned</param>
-        public virtual void OnCatchNPC(Player player, Item item) {
+		/// <summary>
+		/// Allows you to determine how and when this NPC can fall through platforms and similar tiles.
+		/// <br/>Return true to allow this NPC to fall through platforms, false to prevent it. Returns null by default, applying vanilla behaviors (based on aiStyle and type).
+		/// </summary>
+		public virtual bool? CanFallThroughPlatforms() {
+			return null;
 		}
 
 		/// <summary>
-		/// Allows you to add and modify NPC loot tables to drop on death and to appear in the Bestiary.
+		/// Allows you to make things happen when this NPC is caught. Ran Serverside
+		/// </summary>
+		/// <param name="player">The player catching this NPC</param>
+		/// <param name="item">The item that will be spawned</param>
+		public virtual void OnCatchNPC(Player player, Item item) {
+		}
+
+		/// <summary>
+		/// Allows you to add and modify NPC loot tables to drop on death and to appear in the Bestiary.<br/>
+		/// The <see href="https://github.com/tModLoader/tModLoader/wiki/Basic-NPC-Drops-and-Loot-1.4">Basic NPC Drops and Loot 1.4 Guide</see> explains how to use this hook to modify npc loot.
 		/// </summary>
 		/// <param name="npcLoot"></param>
 		public virtual void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -502,7 +484,6 @@ namespace Terraria.ModLoader
 		/// <summary>
 		/// When used in conjunction with "npc.hide = true", allows you to specify that this npc should be drawn behind certain elements. Add the index to one of Main.DrawCacheNPCsMoonMoon, DrawCacheNPCsOverPlayers, DrawCacheNPCProjectiles, or DrawCacheNPCsBehindNonSolidTiles.
 		/// </summary>
-		/// <param name="npc"></param>
 		/// <param name="index"></param>
 		public virtual void DrawBehind(int index)
 		{
@@ -535,7 +516,8 @@ namespace Terraria.ModLoader
 		/// <param name="tileY"></param>
 		/// <returns></returns>
 		public virtual int SpawnNPC(int tileX, int tileY) {
-			return NPC.NewNPC(tileX * 16 + 8, tileY * 16, NPC.type);
+			//TODO: Add IEntitySource in '1.4_onspawn'.
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 
 		/// <summary>
@@ -547,6 +529,17 @@ namespace Terraria.ModLoader
 		public virtual bool CanTownNPCSpawn(int numTownNPCs, int money) {
 			return false;
 		}
+
+		/* Disabled until #2083 is addressed. Originally introduced in #1323, but was refactored and now would be for additional features outside PR scope.
+		/// <summary>
+		/// Allows you to set an NPC's biome preferences and nearby npc preferences for the NPC happiness system. Recommended to only be used with NPCs that have shops.
+		/// </summary>
+		/// <param name="shopHelperInstance">The vanilla shop modifier instance to invoke methods such as LikeNPC and HateBiome on</param>
+		/// <param name="primaryPlayerBiome">The current biome the player is in for purposes of npc happiness, referred by PrimaryBiomeID </param>
+		/// <param name="nearbyNPCsByType">The boolean array of if each type of npc is nearby</param>
+		public virtual void ModifyNPCHappiness(int primaryPlayerBiome, ShopHelper shopHelperInstance, bool[] nearbyNPCsByType) {
+		}
+		*/
 
 		/// <summary>
 		/// Allows you to define special conditions required for this town NPC's house. For example, Truffle requires the house to be in an aboveground mushroom biome.
@@ -561,11 +554,18 @@ namespace Terraria.ModLoader
 		}
 
 		/// <summary>
-		/// Allows you to give this town NPC any name when it spawns. By default returns something embarrassing.
+		/// Allows you to modify the type name of this NPC dynamically.
+		/// </summary>
+		public virtual void ModifyTypeName(ref string typeName) {
+		}
+
+		/// <summary>
+		/// Allows you to give a list of names this NPC can be given on spawn.
+		/// By default, returns a blank list, which means the NPC will simply use its type name as its given name when prompted.
 		/// </summary>
 		/// <returns></returns>
-		public virtual string TownNPCName() {
-			return Language.GetTextValue("tModLoader.DefaultTownNPCName");
+		public virtual List<string> SetNPCNameList() {
+			return new List<string>();
 		}
 
 		/// <summary>
